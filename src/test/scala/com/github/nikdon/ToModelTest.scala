@@ -1,13 +1,12 @@
 package com.github.nikdon
 
+import com.github.nikdon.ToModel.syntax._
+import com.github.nikdon.model.{ChatType, MessageEntityType}
+import com.github.nikdon.tags.syntax._
 import org.scalacheck.Arbitrary.arbitrary
+import org.scalacheck.Gen
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
 import org.scalatest.{FlatSpec, Matchers}
-import tags.syntax._
-import ToModel.syntax._
-import com.github.nikdon.model.ChatType
-import org.scalacheck.Gen
-//import org.scalacheck.Shapeless._
 
 
 class ToModelTest extends FlatSpec
@@ -43,6 +42,24 @@ class ToModelTest extends FlatSpec
   it should "produce a model" in {
     forAll(chatDTOGen) { c ⇒
       c.toModel shouldBe model.Chat(c.id.chatId, ChatType.unsafe(c.`type`), c.title, c.userName, c.firstName, c.lastName)
+    }
+  }
+
+  behavior of "MessageEntity"
+
+  val messageDTOGen = for {
+    `type` ← Gen.oneOf("mention", "hashtag", "bot_command", "url", "email", "bold", "italic", "code", "pre", "text_link")
+    offset ← arbitrary[Int]
+    length ← arbitrary[Int]
+    url ← `type` match {
+      case "url" ⇒ arbitrary[Option[String]]
+      case _     ⇒ Gen.oneOf(None: Option[String], None: Option[String])
+    }
+  } yield dto.MessageEntity(`type`, offset, length, url)
+
+  it should "produce a model" in {
+    forAll(messageDTOGen) { m ⇒
+      m.toModel shouldBe model.MessageEntity(MessageEntityType.unsafe(m.`type`), m.offset, m.length, m.url)
     }
   }
 

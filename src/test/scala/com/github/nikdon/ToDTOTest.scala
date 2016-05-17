@@ -5,7 +5,7 @@ import org.scalatest.prop.GeneratorDrivenPropertyChecks
 import org.scalatest.{FlatSpec, Matchers}
 import tags.syntax._
 import ToDTO.syntax._
-import com.github.nikdon.model.{Channel, Group, Private, SuperGroup}
+import com.github.nikdon.model._
 import org.scalacheck.Gen
 
 
@@ -42,6 +42,24 @@ class ToDTOTest extends FlatSpec
   it should "produce a DTO" in {
     forAll(chatModelGen) { c ⇒
       c.toDTO shouldBe dto.Chat(c.id, c.`type`.name, c.title, c.userName, c.firstName, c.lastName)
+    }
+  }
+
+  behavior of "MessageEntity ToDTO"
+
+  val messageEntityGen = for {
+    `type` ← Gen.oneOf(Mention, Hashtag, BotCommand, Url, Email, Bold, Italic, Code, Pre, TextLink)
+    offset ← arbitrary[Int]
+    length ← arbitrary[Int]
+    url ← `type` match {
+      case Url ⇒ arbitrary[Option[String]]
+      case _ ⇒ Gen.oneOf(None: Option[String], None: Option[String])
+    }
+  } yield model.MessageEntity(`type`, offset, length, url)
+
+  it should "produce a DTO" in {
+    forAll(messageEntityGen) { m ⇒
+      m.toDTO shouldBe dto.MessageEntity(m.`type`.name, m.offset, m.length, m.url)
     }
   }
 
