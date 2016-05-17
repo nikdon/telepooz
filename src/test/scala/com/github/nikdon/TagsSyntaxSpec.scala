@@ -1,6 +1,6 @@
 package com.github.nikdon
 
-import com.github.nikdon.tags.UserId
+import com.github.nikdon.tags.{FileId, UserId}
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
 import org.scalatest.{FlatSpec, Matchers}
@@ -18,6 +18,10 @@ class TagsSyntaxSpec extends FlatSpec
   it should "do work for resource ids" in {
     forAll(arbitrary[Int]) { i ⇒
       i.userId shouldBe tag[UserId](i)
+    }
+
+    forAll(arbitrary[String]) { s ⇒
+      s.fileId shouldBe tag[FileId](s)
     }
   }
 
