@@ -5,6 +5,7 @@ import shapeless.tag.@@
 
 
 /**
+  * This object represents a Telegram user or bot.
   *
   * @param id        Unique identifier for this user or bot
   * @param firstName User‘s or bot’s first name

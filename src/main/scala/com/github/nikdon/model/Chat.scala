@@ -5,6 +5,7 @@ import shapeless.tag._
 
 
 /**
+  * This object represents a chat.
   *
   * @param id        Unique identifier for this chat, not exceeding 1e13 by absolute value
   * @param `type`    Type of chat, can be either “private”, “group”, “supergroup” or “channel”
