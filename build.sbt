@@ -40,7 +40,7 @@ lazy val catsV = "0.5.0"
 lazy val shapelessVersion = "2.3.0"
 
 lazy val scalaTestV = "2.2.6"
-lazy val scalaCheckV = "1.12.5"
+lazy val scalaCheckV = "1.13.0"
 
 lazy val kindProjectorV = "0.7.1"
 

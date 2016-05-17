@@ -44,4 +44,19 @@ class ToDTOTest extends FlatSpec
       c.toDTO shouldBe dto.Chat(c.id, c.`type`.name, c.title, c.userName, c.firstName, c.lastName)
     }
   }
+
+  behavior of "PhotoSize ToDTO"
+
+  val photoModelGen = for {
+    fileId ← arbitrary[String].map(_.fileId)
+    width ← arbitrary[Int]
+    height ← arbitrary[Int]
+    fileSize ← arbitrary[Option[Int]]
+  } yield model.PhotoSize(fileId, width, height, fileSize)
+
+  it should "produce a DTO" in {
+    forAll(photoModelGen) { p: model.PhotoSize ⇒
+      p.toDTO shouldBe dto.PhotoSize(p.fileId, p.width, p.height, p.fileSize)
+    }
+  }
 }

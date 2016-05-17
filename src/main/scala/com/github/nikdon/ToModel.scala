@@ -21,9 +21,12 @@ object ToModel {
 
   }
 
-  implicit val userToModel: ToModel[dto.User, model.User] =
-    ToModel(u ⇒ model.User(u.id.userId, u.firstName, u.lastName, u.userName))
-
   implicit val chatToModel: ToModel[dto.Chat, model.Chat] =
     ToModel(c ⇒ model.Chat(c.id.chatId, ChatType.unsafe(c.`type`), c.title, c.userName, c.firstName, c.lastName))
+
+  implicit val photoSizeToModel: ToModel[dto.PhotoSize, model.PhotoSize] =
+    ToModel(p ⇒ model.PhotoSize(p.fileId.fileId, p.width, p.height, p.fileSize))
+
+  implicit val userToModel: ToModel[dto.User, model.User] =
+    ToModel(u ⇒ model.User(u.id.userId, u.firstName, u.lastName, u.userName))
 }

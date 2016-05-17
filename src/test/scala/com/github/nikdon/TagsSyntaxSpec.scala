@@ -22,7 +22,7 @@ class TagsSyntaxSpec extends FlatSpec
   }
 
   it should "do not work for non resource ids" in {
-    illTyped(""" "a".userId """)
+    illTyped(""" 'a'.userId """)
   }
 
 }
