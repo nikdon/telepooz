@@ -1,12 +1,12 @@
 package com.github.nikdon
 
+import com.github.nikdon.ToDTO.syntax._
+import com.github.nikdon.model._
+import com.github.nikdon.tags.syntax._
 import org.scalacheck.Arbitrary.arbitrary
+import org.scalacheck.Gen
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
 import org.scalatest.{FlatSpec, Matchers}
-import tags.syntax._
-import ToDTO.syntax._
-import com.github.nikdon.model._
-import org.scalacheck.Gen
 
 
 class ToDTOTest extends FlatSpec
@@ -75,6 +75,21 @@ class ToDTOTest extends FlatSpec
   it should "produce a DTO" in {
     forAll(photoModelGen) { p: model.PhotoSize ⇒
       p.toDTO shouldBe dto.PhotoSize(p.fileId, p.width, p.height, p.fileSize)
+    }
+  }
+
+  behavior of "Contact"
+
+  val contactGen = for {
+    phoneNumber ← arbitrary[String]
+    firstName ← arbitrary[String]
+    lastName ← arbitrary[Option[String]]
+    userId ← arbitrary[Option[Int]].map(_.map(_.userId))
+  } yield model.Contact(phoneNumber, firstName, lastName, userId)
+
+  it should "produce a DTO" in {
+    forAll(contactGen) { c ⇒
+      c.toDTO shouldBe dto.Contact(c.phoneNumber, c.firstName, c.lastName, c.userId)
     }
   }
 }
