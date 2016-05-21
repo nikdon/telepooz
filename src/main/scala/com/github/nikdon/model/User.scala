@@ -1,6 +1,6 @@
 package com.github.nikdon.model
 
-import com.github.nikdon.tags
+import com.github.nikdon.{ToDTO, dto, model, tags}
 import shapeless.tag.@@
 
 
@@ -16,3 +16,8 @@ case class User(id: Int @@ tags.UserId,
                 firstName: String,
                 lastName: Option[String],
                 userName: Option[String])
+
+object User {
+  implicit val userToDTO: ToDTO[model.User, dto.User] =
+    ToDTO(u ⇒ dto.User(u.id, u.firstName, u.lastName, u.userName))
+}

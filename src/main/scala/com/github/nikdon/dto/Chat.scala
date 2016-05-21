@@ -1,5 +1,9 @@
 package com.github.nikdon.dto
 
+import com.github.nikdon.model.ChatType
+import com.github.nikdon.tags.syntax._
+import com.github.nikdon.{ToModel, model}
+
 
 /**
   * This object represents a chat.
@@ -17,3 +21,8 @@ case class Chat(id: Int,
                 userName: Option[String],
                 firstName: Option[String],
                 lastName: Option[String])
+
+object Chat {
+  implicit val toModel: ToModel[Chat, model.Chat] =
+    ToModel(c ⇒ model.Chat(c.id.chatId, ChatType.unsafe(c.`type`), c.title, c.userName, c.firstName, c.lastName))
+}

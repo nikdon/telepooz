@@ -1,6 +1,7 @@
 package com.github.nikdon.model
 
 import com.github.nikdon.tags.ChatId
+import com.github.nikdon.{ToDTO, dto, model}
 import shapeless.tag._
 
 
@@ -20,6 +21,11 @@ case class Chat(id: Int @@ ChatId,
                 userName: Option[String],
                 firstName: Option[String],
                 lastName: Option[String])
+
+object Chat {
+  implicit val chatToDTO: ToDTO[model.Chat, dto.Chat] =
+    ToDTO(c ⇒ dto.Chat(c.id, c.`type`.name, c.title, c.userName, c.firstName, c.lastName))
+}
 
 
 sealed trait ChatType {

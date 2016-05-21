@@ -18,6 +18,7 @@ object tags {
   trait FileId
   trait UserId
   trait ChatId
+  trait FoursquareId
 
   trait Syntax {
 
@@ -25,6 +26,7 @@ object tags {
       def fileId: A @@ FileId = tag[FileId](a)
       def userId: A @@ UserId = tag[UserId](a)
       def chatId: A @@ ChatId = tag[ChatId](a)
+      def foursquareId: A @@ FoursquareId = tag[FoursquareId](a)
     }
 
   }

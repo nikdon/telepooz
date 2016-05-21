@@ -1,5 +1,8 @@
 package com.github.nikdon.dto
 
+import com.github.nikdon.model.MessageEntityType
+import com.github.nikdon.{ToModel, dto, model}
+
 
 /**
   * This object represents one special entity in a text message. For example, hashtags, usernames, URLs, etc.
@@ -15,3 +18,8 @@ case class MessageEntity(`type`: String,
                          offset: Int,
                          length: Int,
                          url: Option[String])
+
+object MessageEntity {
+  implicit val messageEntityToModel: ToModel[dto.MessageEntity, model.MessageEntity] =
+    ToModel(m ⇒ model.MessageEntity(MessageEntityType.unsafe(m.`type`), m.offset, m.length, m.url))
+}

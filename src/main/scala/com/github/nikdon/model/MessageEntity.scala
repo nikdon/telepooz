@@ -1,5 +1,7 @@
 package com.github.nikdon.model
 
+import com.github.nikdon.{ToDTO, dto, model}
+
 
 /**
   * This object represents one special entity in a text message. For example, hashtags, usernames, URLs, etc.
@@ -15,6 +17,11 @@ case class MessageEntity(`type`: MessageEntityType,
                          offset: Int,
                          length: Int,
                          url: Option[String])
+
+object MessageEntity {
+  implicit val messageEntityToDTO: ToDTO[model.MessageEntity, dto.MessageEntity] =
+    ToDTO(m ⇒ dto.MessageEntity(m.`type`.name, m.offset, m.length, m.url))
+}
 
 
 sealed trait MessageEntityType {

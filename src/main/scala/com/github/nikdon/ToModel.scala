@@ -1,8 +1,5 @@
 package com.github.nikdon
 
-import com.github.nikdon.model.{ChatType, MessageEntityType}
-import com.github.nikdon.tags.syntax._
-
 
 trait ToModel[DTO, Model] extends Produce[DTO, Model]
 
@@ -21,15 +18,4 @@ object ToModel {
 
   }
 
-  implicit val chatToModel: ToModel[dto.Chat, model.Chat] =
-    ToModel(c ⇒ model.Chat(c.id.chatId, ChatType.unsafe(c.`type`), c.title, c.userName, c.firstName, c.lastName))
-
-  implicit val messageEntityToModel: ToModel[dto.MessageEntity, model.MessageEntity] =
-    ToModel(m ⇒ model.MessageEntity(MessageEntityType.unsafe(m.`type`), m.offset, m.length, m.url))
-
-  implicit val photoSizeToModel: ToModel[dto.PhotoSize, model.PhotoSize] =
-    ToModel(p ⇒ model.PhotoSize(p.fileId.fileId, p.width, p.height, p.fileSize))
-
-  implicit val userToModel: ToModel[dto.User, model.User] =
-    ToModel(u ⇒ model.User(u.id.userId, u.firstName, u.lastName, u.userName))
 }
