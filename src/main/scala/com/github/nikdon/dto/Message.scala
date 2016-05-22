@@ -80,11 +80,11 @@ object Message {
   implicit val toModel: ToModel[Message, model.Message] =
     ToModel(m ⇒ model.Message(m.messageId.messageId,
                               m.from.map(_.toModel),
-                              new Date(m.date.toLong), // TODO
+                              new Date(m.date.toLong),
                               m.chat.toModel,
                               m.forwardFrom.map(_.toModel),
                               m.forwardFromChat.map(_.toModel),
-                              m.forwardDate.map(i ⇒ new Date(i.toLong)), // TODO
+                              m.forwardDate.map(i ⇒ new Date(i.toLong)),
                               m.replyToMessage.map(_.toModel),
                               m.text,
                               m.entities.map(_.map(_.toModel)),

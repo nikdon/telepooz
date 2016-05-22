@@ -81,11 +81,11 @@ object Message {
   implicit val toDTO: ToDTO[Message, dto.Message] =
     ToDTO(m ⇒ dto.Message(m.messageId,
                           m.from.map(_.toDTO),
-                          m.date.getTime.toInt, // TODO
+                          toUnixTime(m.date),
                           m.chat.toDTO,
                           m.forwardFrom.map(_.toDTO),
                           m.forwardFromChat.map(_.toDTO),
-                          m.forwardDate.map(_.getTime.toInt), // TODO
+                          m.forwardDate.map(toUnixTime),
                           m.replyToMessage.map(_.toDTO),
                           m.text,
                           m.entities.map(_.map(_.toDTO)),
@@ -110,4 +110,6 @@ object Message {
                           m.migrateToChatId,
                           m.migrateFromChatId,
                           m.pinnedMessage.map(_.toDTO)))
+
+  private[this] def toUnixTime(d: Date): Int = (d.getTime / 1000L).toInt
 }
