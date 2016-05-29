@@ -4,6 +4,7 @@ import shapeless.tag
 import shapeless.tag.@@
 
 
+@scala.annotation.implicitNotFound("No member of type class IsResourceId in scope for ${A}")
 trait IsResourceId[A]
 
 

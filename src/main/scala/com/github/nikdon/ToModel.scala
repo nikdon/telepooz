@@ -1,6 +1,7 @@
 package com.github.nikdon
 
 
+@scala.annotation.implicitNotFound("No member of type class ToModel in scope for ${DTO} and ${Model}")
 trait ToModel[DTO, Model] extends Produce[DTO, Model]
 
 
