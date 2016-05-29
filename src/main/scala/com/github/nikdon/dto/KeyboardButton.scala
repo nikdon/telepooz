@@ -11,16 +11,16 @@ import com.github.nikdon.{ToModel, model}
   * @param text             Text of the button.
   *                         If none of the optional fields are used, it will be
   *                         sent to the bot as a message when the button is pressed
-  * @param requestContact   If True, the user's phone number will be sent as a
+  * @param request_contact  If True, the user's phone number will be sent as a
   *                         contact when the button is pressed. Available in private chats only
-  * @param requestLocation  If True, the user's current location will be sent when
+  * @param request_location If True, the user's current location will be sent when
   *                         the button is pressed. Available in private chats only
   */
 case class KeyboardButton(text: String,
-                          requestContact: Option[Boolean],
-                          requestLocation: Option[Boolean])
+                          request_contact: Option[Boolean],
+                          request_location: Option[Boolean])
 
 object KeyboardButton {
   implicit val toModel: ToModel[KeyboardButton, model.KeyboardButton] =
-    ToModel(k ⇒ model.KeyboardButton(k.text, k.requestContact, k.requestLocation))
+    ToModel(k ⇒ model.KeyboardButton(k.text, k.request_contact, k.request_location))
 }

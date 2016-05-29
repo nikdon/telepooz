@@ -7,17 +7,17 @@ import com.github.nikdon.{ToModel, model}
 /**
   * This object represents a phone contact.
   *
-  * @param phoneNumber  Contact's phone number
-  * @param firstName    Contact's first name
-  * @param lastName     Contact's last name
-  * @param userId       Contact's user identifier in Telegram
+  * @param phone_number  Contact's phone number
+  * @param first_name    Contact's first name
+  * @param last_name     Contact's last name
+  * @param user_id       Contact's user identifier in Telegram
   */
-case class Contact(phoneNumber: String,
-                   firstName: String,
-                   lastName: Option[String],
-                   userId: Option[Int])
+case class Contact(phone_number: String,
+                   first_name: String,
+                   last_name: Option[String] = None,
+                   user_id: Option[Int] = None)
 
 object Contact {
   implicit val toModel: ToModel[Contact, model.Contact] =
-    ToModel(v ⇒ model.Contact(v.phoneNumber, v.firstName, v.lastName, v.userId.map(_.userId)))
+    ToModel(v ⇒ model.Contact(v.phone_number, v.first_name, v.last_name, v.user_id.map(_.userId)))
 }

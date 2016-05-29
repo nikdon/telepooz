@@ -9,20 +9,20 @@ import com.github.nikdon.{ToModel, model}
 /**
   * This object represents a voice note.
   *
-  * @param fileId   Unique identifier for this file
-  * @param duration Duration of the audio in seconds as defined by sender
-  * @param mimeType MIME type of the file as defined by sender
-  * @param fileSize File size
+  * @param file_id    Unique identifier for this file
+  * @param duration   Duration of the audio in seconds as defined by sender
+  * @param mime_type  MIME type of the file as defined by sender
+  * @param file_size  File size
   */
-case class Voice(fileId: String,
+case class Voice(file_id: String,
                  duration: Int,
-                 mimeType: String,
-                 fileSize: Int)
+                 mime_type: String,
+                 file_size: Int)
 
 object Voice {
   implicit val toModel: ToModel[Voice, model.Voice] =
-    ToModel(v ⇒ model.Voice(v.fileId.fileId,
+    ToModel(v ⇒ model.Voice(v.file_id.fileId,
                             Duration.ofSeconds(v.duration.toLong),
-                            v.mimeType,
-                            v.fileSize))
+                            v.mime_type,
+                            v.file_size))
 }

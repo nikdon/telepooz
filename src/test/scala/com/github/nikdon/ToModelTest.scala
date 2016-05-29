@@ -24,7 +24,7 @@ class ToModelTest extends FlatSpec
 
   it should "produce a model" in {
     forAll(userDTOGen) { u ⇒
-      u.toModel shouldBe model.User(u.id.userId, u.firstName, u.lastName, u.userName)
+      u.toModel shouldBe model.User(u.id.userId, u.first_name, u.last_name, u.user_name)
     }
   }
 
@@ -41,7 +41,7 @@ class ToModelTest extends FlatSpec
 
   it should "produce a model" in {
     forAll(chatDTOGen) { c ⇒
-      c.toModel shouldBe model.Chat(c.id.chatId, ChatType.unsafe(c.`type`), c.title, c.userName, c.firstName, c.lastName)
+      c.toModel shouldBe model.Chat(c.id.chatId, ChatType.unsafe(c.`type`), c.title, c.user_name, c.first_name, c.last_name)
     }
   }
 
@@ -74,7 +74,7 @@ class ToModelTest extends FlatSpec
 
   it should "produce a model" in {
     forAll(photoSizeDTOGen) { p: dto.PhotoSize ⇒
-      p.toModel shouldBe model.PhotoSize(p.fileId.fileId, p.width, p.height, p.fileSize)
+      p.toModel shouldBe model.PhotoSize(p.file_id.fileId, p.width, p.height, p.file_size)
     }
   }
 }

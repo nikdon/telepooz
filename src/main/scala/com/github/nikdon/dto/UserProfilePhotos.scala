@@ -7,13 +7,13 @@ import com.github.nikdon.ToModel.syntax._
 /**
   * This object represent a user's profile pictures.
   *
-  * @param totalCount Total number of profile pictures the target user has
-  * @param photos     Requested profile pictures (in up to 4 sizes each)
+  * @param total_count Total number of profile pictures the target user has
+  * @param photos      Requested profile pictures (in up to 4 sizes each)
   */
-case class UserProfilePhotos(totalCount: Int,
+case class UserProfilePhotos(total_count: Int,
                              photos: Vector[Vector[dto.PhotoSize]])
 
 object UserProfilePhotos {
   implicit val toModel: ToModel[UserProfilePhotos, model.UserProfilePhotos] =
-    ToModel(u ⇒ model.UserProfilePhotos(u.totalCount, u.photos.map(_.map(_.toModel))))
+    ToModel(u ⇒ model.UserProfilePhotos(u.total_count, u.photos.map(_.map(_.toModel))))
 }

@@ -9,15 +9,15 @@ import com.github.nikdon.{ToModel, model}
   * [[https://api.telegram.org/file/bot<token>/<file_path>]]. It is guaranteed that the link will be
   * valid for at least 1 hour. When the link expires, a new one can be requested by calling [[GetFile]].
   *
-  * @param fileId   Unique identifier for this file
-  * @param fileSize File size, if known
-  * @param filePath File path. Use [[https://api.telegram.org/file/bot<token>/<file_path>]] to get the file.
+  * @param file_id   Unique identifier for this file
+  * @param file_size File size, if known
+  * @param file_path File path. Use [[https://api.telegram.org/file/bot<token>/<file_path>]] to get the file.
   */
-case class File(fileId: String,
-                fileSize: Option[Int],
-                filePath: Option[String])
+case class File(file_id: String,
+                file_size: Option[Int] = None,
+                file_path: Option[String] = None)
 
 object File {
   implicit val toModel: ToModel[File, model.File] =
-    ToModel(f ⇒ model.File(f.fileId.fileId, f.fileSize, f.filePath))
+    ToModel(f ⇒ model.File(f.file_id.fileId, f.file_size, f.file_path))
 }

@@ -8,19 +8,19 @@ import com.github.nikdon.ToModel.syntax._
 /**
   * This object represents a general file (as opposed to [[Photo]], [[VoiceMessage]] and [[AudioFile]]).
   *
-  * @param fileId   Unique file identifier
-  * @param thumb    Document thumbnail as defined by sender
-  * @param fileName Original filename as defined by sender
-  * @param mimeType MIME type of the file as defined by sender
-  * @param fileSize File size
+  * @param file_id    Unique file identifier
+  * @param thumb      Document thumbnail as defined by sender
+  * @param file_name  Original filename as defined by sender
+  * @param mime_type  MIME type of the file as defined by sender
+  * @param file_size  File size
   */
-case class Document(fileId: String,
-                    thumb: Option[dto.PhotoSize],
-                    fileName: Option[String],
-                    mimeType: Option[String],
-                    fileSize: Option[Int])
+case class Document(file_id: String,
+                    thumb: Option[dto.PhotoSize] = None,
+                    file_name: Option[String] = None,
+                    mime_type: Option[String] = None,
+                    file_size: Option[Int] = None)
 
 object Document {
   implicit val toModel: ToModel[Document, model.Document] =
-    ToModel(d ⇒ model.Document(d.fileId.fileId, d.thumb.map(_.toModel), d.fileName, d.mimeType, d.fileSize))
+    ToModel(d ⇒ model.Document(d.file_id.fileId, d.thumb.map(_.toModel), d.file_name, d.mime_type, d.file_size))
 }
