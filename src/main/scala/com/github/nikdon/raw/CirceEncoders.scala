@@ -21,4 +21,5 @@ trait CirceEncoders {
 
   implicit val getMeJsonEncoder: Encoder[GetMe.type] = encodeCaseObject[GetMe.type]
   implicit def sendMessageJsonEncoder[A: IsResourceId : Encoder] = Encoder[SendMessage[A]]
+  implicit def forwardMessageJsonEncoder[A: IsResourceId : Encoder] = Encoder[ForwardMessage[A]]
 }

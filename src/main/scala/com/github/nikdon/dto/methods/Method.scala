@@ -1,7 +1,10 @@
 package com.github.nikdon.dto.methods
 
 import com.github.nikdon.dto.ReplyMarkup
-import com.github.nikdon.{IsResourceId, dto}
+import com.github.nikdon.raw.{CirceEncoders, RawMethod}
+import com.github.nikdon.{IsResourceId, ToRaw, dto}
+import io.circe.Encoder
+import io.circe.syntax._
 
 
 sealed trait Method[Result] extends Product with Serializable {
@@ -12,7 +15,10 @@ sealed trait Method[Result] extends Product with Serializable {
   * A simple method for testing your bot's auth token. Requires no parameters.
   * Returns basic information about the bot in form of a User object.
   */
-case object GetMe extends Method[dto.User]
+case object GetMe extends Method[dto.User] {
+  implicit val getMeMethodToRaw: ToRaw[GetMe.type, RawMethod.GetMe.type] =
+    ToRaw(m => RawMethod.GetMe)
+}
 
 /**
   * Use this method to send text messages. On success, the sent Message is returned.
@@ -35,3 +41,27 @@ case class SendMessage[A : IsResourceId](chat_id: A,
                                          disable_notification: Option[Boolean] = None,
                                          reply_to_message_id: Option[Int] = None,
                                          reply_markup: Option[ReplyMarkup] = None) extends Method[dto.Message]
+
+object SendMessage extends CirceEncoders {
+  implicit def sendMessageMethodToRaw[A : IsResourceId : Encoder]: ToRaw[SendMessage[A], RawMethod.SendMessage] =
+    ToRaw(m ⇒ RawMethod.SendMessage(m.asJson))
+}
+
+/**
+  * Use this method to forward messages of any kind. On success, the sent Message is returned.
+  *
+  * @param chat_id              Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+  * @param from_chat_id         Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)
+  * @param disable_notification Sends the message silently. iOS users will not receive a notification, Android users
+  *                             will receive a notification with no sound.
+  * @param message_id           Unique message identifier
+  */
+case class ForwardMessage[A : IsResourceId](chat_id: A,
+                                            from_chat_id: A,
+                                            disable_notification: Option[Boolean] = None,
+                                            message_id: Int) extends Method[dto.Message]
+
+object ForwardMessage extends CirceEncoders {
+  implicit def forwardMessageToRaw[A : IsResourceId : Encoder]: ToRaw[ForwardMessage[A], RawMethod.ForwardMessage] =
+    ToRaw(m ⇒ RawMethod.ForwardMessage(m.asJson))
+}

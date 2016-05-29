@@ -52,3 +52,26 @@ object SendMessage {
                                          m.replyToMessageId,
                                          m.replyMarkup.map(ReplyMarkup.convertToDTO)))
 }
+
+
+/**
+  * Use this method to forward messages of any kind. On success, the sent Message is returned.
+  *
+  * @param chatId               Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+  * @param fromChatId           Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)
+  * @param disableNotification  Sends the message silently. iOS users will not receive a notification, Android users
+  *                             will receive a notification with no sound.
+  * @param messageId            Unique message identifier
+  */
+case class ForwardMessage[A : IsResourceId](chatId: A @@ ChatId,
+                                            fromChatId: A @@ ChatId,
+                                            disableNotification: Option[Boolean] = None,
+                                            messageId: Int @@ MessageId) extends Method[model.Message]
+
+object ForwardMessage {
+  implicit def forwardMessageToDTO[A: IsResourceId]: ToDTO[ForwardMessage[A], dto.methods.ForwardMessage[A]] =
+    ToDTO(m ⇒ dto.methods.ForwardMessage[A](m.chatId,
+                                            m.fromChatId,
+                                            m.disableNotification,
+                                            m.messageId))
+}
