@@ -1,6 +1,7 @@
 package com.github.nikdon.model
 
 import com.github.nikdon.{ToDTO, dto, model}
+import com.github.nikdon.utils._
 
 
 /**
@@ -24,34 +25,23 @@ object MessageEntity {
 }
 
 
-sealed trait MessageEntityType {
-  def name: String = this match {
-    case Mention    ⇒ "mention"
-    case Hashtag    ⇒ "hashtag"
-    case BotCommand ⇒ "bot_command"
-    case Url        ⇒ "url"
-    case Email      ⇒ "email"
-    case Bold       ⇒ "bold"
-    case Italic     ⇒ "italic"
-    case Code       ⇒ "code"
-    case Pre        ⇒ "pre"
-    case TextLink   ⇒ "text_link"
-    case _          ⇒ sys.error("unexpected")
-  }
+sealed trait MessageEntityType extends Product with Serializable {
+  def name: String = snakecase { this.productPrefix }
 }
 
-case object Mention extends MessageEntityType
-case object Hashtag extends MessageEntityType
-case object BotCommand extends MessageEntityType
-case object Url extends MessageEntityType
-case object Email extends MessageEntityType
-case object Bold extends MessageEntityType
-case object Italic extends MessageEntityType
-case object Code extends MessageEntityType
-case object Pre extends MessageEntityType
-case object TextLink extends MessageEntityType
-
 object MessageEntityType {
+
+  case object Mention extends MessageEntityType
+  case object Hashtag extends MessageEntityType
+  case object BotCommand extends MessageEntityType
+  case object Url extends MessageEntityType
+  case object Email extends MessageEntityType
+  case object Bold extends MessageEntityType
+  case object Italic extends MessageEntityType
+  case object Code extends MessageEntityType
+  case object Pre extends MessageEntityType
+  case object TextLink extends MessageEntityType
+
   def unsafe(str: String): MessageEntityType = str match {
     case "mention"     ⇒ Mention
     case "hashtag"     ⇒ Hashtag

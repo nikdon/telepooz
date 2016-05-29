@@ -1,7 +1,8 @@
 package com.github.nikdon
 
 import com.github.nikdon.ToDTO.syntax._
-import com.github.nikdon.model._
+import com.github.nikdon.model.ChatType.{Channel, Group, Private, SuperGroup}
+import com.github.nikdon.model.MessageEntityType._
 import com.github.nikdon.tags.syntax._
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.Gen

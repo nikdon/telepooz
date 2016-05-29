@@ -1,5 +1,6 @@
 package com.github.nikdon.model
 
+import com.github.nikdon._
 import com.github.nikdon.tags.ChatId
 import com.github.nikdon.{ToDTO, dto, model}
 import shapeless.tag._
@@ -28,27 +29,22 @@ object Chat {
 }
 
 
-sealed trait ChatType {
-  def name: String = this match {
-    case Private    ⇒ "private"
-    case Group      ⇒ "group"
-    case SuperGroup ⇒ "supergroup"
-    case Channel    ⇒ "channel"
-    case _          ⇒ sys.error("unexpected")
-  }
+sealed trait ChatType extends Product with Serializable {
+  def name: String = this.productPrefix.toLowerCase
 }
 
-case object Private extends ChatType
-case object Group extends ChatType
-case object SuperGroup extends ChatType
-case object Channel extends ChatType
-
 object ChatType {
+
+  case object Private extends ChatType
+  case object Group extends ChatType
+  case object SuperGroup extends ChatType
+  case object Channel extends ChatType
+
   def unsafe(str: String): ChatType = str match {
     case "private"    ⇒ Private
     case "group"      ⇒ Group
     case "supergroup" ⇒ SuperGroup
     case "channel"    ⇒ Channel
-    case _            ⇒ sys.error("unexpected")
+    case _            ⇒ unexpected(str)
   }
 }
