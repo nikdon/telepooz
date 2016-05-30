@@ -47,6 +47,8 @@ trait CirceEncoders {
   implicit val messageEntityTypeEncoder = Encoder[String].contramap[MessageEntityType](e ⇒ snakenize { e.productPrefix })
   implicit val messageEntityEncoder = Encoder[MessageEntity]
 
+  implicit def parseModeEncoder = Encoder[String].contramap[ParseMode](_.productPrefix)
+
   implicit def photoSizeEncoder(implicit E: Encoder[String @@ FileId]) = Encoder[PhotoSize]
 
   implicit val forceReplyEncoder = Encoder[ForceReply]
