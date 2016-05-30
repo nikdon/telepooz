@@ -1,6 +1,5 @@
 package com.github.nikdon.telepooz.model
 
-import com.github.nikdon.telepooz.{ToDTO, dto}
 import com.github.nikdon.telepooz.tags.FileId
 import shapeless.tag.@@
 
@@ -17,8 +16,3 @@ import shapeless.tag.@@
 case class File(fileId: String @@ FileId,
                 fileSize: Option[Int],
                 filePath: Option[String])
-
-object File {
-  implicit val toDTO: ToDTO[File, dto.File] =
-    ToDTO(f ⇒ dto.File(f.fileId, f.fileSize, f.filePath))
-}

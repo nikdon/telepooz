@@ -1,8 +1,7 @@
 package com.github.nikdon.telepooz.model
 
-import com.github.nikdon.telepooz.ToDTO.syntax._
+import com.github.nikdon.telepooz.model
 import com.github.nikdon.telepooz.tags.FoursquareId
-import com.github.nikdon.telepooz.{ToDTO, dto, model}
 import shapeless.tag.@@
 
 
@@ -18,8 +17,3 @@ case class Venue(location: model.Location,
                  title: String,
                  address: String,
                  foursquareId: Option[String @@ FoursquareId])
-
-object Venue {
-  implicit val toDTO: ToDTO[Venue, dto.Venue] =
-    ToDTO(l ⇒ dto.Venue(l.location.toDTO, l.title, l.address, l.foursquareId))
-}

@@ -3,7 +3,6 @@ package com.github.nikdon.telepooz.model
 import java.time.Duration
 
 import com.github.nikdon.telepooz.tags.FileId
-import com.github.nikdon.telepooz.{ToDTO, dto}
 import shapeless.tag.@@
 
 
@@ -19,8 +18,3 @@ case class Voice(fileId: String @@ FileId,
                  duration: Duration,
                  mimeType: String,
                  fileSize: Int)
-
-object Voice {
-  implicit val toDTO: ToDTO[Voice, dto.Voice] =
-    ToDTO(v ⇒ dto.Voice(v.fileId, v.duration.getSeconds.toInt, v.mimeType, v.fileSize))
-}

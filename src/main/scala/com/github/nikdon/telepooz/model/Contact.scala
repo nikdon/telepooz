@@ -1,7 +1,6 @@
 package com.github.nikdon.telepooz.model
 
 import com.github.nikdon.telepooz.tags.UserId
-import com.github.nikdon.telepooz.{ToDTO, dto}
 import shapeless.tag.@@
 
 
@@ -17,8 +16,3 @@ case class Contact(phoneNumber: String,
                    firstName: String,
                    lastName: Option[String],
                    userId: Option[Int @@ UserId])
-
-object Contact {
-  implicit val toDTO: ToDTO[Contact, dto.Contact] =
-    ToDTO(v ⇒ dto.Contact(v.phoneNumber, v.firstName, v.lastName, v.userId))
-}

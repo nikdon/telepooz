@@ -1,7 +1,6 @@
 package com.github.nikdon.telepooz.model
 
-import com.github.nikdon.telepooz.{ToDTO, dto, model}
-import com.github.nikdon.telepooz.utils._
+import com.github.nikdon.telepooz._
 
 
 /**
@@ -19,40 +18,35 @@ case class MessageEntity(`type`: MessageEntityType,
                          length: Int,
                          url: Option[String])
 
-object MessageEntity {
-  implicit val messageEntityToDTO: ToDTO[model.MessageEntity, dto.MessageEntity] =
-    ToDTO(m ⇒ dto.MessageEntity(m.`type`.name, m.offset, m.length, m.url))
-}
-
 
 sealed trait MessageEntityType extends Product with Serializable {
-  def name: String = snakecase { this.productPrefix }
+  def name: String = this.productPrefix
 }
 
 object MessageEntityType {
 
-  case object Mention extends MessageEntityType
-  case object Hashtag extends MessageEntityType
-  case object BotCommand extends MessageEntityType
-  case object Url extends MessageEntityType
-  case object Email extends MessageEntityType
-  case object Bold extends MessageEntityType
-  case object Italic extends MessageEntityType
-  case object Code extends MessageEntityType
-  case object Pre extends MessageEntityType
-  case object TextLink extends MessageEntityType
+  case object Mention extends MessageEntityType {override val name = super.name}
+  case object Hashtag extends MessageEntityType {override val name = super.name}
+  case object BotCommand extends MessageEntityType {override val name = super.name}
+  case object Url extends MessageEntityType {override val name = super.name}
+  case object Email extends MessageEntityType {override val name = super.name}
+  case object Bold extends MessageEntityType {override val name = super.name}
+  case object Italic extends MessageEntityType {override val name = super.name}
+  case object Code extends MessageEntityType {override val name = super.name}
+  case object Pre extends MessageEntityType {override val name = super.name}
+  case object TextLink extends MessageEntityType {override val name = super.name}
 
   def unsafe(str: String): MessageEntityType = str match {
-    case "mention"     ⇒ Mention
-    case "hashtag"     ⇒ Hashtag
-    case "bot_command" ⇒ BotCommand
-    case "url"         ⇒ Url
-    case "email"       ⇒ Email
-    case "bold"        ⇒ Bold
-    case "italic"      ⇒ Italic
-    case "code"        ⇒ Code
-    case "pre"         ⇒ Pre
-    case "text_link"   ⇒ TextLink
-    case _             ⇒ sys.error("unexpected")
+    case Mention.name    ⇒ Mention
+    case Hashtag.name    ⇒ Hashtag
+    case BotCommand.name ⇒ BotCommand
+    case Url.name        ⇒ Url
+    case Email.name      ⇒ Email
+    case Bold.name       ⇒ Bold
+    case Italic.name     ⇒ Italic
+    case Code.name       ⇒ Code
+    case Pre.name        ⇒ Pre
+    case TextLink.name   ⇒ TextLink
+    case _               ⇒ unexpected(str)
   }
 }

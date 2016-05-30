@@ -1,8 +1,6 @@
 package com.github.nikdon.telepooz.model
 
-import com.github.nikdon.telepooz.ToDTO.syntax._
 import com.github.nikdon.telepooz.tags.QueryId
-import com.github.nikdon.telepooz.{ToDTO, dto}
 import shapeless.tag.@@
 
 
@@ -25,12 +23,3 @@ case class CallbackQuery(id: String @@ QueryId,
                          message: Option[Message],
                          inlineMessageId: Option[String @@ QueryId],
                          data: String)
-
-object CallbackQuery {
-  implicit val toDTO: ToDTO[CallbackQuery, dto.CallbackQuery] =
-    ToDTO(c ⇒ dto.CallbackQuery(c.id,
-                                c.from.map(_.toDTO),
-                                c.message.map(_.toDTO),
-                                c.inlineMessageId,
-                                c.data))
-}

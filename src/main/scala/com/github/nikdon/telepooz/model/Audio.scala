@@ -1,9 +1,9 @@
 package com.github.nikdon.telepooz.model
 
-import com.github.nikdon.telepooz.{ToDTO, dto}
+import java.time.Duration
+
 import com.github.nikdon.telepooz.tags.FileId
 import shapeless.tag.@@
-import java.time.Duration
 
 
 /**
@@ -22,8 +22,3 @@ case class Audio(fileId: String @@ FileId,
                  title: Option[String],
                  mimeType: Option[String],
                  fileSize: Option[Int])
-
-object Audio {
-  implicit val toDTO: ToDTO[Audio, dto.Audio] =
-    ToDTO(a ⇒ dto.Audio(a.fileId, a.duration.getSeconds.toInt, a.performer, a.title, a.mimeType, a.fileSize))
-}

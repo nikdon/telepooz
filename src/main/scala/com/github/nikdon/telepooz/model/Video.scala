@@ -1,11 +1,11 @@
 package com.github.nikdon.telepooz.model
 
 
-import com.github.nikdon.telepooz.ToDTO.syntax._
-import com.github.nikdon.telepooz.tags.FileId
-import com.github.nikdon.telepooz.{ToDTO, dto, model}
-import shapeless.tag.@@
 import java.time.Duration
+
+import com.github.nikdon.telepooz.model
+import com.github.nikdon.telepooz.tags.FileId
+import shapeless.tag.@@
 
 
 case class Video(fileId: String @@ FileId,
@@ -15,8 +15,3 @@ case class Video(fileId: String @@ FileId,
                  thumb: Option[model.PhotoSize],
                  mimeType: Option[String],
                  fileSize: Option[Int])
-
-object Video {
-  implicit val toDTO: ToDTO[Video, dto.Video] =
-    ToDTO(v ⇒ dto.Video(v.fileId, v.width, v.height, v.duration.getSeconds.toInt, v.thumb.map(_.toDTO), v.mimeType, v.fileSize))
-}

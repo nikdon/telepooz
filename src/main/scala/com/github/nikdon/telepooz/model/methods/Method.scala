@@ -1,9 +1,8 @@
 package com.github.nikdon.telepooz.model.methods
 
-import com.github.nikdon.telepooz.model.{ReplyMarkup, ParseMode}
-import com.github.nikdon.telepooz.dto
+import com.github.nikdon.telepooz.model.{ParseMode, ReplyMarkup}
 import com.github.nikdon.telepooz.tags.{ChatId, MessageId}
-import com.github.nikdon.telepooz.{IsResourceId, ToDTO, model}
+import com.github.nikdon.telepooz.{IsResourceId, model}
 import shapeless.tag.@@
 
 
@@ -17,7 +16,6 @@ sealed trait Method[Result] extends Product with Serializable {
   * Returns basic information about the bot in form of a User object.
   */
 case object GetMe extends Method[model.User] {
-  implicit val getMeToDTO: ToDTO[GetMe.type, dto.methods.GetMe.type] = ToDTO(m ⇒ dto.methods.GetMe)
 }
 
 /**
@@ -43,14 +41,6 @@ case class SendMessage[A : IsResourceId](chatId: A @@ ChatId,
                                          replyMarkup: Option[ReplyMarkup] = None) extends Method[model.Message]
 
 object SendMessage {
-  implicit def sendMessageToDTO[A : IsResourceId]: ToDTO[SendMessage[A], dto.methods.SendMessage[A]] =
-    ToDTO(m ⇒ dto.methods.SendMessage[A](m.chatId,
-                                         m.text,
-                                         m.parseMode.map(_.name),
-                                         m.disableWebPagePreview,
-                                         m.disableNotification,
-                                         m.replyToMessageId,
-                                         m.replyMarkup.map(ReplyMarkup.convertToDTO)))
 }
 
 
@@ -69,9 +59,4 @@ case class ForwardMessage[A : IsResourceId](chatId: A @@ ChatId,
                                             messageId: Int @@ MessageId) extends Method[model.Message]
 
 object ForwardMessage {
-  implicit def forwardMessageToDTO[A: IsResourceId]: ToDTO[ForwardMessage[A], dto.methods.ForwardMessage[A]] =
-    ToDTO(m ⇒ dto.methods.ForwardMessage[A](m.chatId,
-                                            m.fromChatId,
-                                            m.disableNotification,
-                                            m.messageId))
 }

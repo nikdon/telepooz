@@ -1,19 +1,7 @@
 package com.github.nikdon.telepooz.model
 
-import com.github.nikdon.telepooz.ToDTO.syntax._
-import com.github.nikdon.telepooz.{ToDTO, dto}
-
 
 sealed trait ReplyMarkup extends Product with Serializable
-
-object ReplyMarkup {
-  def convertToDTO(m: ReplyMarkup) = m match {
-    case x: ReplyKeyboardMarkup  => x.toDTO
-    case x: InlineKeyboardMarkup => x.toDTO
-    case x: ForceReply           => x.toDTO
-  }
-}
-
 
 /**
   * This object represents a custom keyboard with reply options (see Introduction to bots for details and examples).
@@ -37,27 +25,12 @@ case class ReplyKeyboardMarkup(keyboard: Vector[Vector[KeyboardButton]],
                                oneTimeKeyBoard: Option[Boolean],
                                selective: Option[Boolean]) extends ReplyMarkup
 
-object ReplyKeyboardMarkup {
-  implicit val replyKeyboardToDTO: ToDTO[ReplyKeyboardMarkup, dto.ReplyKeyboardMarkup] =
-    ToDTO(r ⇒ dto.ReplyKeyboardMarkup(r.keyboard.map(_.map(_.toDTO)),
-                                      r.resizeKeyboard,
-                                      r.oneTimeKeyBoard,
-                                      r.selective))
-}
-
-
 /**
   * This object represents an inline keyboard that appears right next to the message it belongs to.
   *
   * @param keyboard Array of button rows, each represented by an Array of [[InlineKeyboardButton]] objects
   */
 case class InlineKeyboardMarkup(keyboard: Vector[Vector[InlineKeyboardButton]]) extends ReplyMarkup
-
-object InlineKeyboardMarkup {
-  implicit val inlineKeyboardMarkupToDTO: ToDTO[InlineKeyboardMarkup, dto.InlineKeyboardMarkup] =
-    ToDTO(i ⇒ dto.InlineKeyboardMarkup(i.keyboard.map(_.map(_.toDTO))))
-}
-
 
 /**
   * Upon receiving a message with this object, Telegram clients will display a reply
@@ -72,8 +45,3 @@ object InlineKeyboardMarkup {
   *                     2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.
   */
 case class ForceReply(forceReply: Boolean, selective: Option[Boolean]) extends ReplyMarkup
-
-object ForceReply {
-  implicit val ForceReplyToDTO: ToDTO[ForceReply, dto.ForceReply] =
-    ToDTO(f ⇒ dto.ForceReply(f.forceReply, f.selective))
-}

@@ -1,7 +1,5 @@
 package com.github.nikdon.telepooz.model
 
-import com.github.nikdon.telepooz.{ToDTO, dto}
-
 
 /**
   * This object represents one button of the reply keyboard.
@@ -19,8 +17,3 @@ import com.github.nikdon.telepooz.{ToDTO, dto}
 case class KeyboardButton(text: String,
                           requestContact: Option[Boolean],
                           requestLocation: Option[Boolean])
-
-object KeyboardButton {
-  implicit val toDTO: ToDTO[KeyboardButton, dto.KeyboardButton] =
-    ToDTO(k ⇒ dto.KeyboardButton(k.text, k.requestContact, k.requestLocation))
-}

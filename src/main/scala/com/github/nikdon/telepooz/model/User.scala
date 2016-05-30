@@ -1,6 +1,6 @@
 package com.github.nikdon.telepooz.model
 
-import com.github.nikdon.telepooz.{ToDTO, dto, model, tags}
+import com.github.nikdon.telepooz.tags
 import shapeless.tag.@@
 
 
@@ -16,8 +16,3 @@ case class User(id: Int @@ tags.UserId,
                 firstName: String,
                 lastName: Option[String],
                 userName: Option[String])
-
-object User {
-  implicit val userToDTO: ToDTO[model.User, dto.User] =
-    ToDTO(u ⇒ dto.User(u.id, u.firstName, u.lastName, u.userName))
-}

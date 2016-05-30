@@ -1,8 +1,5 @@
 package com.github.nikdon.telepooz.model.inline
 
-import com.github.nikdon.telepooz.ToDTO
-import com.github.nikdon.telepooz.ToDTO.syntax._
-import com.github.nikdon.telepooz.dto
 import com.github.nikdon.telepooz.model.{Location, User}
 import com.github.nikdon.telepooz.tags.QueryId
 import shapeless.tag.@@
@@ -25,6 +22,4 @@ case class InlineQuery(id: String @@ QueryId,
                        offset: String)
 
 object InlineQuery {
-  implicit val toDTO: ToDTO[InlineQuery, dto.inline.InlineQuery] =
-    ToDTO(i ⇒ dto.inline.InlineQuery(i.id, i.from.toDTO, i.location.map(_.toDTO), i.query, i.offset))
 }

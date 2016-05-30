@@ -2,9 +2,7 @@ package com.github.nikdon.telepooz.model
 
 import java.util.Date
 
-import com.github.nikdon.telepooz.ToDTO.syntax._
 import com.github.nikdon.telepooz.tags.{ChatId, MessageId}
-import com.github.nikdon.telepooz.{ToDTO, dto}
 import shapeless.tag.@@
 
 
@@ -76,40 +74,3 @@ case class Message(messageId: Int @@ MessageId,
                    migrateToChatId: Option[Int @@ ChatId] = None,
                    migrateFromChatId: Option[Int @@ ChatId] = None,
                    pinnedMessage: Option[Message] = None)
-
-object Message {
-  implicit val toDTO: ToDTO[Message, dto.Message] =
-    ToDTO(m ⇒ dto.Message(m.messageId,
-                          m.from.map(_.toDTO),
-                          toUnixTime(m.date),
-                          m.chat.toDTO,
-                          m.forwardFrom.map(_.toDTO),
-                          m.forwardFromChat.map(_.toDTO),
-                          m.forwardDate.map(toUnixTime),
-                          m.replyToMessage.map(_.toDTO),
-                          m.text,
-                          m.entities.map(_.map(_.toDTO)),
-                          m.audio.map(_.toDTO),
-                          m.document.map(_.toDTO),
-                          m.photo.map(_.map(_.toDTO)),
-                          m.sticker.map(_.toDTO),
-                          m.video.map(_.toDTO),
-                          m.voice.map(_.toDTO),
-                          m.caption,
-                          m.contact.map(_.toDTO),
-                          m.location.map(_.toDTO),
-                          m.venue.map(_.toDTO),
-                          m.newChatMember.map(_.toDTO),
-                          m.leftChatMember.map(_.toDTO),
-                          m.newChatTitle,
-                          m.newChatPhoto.map(_.map(_.toDTO)),
-                          m.deleteChatPhoto,
-                          m.groupChatCreated,
-                          m.superGroupChatCreated,
-                          m.channelChatCreated,
-                          m.migrateToChatId,
-                          m.migrateFromChatId,
-                          m.pinnedMessage.map(_.toDTO)))
-
-  private[this] def toUnixTime(d: Date): Int = (d.getTime / 1000L).toInt
-}

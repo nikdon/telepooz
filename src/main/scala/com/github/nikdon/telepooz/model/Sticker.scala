@@ -1,8 +1,7 @@
 package com.github.nikdon.telepooz.model
 
-import com.github.nikdon.telepooz.ToDTO.syntax._
+import com.github.nikdon.telepooz.model
 import com.github.nikdon.telepooz.tags.FileId
-import com.github.nikdon.telepooz.{ToDTO, dto, model}
 import shapeless.tag.@@
 
 
@@ -22,8 +21,3 @@ case class Sticker(fileId: String @@ FileId,
                    thumb: Option[model.PhotoSize],
                    emoji: Option[String],
                    fileSize: Option[Int])
-
-object Sticker {
-  implicit val toDTO: ToDTO[Sticker, dto.Sticker] =
-    ToDTO(s ⇒ dto.Sticker(s.fileId, s.width, s.height, s.thumb.map(_.toDTO), s.emoji, s.fileSize))
-}

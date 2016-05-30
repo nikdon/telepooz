@@ -2,7 +2,6 @@ package com.github.nikdon.telepooz.model
 
 import com.github.nikdon.telepooz._
 import com.github.nikdon.telepooz.tags.ChatId
-import com.github.nikdon.telepooz.{ToDTO, dto, model}
 import shapeless.tag._
 
 
@@ -23,28 +22,23 @@ case class Chat(id: Int @@ ChatId,
                 firstName: Option[String],
                 lastName: Option[String])
 
-object Chat {
-  implicit val chatToDTO: ToDTO[model.Chat, dto.Chat] =
-    ToDTO(c ⇒ dto.Chat(c.id, c.`type`.name, c.title, c.userName, c.firstName, c.lastName))
-}
-
 
 sealed trait ChatType extends Product with Serializable {
-  def name: String = this.productPrefix.toLowerCase
+  def name: String = this.productPrefix
 }
 
 object ChatType {
 
-  case object Private extends ChatType
-  case object Group extends ChatType
-  case object SuperGroup extends ChatType
-  case object Channel extends ChatType
+  case object Private extends ChatType {override val name: String = super.name}
+  case object Group extends ChatType {override val name: String = super.name}
+  case object SuperGroup extends ChatType {override val name: String = super.name}
+  case object Channel extends ChatType {override val name: String = super.name}
 
   def unsafe(str: String): ChatType = str match {
-    case "private"    ⇒ Private
-    case "group"      ⇒ Group
-    case "supergroup" ⇒ SuperGroup
-    case "channel"    ⇒ Channel
-    case _            ⇒ unexpected(str)
+    case Private.name    ⇒ Private
+    case Group.name      ⇒ Group
+    case SuperGroup.name ⇒ SuperGroup
+    case Channel.name    ⇒ Channel
+    case _               ⇒ unexpected(str)
   }
 }

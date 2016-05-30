@@ -1,7 +1,6 @@
 package com.github.nikdon.telepooz.model
 
-import com.github.nikdon.telepooz.ToDTO.syntax._
-import com.github.nikdon.telepooz.{ToDTO, dto, model}
+import com.github.nikdon.telepooz.model
 
 
 /**
@@ -12,8 +11,3 @@ import com.github.nikdon.telepooz.{ToDTO, dto, model}
   */
 case class UserProfilePhotos(totalCount: Int,
                              photos: Vector[Vector[model.PhotoSize]])
-
-object UserProfilePhotos {
-  implicit val toDTO: ToDTO[UserProfilePhotos, dto.UserProfilePhotos] =
-    ToDTO(u ⇒ dto.UserProfilePhotos(u.totalCount, u.photos.map(_.map(_.toDTO))))
-}

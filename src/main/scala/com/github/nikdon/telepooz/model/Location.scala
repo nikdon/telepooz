@@ -1,7 +1,5 @@
 package com.github.nikdon.telepooz.model
 
-import com.github.nikdon.telepooz.{ToDTO, dto}
-
 
 /**
   * This object represents a point on the map.
@@ -11,8 +9,3 @@ import com.github.nikdon.telepooz.{ToDTO, dto}
   */
 case class Location(longitude: Double,
                     latitude: Double)
-
-object Location {
-  implicit val toDTO: ToDTO[Location, dto.Location] =
-    ToDTO(l ⇒ dto.Location(l.longitude, l.latitude))
-}

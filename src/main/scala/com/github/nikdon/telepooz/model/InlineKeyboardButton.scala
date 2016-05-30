@@ -1,7 +1,5 @@
 package com.github.nikdon.telepooz.model
 
-import com.github.nikdon.telepooz.{ToDTO, dto}
-
 
 /**
   * This object represents one button of an inline keyboard. You must use exactly one of the optional fields.
@@ -18,8 +16,3 @@ case class InlineKeyboardButton(text: String,
                                 url: Option[String],
                                 callbackData: Option[String],
                                 switchInlineQuery: Option[String])
-
-object InlineKeyboardButton {
-  implicit val toDTO: ToDTO[InlineKeyboardButton, dto.InlineKeyboardButton] =
-    ToDTO(i ⇒ dto.InlineKeyboardButton(i.text, i.url, i.callbackData, i.switchInlineQuery))
-}

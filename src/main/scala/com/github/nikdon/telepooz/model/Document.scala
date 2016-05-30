@@ -1,8 +1,5 @@
 package com.github.nikdon.telepooz.model
 
-import com.github.nikdon.telepooz.ToDTO
-import com.github.nikdon.telepooz.ToDTO.syntax._
-import com.github.nikdon.telepooz.dto
 import com.github.nikdon.telepooz.tags.FileId
 import shapeless.tag.@@
 
@@ -21,8 +18,3 @@ case class Document(fileId: String @@ FileId,
                     fileName: Option[String],
                     mimeType: Option[String],
                     fileSize: Option[Int])
-
-object Document {
-  implicit val toDTO: ToDTO[Document, dto.Document] =
-    ToDTO(d ⇒ dto.Document(d.fileId, d.thumb.map(_.toDTO), d.fileName, d.mimeType, d.fileSize))
-}
