@@ -53,10 +53,10 @@ object SendMessage {
   *                             will receive a notification with no sound.
   * @param messageId            Unique message identifier
   */
-case class ForwardMessage[A : IsResourceId](chatId: A @@ ChatId,
-                                            fromChatId: A @@ ChatId,
-                                            disableNotification: Option[Boolean] = None,
-                                            messageId: Int @@ MessageId) extends Method[model.Message]
+case class ForwardMessage[A : IsResourceId, B : IsResourceId](chatId: A @@ ChatId,
+                                                              fromChatId: B @@ ChatId,
+                                                              disableNotification: Option[Boolean] = None,
+                                                              messageId: Int @@ MessageId) extends Method[model.Message]
 
 object ForwardMessage {
 }
