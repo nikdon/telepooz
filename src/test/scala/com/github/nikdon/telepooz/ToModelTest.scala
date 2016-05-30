@@ -1,8 +1,8 @@
-package com.github.nikdon
+package com.github.nikdon.telepooz
 
-import com.github.nikdon.ToModel.syntax._
-import com.github.nikdon.model.{ChatType, MessageEntityType}
-import com.github.nikdon.tags.syntax._
+import com.github.nikdon.telepooz.ToModel.syntax._
+import com.github.nikdon.telepooz.model.{ChatType, MessageEntityType}
+import com.github.nikdon.telepooz.tags.syntax._
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.Gen
 import org.scalatest.prop.GeneratorDrivenPropertyChecks

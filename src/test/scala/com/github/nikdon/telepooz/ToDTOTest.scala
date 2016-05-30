@@ -1,9 +1,9 @@
-package com.github.nikdon
+package com.github.nikdon.telepooz
 
-import com.github.nikdon.ToDTO.syntax._
-import com.github.nikdon.model.ChatType.{Channel, Group, Private, SuperGroup}
-import com.github.nikdon.model.MessageEntityType._
-import com.github.nikdon.tags.syntax._
+import com.github.nikdon.telepooz.ToDTO.syntax._
+import com.github.nikdon.telepooz.model.ChatType.{Channel, Group, Private, SuperGroup}
+import com.github.nikdon.telepooz.model.MessageEntityType._
+import com.github.nikdon.telepooz.tags.syntax._
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.Gen
 import org.scalatest.prop.GeneratorDrivenPropertyChecks

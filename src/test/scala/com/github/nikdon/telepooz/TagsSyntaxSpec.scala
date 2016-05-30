@@ -1,6 +1,6 @@
-package com.github.nikdon
+package com.github.nikdon.telepooz
 
-import com.github.nikdon.tags.{FileId, UserId}
+import com.github.nikdon.telepooz.tags.{FileId, UserId}
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
 import org.scalatest.{FlatSpec, Matchers}
