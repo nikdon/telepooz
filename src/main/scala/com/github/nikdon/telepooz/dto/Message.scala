@@ -46,7 +46,7 @@ import com.github.nikdon.telepooz.{ToModel, model}
   */
 case class Message(message_id: Int,
                    from: Option[User] = None,
-                   date: Integer,
+                   date: Int,
                    chat: Chat,
                    forward_from: Option[User] = None,
                    forward_from_chat: Option[Chat] = None,

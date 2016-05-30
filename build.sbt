@@ -26,7 +26,8 @@ lazy val baseSettings = Seq(
   scalacOptions in(Compile, test) := compilerOptions,
   resolvers ++= Seq(
     Resolver.sonatypeRepo("releases"),
-    Resolver.sonatypeRepo("snapshots")
+    Resolver.sonatypeRepo("snapshots"),
+    "jitpack" at "https://jitpack.io"
   )
 )
 
@@ -58,6 +59,8 @@ libraryDependencies ++= Seq(
   "de.heikoseeberger" %% "akka-http-circe" % akkaHttpJsonV,
 
   "com.chuusai" %% "shapeless" % shapelessVersion,
+
+  "com.github.nikdon" % "scalaz-interpreter" % "745a060",
 
   "org.scalatest"  %% "scalatest"  % scalaTestV  % "test",
   "org.scalacheck" %% "scalacheck" % scalaCheckV % "test",

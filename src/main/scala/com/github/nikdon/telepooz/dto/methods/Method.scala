@@ -1,7 +1,7 @@
 package com.github.nikdon.telepooz.dto.methods
 
 import com.github.nikdon.telepooz.dto.ReplyMarkup
-import com.github.nikdon.telepooz.raw.{CirceEncoders, RawMethod}
+import com.github.nikdon.telepooz.raw.{CirceEncoders, RawRequest}
 import com.github.nikdon.telepooz.{IsResourceId, ToRaw, dto}
 import io.circe.Encoder
 import io.circe.syntax._
@@ -16,8 +16,8 @@ sealed trait Method[Result] extends Product with Serializable {
   * Returns basic information about the bot in form of a User object.
   */
 case object GetMe extends Method[dto.User] {
-  implicit val getMeMethodToRaw: ToRaw[GetMe.type, RawMethod.GetMe.type] =
-    ToRaw(m => RawMethod.GetMe)
+  implicit val getMeMethodToRaw: ToRaw[GetMe.type, RawRequest.GetMe.type] =
+    ToRaw(m => RawRequest.GetMe)
 }
 
 /**
@@ -43,8 +43,8 @@ case class SendMessage[A : IsResourceId](chat_id: A,
                                          reply_markup: Option[ReplyMarkup] = None) extends Method[dto.Message]
 
 object SendMessage extends CirceEncoders {
-  implicit def sendMessageMethodToRaw[A : IsResourceId : Encoder]: ToRaw[SendMessage[A], RawMethod.SendMessage] =
-    ToRaw(m ⇒ RawMethod.SendMessage(m.asJson))
+  implicit def sendMessageMethodToRaw[A : IsResourceId : Encoder]: ToRaw[SendMessage[A], RawRequest.SendMessage] =
+    ToRaw(m ⇒ RawRequest.SendMessage(m.asJson))
 }
 
 /**
@@ -62,6 +62,6 @@ case class ForwardMessage[A : IsResourceId](chat_id: A,
                                             message_id: Int) extends Method[dto.Message]
 
 object ForwardMessage extends CirceEncoders {
-  implicit def forwardMessageToRaw[A : IsResourceId : Encoder]: ToRaw[ForwardMessage[A], RawMethod.ForwardMessage] =
-    ToRaw(m ⇒ RawMethod.ForwardMessage(m.asJson))
+  implicit def forwardMessageToRaw[A : IsResourceId : Encoder]: ToRaw[ForwardMessage[A], RawRequest.ForwardMessage] =
+    ToRaw(m ⇒ RawRequest.ForwardMessage(m.asJson))
 }
