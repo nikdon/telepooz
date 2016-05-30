@@ -63,5 +63,5 @@ trait CirceEncoders {
   implicit def voiceEncoder(implicit E: Encoder[String @@ FileId]) = Encoder[Voice]
 
   implicit def messageEncoder(implicit E: Encoder[Int @@ MessageId], EE: Encoder[Int @@ ChatId]) = Encoder[Message]
-
+  implicit def callbackQueryEncoder(implicit E: Encoder[String @@ QueryId]) = Encoder[CallbackQuery]
 }

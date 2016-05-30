@@ -56,5 +56,6 @@ trait CirceDecoders {
   implicit def voiceDecoder(implicit D: Decoder[String @@ FileId]) = Decoder[Voice]
 
   implicit def messageDecoder(implicit D: Decoder[Int @@ MessageId], DD: Decoder[Int @@ ChatId]) = Decoder[Message]
+  implicit def callbackQueryDecoder(implicit D: Decoder[String @@ QueryId]) = Decoder[CallbackQuery]
 
 }
