@@ -20,6 +20,3 @@ case class InlineQuery(id: String @@ QueryId,
                        location: Option[Location],
                        query: String,
                        offset: String)
-
-object InlineQuery {
-}

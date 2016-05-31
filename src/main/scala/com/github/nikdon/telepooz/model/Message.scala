@@ -10,9 +10,9 @@ import shapeless.tag.@@
   * This object represents a message.
   *
   * @param messageId             Unique message identifier
-  * @param from                  Sender, can be empty for messages sent to channels
   * @param date                  Date the message was sent in Unix time
   * @param chat                  Conversation the message belongs to
+  * @param from                  Sender, can be empty for messages sent to channels
   * @param forwardFrom           For forwarded messages, sender of the original message
   * @param forwardFromChat       For messages forwarded from a channel, information about the original channel
   * @param forwardDate           For forwarded messages, date the original message was sent in Unix time
@@ -33,7 +33,7 @@ import shapeless.tag.@@
   * @param newChatMember         A new member was added to the group, information about them (this member may be the bot itself)
   * @param leftChatMember        A member was removed from the group, information about them (this member may be the bot itself)
   * @param newChatTitle          A chat title was changed to this value
-  * @param newChatPhoto          A chat photo was change to this value
+  * @param newChatPhoto          A chat photo was changed to this value
   * @param deleteChatPhoto       Service message: the chat photo was deleted
   * @param groupChatCreated      Service message: the group has been created
   * @param superGroupChatCreated Service message: the supergroup has been created
@@ -44,9 +44,9 @@ import shapeless.tag.@@
   *                              will not contain further reply_to_message fields even if it is itself a reply.
   */
 case class Message(messageId: Int @@ MessageId,
-                   from: Option[User],
                    date: Date,
                    chat: Chat,
+                   from: Option[User] = None,
                    forwardFrom: Option[User] = None,
                    forwardFromChat: Option[Chat] = None,
                    forwardDate: Option[Date] = None,

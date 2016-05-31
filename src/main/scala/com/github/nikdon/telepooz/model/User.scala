@@ -14,5 +14,5 @@ import shapeless.tag.@@
   */
 case class User(id: Int @@ tags.UserId,
                 firstName: String,
-                lastName: Option[String],
-                userName: Option[String])
+                lastName: Option[String] = None,
+                userName: Option[String] = None)

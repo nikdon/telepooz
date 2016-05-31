@@ -17,12 +17,7 @@ class ContactTest extends FlatSpec
 
   behavior of "Contact"
 
-  val contactGen = for {
-    phoneNumber ← arbitrary[String]
-    firstName ← arbitrary[String]
-    lastName ← arbitrary[Option[String]]
-    userId ← arbitrary[Option[Int]]
-  } yield Contact(phoneNumber, firstName, lastName, userId.map(_.userId))
+  import ContactTest._
 
   it should "convert to a json and back to a model" in {
 
@@ -32,4 +27,13 @@ class ContactTest extends FlatSpec
     }
   }
 
+}
+
+object ContactTest extends tags.Syntax {
+  val contactGen = for {
+    phoneNumber ← arbitrary[String]
+    firstName ← arbitrary[String]
+    lastName ← arbitrary[Option[String]]
+    userId ← arbitrary[Option[Int]]
+  } yield Contact(phoneNumber, firstName, lastName, userId.map(_.userId))
 }

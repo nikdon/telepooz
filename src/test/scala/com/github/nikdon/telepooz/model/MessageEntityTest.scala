@@ -19,12 +19,7 @@ class MessageEntityTest extends FlatSpec
 
   behavior of "MessageEntity"
 
-  val messageEntityGen = for {
-    t ← Gen.oneOf(Mention, Hashtag, BotCommand, Url, Email, Bold, Italic, Code, Pre, TextLink)
-    offset ← arbitrary[Int]
-    length ← arbitrary[Int]
-    url ← arbitrary[Option[String]]
-  } yield MessageEntity(t, offset, length, url)
+  import MessageEntityTest._
 
   it should "convert to a json and back to a model" in {
 
@@ -34,4 +29,13 @@ class MessageEntityTest extends FlatSpec
     }
   }
 
+}
+
+object MessageEntityTest {
+  val messageEntityGen = for {
+    t ← Gen.oneOf(Mention, Hashtag, BotCommand, Url, Email, Bold, Italic, Code, Pre, TextLink)
+    offset ← arbitrary[Int]
+    length ← arbitrary[Int]
+    url ← arbitrary[Option[String]]
+  } yield MessageEntity(t, offset, length, url)
 }

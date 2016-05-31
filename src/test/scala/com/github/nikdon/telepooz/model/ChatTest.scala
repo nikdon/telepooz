@@ -16,7 +16,17 @@ class ChatTest extends FlatSpec
                        with CirceDecoders {
 
   behavior of "Chat"
+  import ChatTest._
 
+  it should "convert to a json and back to a model" in {
+    forAll(chatGen) { chat ⇒
+      val json = chat.asJson.noSpaces
+      io.circe.parser.decode[Chat](json) foreach (res ⇒ res shouldEqual chat)
+    }
+  }
+}
+
+object ChatTest extends tags.Syntax {
   val chatGen = for {
     id ← arbitrary[Int].map(_.chatId)
     t ← Gen.oneOf(ChatType.Group, ChatType.Channel, ChatType.Private, ChatType.SuperGroup)
@@ -25,12 +35,4 @@ class ChatTest extends FlatSpec
     firstName ← arbitrary[Option[String]]
     lastName ← arbitrary[Option[String]]
   } yield Chat(id, t, title, userName, firstName, lastName)
-
-  it should "convert to a json and back to a model" in {
-
-    forAll(chatGen) { chat ⇒
-      val json = chat.asJson.noSpaces
-      io.circe.parser.decode[Chat](json) foreach (res ⇒ res shouldEqual chat)
-    }
-  }
 }

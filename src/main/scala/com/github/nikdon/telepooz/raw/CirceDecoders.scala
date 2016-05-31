@@ -5,6 +5,7 @@ import java.util.Date
 
 import com.github.nikdon.telepooz.IsResourceId
 import com.github.nikdon.telepooz.model._
+import com.github.nikdon.telepooz.model.inline.{ChosenInlineQuery, InlineQuery}
 import com.github.nikdon.telepooz.tags._
 import com.github.nikdon.telepooz.tags.syntax._
 import com.github.nikdon.telepooz.utils._
@@ -19,11 +20,12 @@ trait CirceDecoders {
   implicit def fileIdTagDecoder[A : IsResourceId : Decoder]: Decoder[A @@ FileId] = Decoder[A].map(a ⇒ a.fileId)
   implicit def foursquareIdTagDecoder[A : IsResourceId : Decoder]: Decoder[A @@ FoursquareId] = Decoder[A].map(a ⇒ a.foursquareId)
   implicit def messageIdTagDecoder[A : IsResourceId : Decoder]: Decoder[A @@ MessageId] = Decoder[A].map(a ⇒ a.messageId)
+  implicit def updateIdTagDecoder[A : IsResourceId : Decoder]: Decoder[A @@ UpdateId] = Decoder[A].map(a ⇒ a.updateId)
   implicit def userIdTagDecoder[A : IsResourceId : Decoder]: Decoder[A @@ UserId] = Decoder[A].map(a ⇒ a.userId)
   implicit def queryIdTagDecoder[A : IsResourceId : Decoder]: Decoder[A @@ QueryId] = Decoder[A].map(a ⇒ a.queryId)
 
-  implicit val dateDecoder: Decoder[Date] = Decoder[Int].map(d ⇒ new Date(d.toLong))
-  implicit val durationDecoder: Decoder[Duration] = Decoder[Int].map(d ⇒ Duration.ofSeconds(d.toLong))
+  private implicit val dateDecoder: Decoder[Date] = Decoder[Long].map(d ⇒ new Date(d))                          // TODO Check
+  private implicit val durationDecoder: Decoder[Duration] = Decoder[Int].map(d ⇒ Duration.ofSeconds(d.toLong))  // TODO Check
 
   implicit def audioDecoder(implicit D: Decoder[String @@ FileId]) = Decoder[Audio]
 
@@ -57,5 +59,12 @@ trait CirceDecoders {
 
   implicit def messageDecoder(implicit D: Decoder[Int @@ MessageId], DD: Decoder[Int @@ ChatId]) = Decoder[Message]
   implicit def callbackQueryDecoder(implicit D: Decoder[String @@ QueryId]) = Decoder[CallbackQuery]
+
+  implicit def inlineQueryDecoder(implicit D: Decoder[String @@ QueryId]) = Decoder[InlineQuery]
+  implicit val chosenInlineQuery = Decoder[ChosenInlineQuery]
+
+  implicit def updateDecoder(implicit D: Decoder[Int @@ UpdateId]) = Decoder[Update]
+
+  implicit def responseDecoder[T](implicit D: Decoder[T]) = Decoder[Response[T]]
 
 }
