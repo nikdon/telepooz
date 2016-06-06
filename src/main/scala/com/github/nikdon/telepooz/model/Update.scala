@@ -19,8 +19,8 @@ import shapeless.tag.@@
   * @param callback_query       New incoming callback query
   */
 case class Update(update_id: Int @@ UpdateId,
-                  message: Message,
-                  edited_message: Message,
-                  inline_query: InlineQuery,
-                  chosen_inline_result: ChosenInlineQuery,
-                  callback_query: CallbackQuery)
+                  message: Option[Message] = None,
+                  edited_message: Option[Message] = None,
+                  inline_query: Option[InlineQuery] = None,
+                  chosen_inline_result: Option[ChosenInlineQuery] = None,
+                  callback_query: Option[CallbackQuery] = None)

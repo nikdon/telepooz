@@ -7,12 +7,12 @@ import shapeless.tag.@@
 /**
   * This object represents one size of a photo or a file / sticker thumbnail.
   *
-  * @param fileId   Unique identifier for this file
-  * @param width    Photo width
-  * @param height   Photo height
-  * @param fileSize File size
+  * @param file_id    Unique identifier for this file
+  * @param width      Photo width
+  * @param height     Photo height
+  * @param file_size  File size
   */
-case class PhotoSize(fileId: String @@ FileId,
+case class PhotoSize(file_id: String @@ FileId,
                      width: Int,
                      height: Int,
-                     fileSize: Option[Int])
+                     file_size: Option[Int])

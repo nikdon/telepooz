@@ -7,14 +7,14 @@ import shapeless.tag.@@
 /**
   * This object represents a general file (as opposed to [[Photo]], [[VoiceMessage]] and [[AudioFile]]).
   *
-  * @param fileId   Unique file identifier
-  * @param thumb    Document thumbnail as defined by sender
-  * @param fileName Original filename as defined by sender
-  * @param mimeType MIME type of the file as defined by sender
-  * @param fileSize File size
+  * @param file_id    Unique file identifier
+  * @param thumb      Document thumbnail as defined by sender
+  * @param file_name  Original filename as defined by sender
+  * @param mime_type  MIME type of the file as defined by sender
+  * @param file_size  File size
   */
-case class Document(fileId: String @@ FileId,
+case class Document(file_id: String @@ FileId,
                     thumb: Option[PhotoSize],
-                    fileName: Option[String],
-                    mimeType: Option[String],
-                    fileSize: Option[Int])
+                    file_name: Option[String],
+                    mime_type: Option[String],
+                    file_size: Option[Int])

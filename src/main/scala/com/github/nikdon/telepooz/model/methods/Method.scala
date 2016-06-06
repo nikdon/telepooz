@@ -15,38 +15,38 @@ case object GetMe
 /**
   * Use this method to send text messages. On success, the sent Message is returned.
   *
-  * @param chatId                 Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-  * @param text                   Text of the message to be sent
-  * @param parseMode              Send Markdown or HTML, if you want Telegram apps to show bold, italic,
-  *                               fixed-width text or inline URLs in your bot's message.
-  * @param disableWebPagePreview  Disables link previews for links in this message
-  * @param disableNotification    Sends the message silently. iOS users will not receive a notification,
-  *                               Android users will receive a notification with no sound.
-  * @param replyToMessageId       If the message is a reply, ID of the original message
-  * @param replyMarkup            Additional interface options. A JSON-serialized object for an inline keyboard,
-  *                               custom reply keyboard, instructions to hide reply keyboard or to force a reply from the user.
+  * @param chat_id                    Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+  * @param text                       Text of the message to be sent
+  * @param parse_mode                 Send Markdown or HTML, if you want Telegram apps to show bold, italic,
+  *                                   fixed-width text or inline URLs in your bot's message.
+  * @param disable_web_page_preview   Disables link previews for links in this message
+  * @param disable_notification       Sends the message silently. iOS users will not receive a notification,
+  *                                   Android users will receive a notification with no sound.
+  * @param reply_to_message_id        If the message is a reply, ID of the original message
+  * @param reply_markup               Additional interface options. A JSON-serialized object for an inline keyboard,
+  *                                   custom reply keyboard, instructions to hide reply keyboard or to force a reply from the user.
   */
-case class SendMessage[A : IsResourceId](chatId: A @@ ChatId,
+case class SendMessage[A : IsResourceId](chat_id: A @@ ChatId,
                                          text: String,
-                                         parseMode: Option[ParseMode] = None,
-                                         disableWebPagePreview: Option[Boolean] = None,
-                                         disableNotification: Option[Boolean] = None,
-                                         replyToMessageId: Option[Int @@ MessageId] = None,
-                                         replyMarkup: Option[ReplyMarkup] = None)
+                                         parse_mode: Option[ParseMode] = None,
+                                         disable_web_page_preview: Option[Boolean] = None,
+                                         disable_notification: Option[Boolean] = None,
+                                         reply_to_message_id: Option[Int @@ MessageId] = None,
+                                         reply_markup: Option[ReplyMarkup] = None)
 
 /**
   * Use this method to forward messages of any kind. On success, the sent Message is returned.
   *
-  * @param chatId               Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-  * @param fromChatId           Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)
-  * @param messageId            Unique message identifier
-  * @param disableNotification  Sends the message silently. iOS users will not receive a notification, Android users
+  * @param chat_id              Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+  * @param from_chat_id         Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)
+  * @param message_id           Unique message identifier
+  * @param disable_notification Sends the message silently. iOS users will not receive a notification, Android users
   *                             will receive a notification with no sound.
   */
-case class ForwardMessage[A : IsResourceId, B : IsResourceId](chatId: A @@ ChatId,
-                                                              fromChatId: B @@ ChatId,
-                                                              messageId: Int @@ MessageId,
-                                                              disableNotification: Option[Boolean] = None)
+case class ForwardMessage[A : IsResourceId, B : IsResourceId](chat_id: A @@ ChatId,
+                                                              from_chat_id: B @@ ChatId,
+                                                              message_id: Int @@ MessageId,
+                                                              disable_notification: Option[Boolean] = None)
 
 
 /**

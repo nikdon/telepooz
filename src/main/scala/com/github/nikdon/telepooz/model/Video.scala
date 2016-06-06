@@ -11,18 +11,18 @@ import shapeless.tag.@@
 /**
   * This object represents a video file.
   *
-  * @param fileId   Unique identifier for this file
-  * @param width    Video width as defined by sender
-  * @param height   Video height as defined by sender
-  * @param duration Duration of the video in seconds as defined by sender
-  * @param thumb    Video thumbnail
-  * @param mimeType Mime type of a file as defined by sender
-  * @param fileSize File size
+  * @param file_id    Unique identifier for this file
+  * @param width      Video width as defined by sender
+  * @param height     Video height as defined by sender
+  * @param duration   Duration of the video in seconds as defined by sender
+  * @param thumb      Video thumbnail
+  * @param mime_type  Mime type of a file as defined by sender
+  * @param file_size  File size
   */
-case class Video(fileId: String @@ FileId,
+case class Video(file_id: String @@ FileId,
                  width: Int,
                  height: Int,
                  duration: Duration,
                  thumb: Option[model.PhotoSize],
-                 mimeType: Option[String],
-                 fileSize: Option[Int])
+                 mime_type: Option[String],
+                 file_size: Option[Int])

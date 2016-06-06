@@ -8,12 +8,12 @@ import shapeless.tag.@@
 /**
   * This object represents a venue.
   *
-  * @param location     Venue location
-  * @param title        Name of the venue
-  * @param address      Address of the venue
-  * @param foursquareId Foursquare identifier of the venue
+  * @param location       Venue location
+  * @param title          Name of the venue
+  * @param address        Address of the venue
+  * @param foursquare_id  Foursquare identifier of the venue
   */
 case class Venue(location: model.Location,
                  title: String,
                  address: String,
-                 foursquareId: Option[String @@ FoursquareId])
+                 foursquare_id: Option[String @@ FoursquareId])

@@ -3,9 +3,9 @@ package com.github.nikdon.telepooz.model.methods
 import com.github.nikdon.telepooz.raw.{CirceDecoders, CirceEncoders}
 import com.github.nikdon.telepooz.tags
 import io.circe.Json
+import io.circe.syntax._
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
 import org.scalatest.{FlatSpec, Matchers}
-import io.circe.syntax._
 
 
 class GetMeTest extends FlatSpec

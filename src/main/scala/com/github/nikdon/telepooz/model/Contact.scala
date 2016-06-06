@@ -7,12 +7,12 @@ import shapeless.tag.@@
 /**
   * This object represents a phone contact.
   *
-  * @param phoneNumber  Contact's phone number
-  * @param firstName    Contact's first name
-  * @param lastName     Contact's last name
-  * @param userId       Contact's user identifier in Telegram
+  * @param phone_number  Contact's phone number
+  * @param first_name    Contact's first name
+  * @param last_name     Contact's last name
+  * @param user_id       Contact's user identifier in Telegram
   */
-case class Contact(phoneNumber: String,
-                   firstName: String,
-                   lastName: Option[String],
-                   userId: Option[Int @@ UserId])
+case class Contact(phone_number: String,
+                   first_name: String,
+                   last_name: Option[String],
+                   user_id: Option[Int @@ UserId])

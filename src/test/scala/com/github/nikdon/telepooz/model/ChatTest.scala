@@ -3,10 +3,10 @@ package com.github.nikdon.telepooz.model
 import com.github.nikdon.telepooz.raw.{CirceDecoders, CirceEncoders}
 import com.github.nikdon.telepooz.tags
 import io.circe.syntax._
-import org.scalatest.prop.GeneratorDrivenPropertyChecks
-import org.scalatest.{FlatSpec, Matchers}
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.Gen
+import org.scalatest.prop.GeneratorDrivenPropertyChecks
+import org.scalatest.{FlatSpec, Matchers}
 
 class ChatTest extends FlatSpec
                        with Matchers

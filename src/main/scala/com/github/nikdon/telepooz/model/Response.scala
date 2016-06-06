@@ -11,10 +11,10 @@ package com.github.nikdon.telepooz.model
   * @param ok           Status of the request
   * @param result       The result of the query
   * @param description  Explanation of a possible error
-  * @param errorCode    The error code
+  * @param error_code   The error code
   * @tparam T           A type of the expected model
   */
 case class Response[T](ok: Boolean,
                        result: Option[T],
                        description: Option[String] = None,
-                       errorCode: Option[Int] = None)
+                       error_code: Option[Int] = None)
