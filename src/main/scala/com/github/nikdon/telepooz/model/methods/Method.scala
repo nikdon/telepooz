@@ -2,7 +2,7 @@ package com.github.nikdon.telepooz.model.methods
 
 import com.github.nikdon.telepooz.IsResourceId
 import com.github.nikdon.telepooz.model.{ParseMode, ReplyMarkup}
-import com.github.nikdon.telepooz.tags.{ChatId, MessageId}
+import com.github.nikdon.telepooz.tags.{ChatId, MessageId, UpdateId}
 import shapeless.tag.@@
 
 
@@ -61,6 +61,6 @@ case class ForwardMessage[A : IsResourceId, B : IsResourceId](chat_id: A @@ Chat
   * @param limit    Limits the number of updates to be retrieved. Values between 1—100 are accepted. Defaults to 100.
   * @param timeout  Timeout in seconds for long polling. Defaults to 0, i.e. usual short polling
   */
-case class GetUpdates(offset: Option[Int] = None,
+case class GetUpdates(offset: Option[Int @@ UpdateId] = None,
                       limit: Option[Int] = Some(100),
                       timeout: Option[Int] = Some(0))

@@ -18,11 +18,11 @@ import shapeless.tag._
 trait CirceEncoders {
 
   // Types
-
   implicit def chatIdTagEncoder[A : IsResourceId : Encoder]: Encoder[A @@ ChatId] = Encoder[A].contramap[A @@ ChatId](identity)
   implicit def fileIdTagEncoder[A : IsResourceId : Encoder]: Encoder[A @@ FileId] = Encoder[A].contramap[A @@ FileId](identity)
   implicit def foursquareIdTagEncoder[A : IsResourceId : Encoder]: Encoder[A @@ FoursquareId] = Encoder[A].contramap[A @@ FoursquareId](identity)
   implicit def messageIdTagEncoder[A : IsResourceId : Encoder]: Encoder[A @@ MessageId] = Encoder[A].contramap[A @@ MessageId](identity)
+  implicit def updateIdTagEncoder[A : IsResourceId : Encoder]: Encoder[A @@ UpdateId] = Encoder[A].contramap[A @@ UpdateId](identity)
   implicit def userIdTagEncoder[A : IsResourceId : Encoder]: Encoder[A @@ UserId] = Encoder[A].contramap[A @@ UserId](identity)
   implicit def queryIdTagEncoder[A : IsResourceId : Encoder]: Encoder[A @@ QueryId] = Encoder[A].contramap[A @@ QueryId](identity)
 
@@ -67,6 +67,6 @@ trait CirceEncoders {
   implicit val getMeJsonEncoder: Encoder[GetMe.type] = Encoder.instance(_ ⇒ io.circe.Json.Null)
   implicit def sendMessageJsonEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Int @@ MessageId]): Encoder[SendMessage[A]] = deriveEncoder[SendMessage[A]]
   implicit def forwardMessageJsonEncoder[A: IsResourceId, B: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[B @@ ChatId], EEE: Encoder[Int @@ MessageId]): Encoder[ForwardMessage[A, B]] = deriveEncoder[ForwardMessage[A, B]]
-  implicit val getUpdatesJsonEncoder = deriveEncoder[GetUpdates]
+  implicit def getUpdatesJsonEncoder(implicit E: Encoder[Int @@ UpdateId]): Encoder[GetUpdates] = deriveEncoder[GetUpdates]
 
 }
