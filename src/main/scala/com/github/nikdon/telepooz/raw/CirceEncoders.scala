@@ -63,10 +63,15 @@ trait CirceEncoders {
   implicit def messageEncoder(implicit E: Encoder[Int @@ MessageId], EE: Encoder[Int @@ ChatId]): Encoder[Message] = deriveEncoder[Message]
   implicit def callbackQueryEncoder(implicit E: Encoder[String @@ QueryId]): Encoder[CallbackQuery] = deriveEncoder[CallbackQuery]
 
+
   // Methods
   implicit val getMeJsonEncoder: Encoder[GetMe.type] = Encoder.instance(_ ⇒ io.circe.Json.Null)
-  implicit def sendMessageJsonEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Int @@ MessageId]): Encoder[SendMessage[A]] = deriveEncoder[SendMessage[A]]
-  implicit def forwardMessageJsonEncoder[A: IsResourceId, B: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[B @@ ChatId], EEE: Encoder[Int @@ MessageId]): Encoder[ForwardMessage[A, B]] = deriveEncoder[ForwardMessage[A, B]]
+  implicit def sendMessageJsonEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
+                                                       EE: Encoder[Int @@ MessageId]): Encoder[SendMessage[A]] = deriveEncoder[SendMessage[A]]
+  implicit def forwardMessageJsonEncoder[A: IsResourceId, B: IsResourceId](implicit E: Encoder[A @@ ChatId],
+                                                                           EE: Encoder[B @@ ChatId],
+                                                                           EEE: Encoder[Int @@ MessageId])
+  : Encoder[ForwardMessage[A, B]] = deriveEncoder[ForwardMessage[A, B]]
   implicit def getUpdatesJsonEncoder(implicit E: Encoder[Int @@ UpdateId]): Encoder[GetUpdates] = deriveEncoder[GetUpdates]
 
 }

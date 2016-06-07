@@ -2,7 +2,7 @@ package com.github.nikdon.telepooz
 
 import com.github.nikdon.telepooz.model.methods
 import com.github.nikdon.telepooz.raw.{CirceEncoders, RawRequest}
-import com.github.nikdon.telepooz.tags.{ChatId, MessageId}
+import com.github.nikdon.telepooz.tags.{ChatId, MessageId, UpdateId}
 import io.circe.Encoder
 import io.circe.syntax._
 import shapeless.tag.@@
@@ -38,6 +38,6 @@ object ToRawRequest extends CirceEncoders {
   : ToRawRequest[methods.ForwardMessage[A, B], RawRequest.ForwardMessage] =
     ToRawRequest(m ⇒ RawRequest.ForwardMessage(m.asJson))
 
-  implicit val getUpdatesToRawRequest: ToRawRequest[methods.GetUpdates, RawRequest.GetUpdates] =
+  implicit def getUpdatesToRawRequest(implicit E: Encoder[Int @@ UpdateId]): ToRawRequest[methods.GetUpdates, RawRequest.GetUpdates] =
     ToRawRequest(m ⇒ RawRequest.GetUpdates(m.asJson))
 }
