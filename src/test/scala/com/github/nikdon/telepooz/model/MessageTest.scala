@@ -52,7 +52,7 @@ object MessageTest extends tags.Syntax {
     audio ← arbitrary[Option[Int]].map(_ ⇒ AudioTest.auidoGen.sample)
     document ← arbitrary[Option[Boolean]].map(_ ⇒ DocumentTest.documentGen.sample)
     photo ← arbitrary[Option[Boolean]].flatMap(_ ⇒ Gen.nonEmptyListOf(PhotoSizeTest.photoSizeGen).sample.map(_.toVector))
-    // sticker: Option[Sticker] = None, TODO
+    sticker ← arbitrary[Option[Boolean]].map(_ ⇒ StickerTest.stickerGen.sample)
     video ← arbitrary[Option[Boolean]].map(_ ⇒ VideoTest.videoGen.sample)
     voice ← arbitrary[Option[Boolean]].map(_ ⇒ VoiceTest.voiceGen.sample)
     caption ← arbitrary[Option[String]]
@@ -83,7 +83,7 @@ object MessageTest extends tags.Syntax {
                   audio,
                   document,
                   photo,
-                  None,
+                  sticker,
                   video,
                   voice,
                   caption,
