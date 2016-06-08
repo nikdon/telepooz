@@ -22,7 +22,7 @@ class InlineKeyboardMarkupTest extends FlatSpec
   it should "convert to a json and back to a model" in {
     forAll(inlineKeyboardMarkupGen) { inlineKeyboardMarkup ⇒
       val json = inlineKeyboardMarkup.asJson.noSpaces
-      io.circe.parser.decode[ForceReply](json) foreach (res ⇒ res shouldEqual inlineKeyboardMarkup)
+      io.circe.parser.decode[InlineKeyboardMarkup](json) foreach (res ⇒ res shouldEqual inlineKeyboardMarkup)
     }
   }
 }

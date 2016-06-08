@@ -11,11 +11,11 @@ import org.scalatest.{FlatSpec, Matchers}
 
 
 class ReplyKeyboardMarkupTest extends FlatSpec
-                                       with Matchers
-                                       with GeneratorDrivenPropertyChecks
-                                       with tags.Syntax
-                                       with CirceEncoders
-                                       with CirceDecoders {
+                                      with Matchers
+                                      with GeneratorDrivenPropertyChecks
+                                      with tags.Syntax
+                                      with CirceEncoders
+                                      with CirceDecoders {
   behavior of "ReplyKeyboardMarkup"
 
   import ReplyKeyboardMarkupTest._
@@ -23,7 +23,7 @@ class ReplyKeyboardMarkupTest extends FlatSpec
   it should "convert to a json and back to a model" in {
     forAll(replyKeyboardMarkupGen) { replyKeyboardMarkup ⇒
       val json = replyKeyboardMarkup.asJson.noSpaces
-      io.circe.parser.decode[ForceReply](json) foreach (res ⇒ res shouldEqual replyKeyboardMarkup)
+      io.circe.parser.decode[ReplyKeyboardMarkup](json) foreach (res ⇒ res shouldEqual replyKeyboardMarkup)
     }
   }
 }

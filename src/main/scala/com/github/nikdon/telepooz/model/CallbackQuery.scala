@@ -19,7 +19,7 @@ import shapeless.tag.@@
   *                           Be aware that a bad client can send arbitrary data in this field
   */
 case class CallbackQuery(id: String @@ QueryId,
-                         from: Option[User],
-                         message: Option[Message],
-                         inline_message_id: Option[String @@ QueryId],
+                         from: Option[User] = None,
+                         message: Option[Message] = None,
+                         inline_message_id: Option[String @@ QueryId] = None,
                          data: String)
