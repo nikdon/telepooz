@@ -23,7 +23,7 @@ class DocumentTest extends FlatSpec
 
     forAll(documentGen) { document ⇒
       val json = document.asJson.noSpaces
-      io.circe.parser.decode[PhotoSize](json) foreach (res ⇒ res shouldEqual document)
+      io.circe.parser.decode[Document](json) foreach (res ⇒ res shouldEqual document)
     }
   }
 }
