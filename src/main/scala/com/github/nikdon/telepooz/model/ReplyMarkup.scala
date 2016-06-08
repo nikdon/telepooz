@@ -31,8 +31,11 @@ case class ReplyKeyboardMarkup(keyboard: Vector[Vector[KeyboardButton]],
   * by a bot. An exception is made for one-time keyboards that are hidden immediately after the user presses a
   * button (see ReplyKeyboardMarkup).
   *
-  * @param hide_keyboard
-  * @param selective
+  * @param hide_keyboard  Requests clients to hide the custom keyboard
+  * @param selective      Use this parameter if you want to hide keyboard for specific users only.
+  *                       Targets:
+  *                         1) users that are @mentioned in the text of the Message object;
+  *                         2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.
   */
 case class ReplyKeyboardHide(hide_keyboard: Boolean, selective: Option[Boolean]) extends ReplyMarkup
 
