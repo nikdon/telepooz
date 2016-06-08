@@ -10,6 +10,7 @@ trait IsResourceId[A]
 
 object IsResourceId {
   implicit val intIsResourceId = new IsResourceId[Int] {}
+  implicit val longIsResourceId = new IsResourceId[Long] {}
   implicit val stringIsResourceId = new IsResourceId[String] {}
 }
 

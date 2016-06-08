@@ -30,7 +30,7 @@ trait CirceDecoders {
   implicit def audioDecoder(implicit D: Decoder[String @@ FileId]) = Decoder[Audio]
 
   implicit def chatTypeDecoder: Decoder[ChatType] = Decoder[String].map(a ⇒ ChatType.unsafe( pascalize(a) ))
-  implicit def chatDecoder(implicit D: Decoder[Int @@ ChatId]) = Decoder[Chat]
+  implicit def chatDecoder(implicit D: Decoder[Long @@ ChatId]) = Decoder[Chat]
 
   implicit def contactDecoder(implicit D: Decoder[Int @@ UserId]) = Decoder[Contact]
   implicit def documentDecoder(implicit D: Decoder[String @@ FileId]) = Decoder[Document]
@@ -57,7 +57,7 @@ trait CirceDecoders {
   implicit def videoDecoder(implicit D: Decoder[String @@ FileId]) = Decoder[Video]
   implicit def voiceDecoder(implicit D: Decoder[String @@ FileId]) = Decoder[Voice]
 
-  implicit def messageDecoder(implicit D: Decoder[Int @@ MessageId], DD: Decoder[Int @@ ChatId]) = Decoder[Message]
+  implicit def messageDecoder(implicit D: Decoder[Int @@ MessageId], DD: Decoder[Long @@ ChatId]) = Decoder[Message]
   implicit def callbackQueryDecoder(implicit D: Decoder[String @@ QueryId]) = Decoder[CallbackQuery]
 
   implicit def inlineQueryDecoder(implicit D: Decoder[String @@ QueryId]) = Decoder[InlineQuery]

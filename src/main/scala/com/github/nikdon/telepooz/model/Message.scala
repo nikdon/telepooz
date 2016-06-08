@@ -71,6 +71,6 @@ case class Message(message_id: Int @@ MessageId,
                    group_chat_created: Option[Boolean] = None,
                    supergroup_chat_created: Option[Boolean] = None,
                    channel_chat_created: Option[Boolean] = None,
-                   migrate_to_chat_id: Option[Int @@ ChatId] = None,
-                   migrate_from_chat_id: Option[Int @@ ChatId] = None,
+                   migrate_to_chat_id: Option[Long @@ ChatId] = None,
+                   migrate_from_chat_id: Option[Long @@ ChatId] = None,
                    pinned_message: Option[Message] = None)

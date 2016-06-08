@@ -28,7 +28,7 @@ class ChatTest extends FlatSpec
 
 object ChatTest extends tags.Syntax {
   val chatGen = for {
-    id ← arbitrary[Int].map(_.chatId)
+    id ← arbitrary[Long].map(_.chatId)
     t ← Gen.oneOf(ChatType.Group, ChatType.Channel, ChatType.Private, ChatType.SuperGroup)
     title ← arbitrary[Option[String]]
     userName ← arbitrary[Option[String]]

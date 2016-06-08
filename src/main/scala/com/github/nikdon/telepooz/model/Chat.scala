@@ -15,7 +15,7 @@ import shapeless.tag._
   * @param first_name First name of the other party in a private chat
   * @param last_name  Last name of the other party in a private chat
   */
-case class Chat(id: Int @@ ChatId,
+case class Chat(id: Long @@ ChatId,
                 `type`: ChatType,
                 title: Option[String] = None,
                 username: Option[String] = None,

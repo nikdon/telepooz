@@ -32,7 +32,7 @@ trait CirceEncoders {
   implicit def audioEncoder(implicit E: Encoder[String @@ FileId]): Encoder[Audio] = deriveEncoder[Audio]
 
   implicit val chatTypeEncoder: Encoder[ChatType] = Encoder[String].contramap[ChatType](_.productPrefix)
-  implicit def chatEncoder(implicit E: Encoder[Int @@ ChatId]): Encoder[Chat] = deriveEncoder[Chat]
+  implicit def chatEncoder(implicit E: Encoder[Long @@ ChatId]): Encoder[Chat] = deriveEncoder[Chat]
 
   implicit def contactEncoder(implicit E: Encoder[Int @@ UserId]): Encoder[Contact] = deriveEncoder[Contact]
   implicit def documentEncoder(implicit E: Encoder[String @@ FileId]): Encoder[Document] = deriveEncoder[Document]
@@ -60,7 +60,7 @@ trait CirceEncoders {
   implicit def videoEncoder(implicit E: Encoder[String @@ FileId]): Encoder[Video] = deriveEncoder[Video]
   implicit def voiceEncoder(implicit E: Encoder[String @@ FileId]): Encoder[Voice] = deriveEncoder[Voice]
 
-  implicit def messageEncoder(implicit E: Encoder[Int @@ MessageId], EE: Encoder[Int @@ ChatId]): Encoder[Message] = deriveEncoder[Message]
+  implicit def messageEncoder(implicit E: Encoder[Int @@ MessageId], EE: Encoder[Long @@ ChatId]): Encoder[Message] = deriveEncoder[Message]
   implicit def callbackQueryEncoder(implicit E: Encoder[String @@ QueryId]): Encoder[CallbackQuery] = deriveEncoder[CallbackQuery]
 
 

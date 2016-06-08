@@ -68,8 +68,8 @@ object MessageTest extends tags.Syntax {
     groupChatCreated ← arbitrary[Option[Boolean]]
     superGroupChatCreated ← arbitrary[Option[Boolean]]
     channelChatCreated ← arbitrary[Option[Boolean]]
-    migrateToChatId ← arbitrary[Option[Int]].map(_.map(_.chatId))
-    migrateFromChatId ← arbitrary[Option[Int]].map(_.map(_.chatId))
+    migrateToChatId ← arbitrary[Option[Long]].map(_.map(_.chatId))
+    migrateFromChatId ← arbitrary[Option[Long]].map(_.map(_.chatId))
     pinnedMessage ← arbitrary[Option[Int]].map(_ ⇒ simpleMessageGen.sample)
   } yield Message(messageId,
                   date,
