@@ -71,6 +71,7 @@ trait CirceEncoders {
   implicit def inlineQueryEncoder(implicit E: Encoder[String @@ QueryId]): Encoder[inline.InlineQuery] = deriveEncoder[inline.InlineQuery]
   implicit def choosenInlineQueryEncoder(implicit E: Encoder[String @@ ResultId],
                                          EE: Encoder[String @@ MessageId]): Encoder[inline.ChosenInlineQuery] = deriveEncoder[inline.ChosenInlineQuery]
+  implicit val inputContactMessageContentEncoder: Encoder[inline.InputContactMessageContent] = deriveEncoder[inline.InputContactMessageContent]
 
   // Methods
   implicit val getMeJsonEncoder: Encoder[GetMe.type] = Encoder.instance(_ ⇒ io.circe.Json.Null)
