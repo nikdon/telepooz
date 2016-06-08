@@ -75,6 +75,7 @@ trait CirceEncoders {
   implicit def inputVenueMessageContent(implicit E: Encoder[String @@ FoursquareId]): Encoder[inline.InputVenueMessageContent] =
     deriveEncoder[inline.InputVenueMessageContent]
   implicit val inputLocationMessageContentEncoder: Encoder[inline.InputLocationMessageContent] = deriveEncoder[inline.InputLocationMessageContent]
+  implicit val inputTextMessageContentEncoder: Encoder[inline.InputTextMessageContent] = deriveEncoder[inline.InputTextMessageContent]
 
   // Methods
   implicit val getMeJsonEncoder: Encoder[GetMe.type] = Encoder.instance(_ ⇒ io.circe.Json.Null)
@@ -85,5 +86,4 @@ trait CirceEncoders {
                                                                            EEE: Encoder[Int @@ MessageId])
   : Encoder[ForwardMessage[A, B]] = deriveEncoder[ForwardMessage[A, B]]
   implicit def getUpdatesJsonEncoder(implicit E: Encoder[Int @@ UpdateId]): Encoder[GetUpdates] = deriveEncoder[GetUpdates]
-
 }

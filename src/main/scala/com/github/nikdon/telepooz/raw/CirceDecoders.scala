@@ -5,7 +5,7 @@ import java.util.Date
 
 import com.github.nikdon.telepooz.IsResourceId
 import com.github.nikdon.telepooz.model._
-import com.github.nikdon.telepooz.model.inline.{ChosenInlineQuery, InlineQuery, InputContactMessageContent, InputLocationMessageContent, InputVenueMessageContent}
+import com.github.nikdon.telepooz.model.inline._
 import com.github.nikdon.telepooz.tags._
 import com.github.nikdon.telepooz.tags.syntax._
 import com.github.nikdon.telepooz.utils._
@@ -64,13 +64,15 @@ trait CirceDecoders {
   implicit def messageDecoder(implicit D: Decoder[Int @@ MessageId], DD: Decoder[Long @@ ChatId]) = Decoder[Message]
   implicit def callbackQueryDecoder(implicit D: Decoder[String @@ QueryId]) = Decoder[CallbackQuery]
 
+  // Inline
   implicit def inlineQueryDecoder(implicit D: Decoder[String @@ QueryId]) = Decoder[InlineQuery]
   implicit def chosenInlineQueryDecoder(implicit D: Decoder[String @@ ResultId], DD: Decoder[String @@ MessageId]) = Decoder[ChosenInlineQuery]
   implicit val inputContactMessageContent = Decoder[InputContactMessageContent]
   implicit def inputVenueMessageContentDecoder(implicit D: Decoder[String @@ FoursquareId]) = Decoder[InputVenueMessageContent]
   implicit val inputLocationMessageContentDecoder = Decoder[InputLocationMessageContent]
+  implicit val inputTextMessageContentDecoder = Decoder[InputTextMessageContent]
+
 
   implicit def updateDecoder(implicit D: Decoder[Int @@ UpdateId]) = Decoder[Update]
-
   implicit def responseDecoder[T](implicit D: Decoder[T]) = Decoder[Response[T]]
 }
