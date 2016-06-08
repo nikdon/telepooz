@@ -26,10 +26,12 @@ trait CirceEncoders {
   implicit def userIdTagEncoder[A : IsResourceId : Encoder]: Encoder[A @@ UserId] = Encoder[A].contramap[A @@ UserId](identity)
   implicit def queryIdTagEncoder[A : IsResourceId : Encoder]: Encoder[A @@ QueryId] = Encoder[A].contramap[A @@ QueryId](identity)
 
-  implicit val dateEncoder: Encoder[Date] = Encoder[Long].contramap[Date](d ⇒ d.getTime)                      // TODO Check
-  implicit val durationEncoder: Encoder[Duration] = Encoder[Int].contramap[Duration](d ⇒ d.getSeconds.toInt)  // TODO Check
+  // Models
+  private implicit val dateEncoder: Encoder[Date] = Encoder[Long].contramap[Date](d ⇒ d.getTime)                      // TODO Check
+  private implicit val durationEncoder: Encoder[Duration] = Encoder[Int].contramap[Duration](d ⇒ d.getSeconds.toInt)  // TODO Check
 
   implicit def audioEncoder(implicit E: Encoder[String @@ FileId]): Encoder[Audio] = deriveEncoder[Audio]
+  implicit def callbackQueryEncoder(implicit E: Encoder[String @@ QueryId]): Encoder[CallbackQuery] = deriveEncoder[CallbackQuery]
 
   implicit val chatTypeEncoder: Encoder[ChatType] = Encoder[String].contramap[ChatType](_.productPrefix)
   implicit def chatEncoder(implicit E: Encoder[Long @@ ChatId]): Encoder[Chat] = deriveEncoder[Chat]
@@ -42,7 +44,9 @@ trait CirceEncoders {
   implicit val keyboardButtonEncoder      : Encoder[KeyboardButton]       = deriveEncoder[KeyboardButton]
   implicit val locationEncoder            : Encoder[Location]             = deriveEncoder[Location]
 
-  implicit val messageEntityTypeEncoder: Encoder[MessageEntityType] = Encoder[String].contramap[MessageEntityType](e ⇒ snakenize { e.productPrefix })
+  implicit def messageEncoder(implicit E: Encoder[Int @@ MessageId], EE: Encoder[Long @@ ChatId]): Encoder[Message] = deriveEncoder[Message]
+
+  implicit val messageEntityTypeEncoder: Encoder[MessageEntityType] = Encoder[String].contramap[MessageEntityType](e ⇒ snakenize {e.productPrefix})
   implicit val messageEntityEncoder    : Encoder[MessageEntity]     = deriveEncoder[MessageEntity]
 
   implicit def parseModeEncoder: Encoder[ParseMode] = Encoder[String].contramap[ParseMode](_.productPrefix)
@@ -59,9 +63,6 @@ trait CirceEncoders {
   implicit def venueEncoder(implicit E: Encoder[String @@ FoursquareId]): Encoder[Venue] = deriveEncoder[Venue]
   implicit def videoEncoder(implicit E: Encoder[String @@ FileId]): Encoder[Video] = deriveEncoder[Video]
   implicit def voiceEncoder(implicit E: Encoder[String @@ FileId]): Encoder[Voice] = deriveEncoder[Voice]
-
-  implicit def messageEncoder(implicit E: Encoder[Int @@ MessageId], EE: Encoder[Long @@ ChatId]): Encoder[Message] = deriveEncoder[Message]
-  implicit def callbackQueryEncoder(implicit E: Encoder[String @@ QueryId]): Encoder[CallbackQuery] = deriveEncoder[CallbackQuery]
   implicit def updateEncoder(implicit E: Encoder[Int @@ UpdateId]): Encoder[Update] = deriveEncoder[Update]
 
   // Inline

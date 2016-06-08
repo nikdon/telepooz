@@ -16,6 +16,7 @@ import shapeless.tag._
 
 
 trait CirceDecoders {
+  // Tags
   implicit def chatIdTagDecoder[A : IsResourceId : Decoder]: Decoder[A @@ ChatId] = Decoder[A].map(a ⇒ a.chatId)
   implicit def fileIdTagDecoder[A : IsResourceId : Decoder]: Decoder[A @@ FileId] = Decoder[A].map(a ⇒ a.fileId)
   implicit def foursquareIdTagDecoder[A : IsResourceId : Decoder]: Decoder[A @@ FoursquareId] = Decoder[A].map(a ⇒ a.foursquareId)
@@ -24,6 +25,7 @@ trait CirceDecoders {
   implicit def userIdTagDecoder[A : IsResourceId : Decoder]: Decoder[A @@ UserId] = Decoder[A].map(a ⇒ a.userId)
   implicit def queryIdTagDecoder[A : IsResourceId : Decoder]: Decoder[A @@ QueryId] = Decoder[A].map(a ⇒ a.queryId)
 
+  // Models
   private implicit val dateDecoder: Decoder[Date] = Decoder[Long].map(d ⇒ new Date(d))                          // TODO Check
   private implicit val durationDecoder: Decoder[Duration] = Decoder[Int].map(d ⇒ Duration.ofSeconds(d.toLong))  // TODO Check
 
