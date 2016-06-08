@@ -21,6 +21,7 @@ trait CirceDecoders {
   implicit def fileIdTagDecoder[A : IsResourceId : Decoder]: Decoder[A @@ FileId] = Decoder[A].map(a ⇒ a.fileId)
   implicit def foursquareIdTagDecoder[A : IsResourceId : Decoder]: Decoder[A @@ FoursquareId] = Decoder[A].map(a ⇒ a.foursquareId)
   implicit def messageIdTagDecoder[A : IsResourceId : Decoder]: Decoder[A @@ MessageId] = Decoder[A].map(a ⇒ a.messageId)
+  implicit def resultIdDecoder[A : IsResourceId : Decoder]: Decoder[A @@ ResultId] = Decoder[A].map(a ⇒ a.resultId)
   implicit def updateIdTagDecoder[A : IsResourceId : Decoder]: Decoder[A @@ UpdateId] = Decoder[A].map(a ⇒ a.updateId)
   implicit def userIdTagDecoder[A : IsResourceId : Decoder]: Decoder[A @@ UserId] = Decoder[A].map(a ⇒ a.userId)
   implicit def queryIdTagDecoder[A : IsResourceId : Decoder]: Decoder[A @@ QueryId] = Decoder[A].map(a ⇒ a.queryId)
@@ -64,7 +65,7 @@ trait CirceDecoders {
   implicit def callbackQueryDecoder(implicit D: Decoder[String @@ QueryId]) = Decoder[CallbackQuery]
 
   implicit def inlineQueryDecoder(implicit D: Decoder[String @@ QueryId]) = Decoder[InlineQuery]
-  implicit val chosenInlineQuery = Decoder[ChosenInlineQuery]
+  implicit def chosenInlineQueryDecoder(implicit D: Decoder[String @@ ResultId], DD: Decoder[String @@ MessageId]) = Decoder[ChosenInlineQuery]
 
   implicit def updateDecoder(implicit D: Decoder[Int @@ UpdateId]) = Decoder[Update]
 

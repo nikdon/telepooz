@@ -21,6 +21,7 @@ object tags {
   trait FileId
   trait FoursquareId
   trait MessageId
+  trait ResultId
   trait UpdateId
   trait UserId
   trait QueryId
@@ -32,6 +33,7 @@ object tags {
       def fileId: A @@ FileId = tag[FileId](a)
       def foursquareId: A @@ FoursquareId = tag[FoursquareId](a)
       def messageId: A @@ MessageId = tag[MessageId](a)
+      def resultId: A @@ ResultId = tag[ResultId](a)
       def updateId: A @@ UpdateId = tag[UpdateId](a)
       def userId: A @@ UserId = tag[UserId](a)
       def queryId: A @@ QueryId = tag[QueryId](a)

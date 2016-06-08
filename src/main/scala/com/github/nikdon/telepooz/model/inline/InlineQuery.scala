@@ -17,6 +17,6 @@ import shapeless.tag.@@
   */
 case class InlineQuery(id: String @@ QueryId,
                        from: User,
-                       location: Option[Location],
+                       location: Option[Location] = None,
                        query: String,
                        offset: String)
