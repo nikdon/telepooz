@@ -5,7 +5,7 @@ import java.util.Date
 
 import com.github.nikdon.telepooz.IsResourceId
 import com.github.nikdon.telepooz.model._
-import com.github.nikdon.telepooz.model.inline.{ChosenInlineQuery, InlineQuery, InputContactMessageContent, InputVenueMessageContent}
+import com.github.nikdon.telepooz.model.inline.{ChosenInlineQuery, InlineQuery, InputContactMessageContent, InputLocationMessageContent, InputVenueMessageContent}
 import com.github.nikdon.telepooz.tags._
 import com.github.nikdon.telepooz.tags.syntax._
 import com.github.nikdon.telepooz.utils._
@@ -68,6 +68,7 @@ trait CirceDecoders {
   implicit def chosenInlineQueryDecoder(implicit D: Decoder[String @@ ResultId], DD: Decoder[String @@ MessageId]) = Decoder[ChosenInlineQuery]
   implicit val inputContactMessageContent = Decoder[InputContactMessageContent]
   implicit def inputVenueMessageContentDecoder(implicit D: Decoder[String @@ FoursquareId]) = Decoder[InputVenueMessageContent]
+  implicit val inputLocationMessageContentDecoder = Decoder[InputLocationMessageContent]
 
   implicit def updateDecoder(implicit D: Decoder[Int @@ UpdateId]) = Decoder[Update]
 
