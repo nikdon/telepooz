@@ -55,6 +55,7 @@ trait CirceEncoders {
 
   implicit val forceReplyEncoder          : Encoder[ForceReply]           = deriveEncoder[ForceReply]
   implicit val inlineKeyboardMarkupEncoder: Encoder[InlineKeyboardMarkup] = deriveEncoder[InlineKeyboardMarkup]
+  implicit val replyKeyboardHideEncoder   : Encoder[ReplyKeyboardHide]    = deriveEncoder[ReplyKeyboardHide]
   implicit val replyKeyboardMarkupEncoder : Encoder[ReplyKeyboardMarkup]  = deriveEncoder[ReplyKeyboardMarkup]
 
   implicit def stickerEncoder(implicit E: Encoder[String @@ FileId]): Encoder[Sticker] = deriveEncoder[Sticker]
