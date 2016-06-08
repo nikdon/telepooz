@@ -23,7 +23,6 @@ class MessageTest extends FlatSpec
   import MessageTest._
 
   it should "convert to a json and back to a model" in {
-
     forAll(fullMessageGen) { message ⇒
       val json = message.asJson.noSpaces
       io.circe.parser.decode[Message](json) foreach (res ⇒ res shouldEqual message)
@@ -43,27 +42,27 @@ object MessageTest extends tags.Syntax {
     messageId ← arbitrary[Int].map(_.messageId)
     date ← arbitrary[Date]
     chat ← ChatTest.chatGen
-    // from: Option[User] = None TODO
-    // forwardFrom: Option[User] = None TODO
+    from ← arbitrary[Option[Boolean]].map(_ ⇒ UserTest.userGen.sample)
+    forwardFrom ← arbitrary[Option[Boolean]].map(_ ⇒ UserTest.userGen.sample)
     forwardFromChat ← arbitrary[Option[Int]].map(_ ⇒ ChatTest.chatGen.sample)
     forwardDate ← arbitrary[Option[Date]]
     replyToMessage ← arbitrary[Option[Int]].map(_ ⇒ simpleMessageGen.sample)
     text ← arbitrary[Option[String]]
     entities ← arbitrary[Option[Vector[Int]]].map(_.map(_.flatMap(_ ⇒ MessageEntityTest.messageEntityGen.sample)))
     audio ← arbitrary[Option[Int]].map(_ ⇒ AudioTest.auidoGen.sample)
-    // document: Option[Document] = None TODO
-    // photo: Option[Vector[PhotoSize]] = None TODO
+    document ← arbitrary[Option[Boolean]].map(_ ⇒ DocumentTest.documentGen.sample)
+    photo ← arbitrary[Option[Boolean]].flatMap(_ ⇒ Gen.nonEmptyListOf(PhotoSizeTest.photoSizeGen).sample.map(_.toVector))
     // sticker: Option[Sticker] = None, TODO
-    // video: Option[Video] = None, TODO
-    // voice: Option[Voice] = None, TODO
+    video ← arbitrary[Option[Boolean]].map(_ ⇒ VideoTest.videoGen.sample)
+    voice ← arbitrary[Option[Boolean]].map(_ ⇒ VoiceTest.voiceGen.sample)
     caption ← arbitrary[Option[String]]
     contact ← arbitrary[Option[Int]].map(_ ⇒ ContactTest.contactGen.sample)
-    // location: Option[Location] = None, TODO
-    // venue: Option[Venue] = None, TODO
-    // newChatMember: Option[User] = None, TODO
-    // leftChatMember: Option[User] = None, TODO
+    location ← arbitrary[Option[Boolean]].map(_ ⇒ LocationTest.locationGen.sample)
+    venue ← arbitrary[Option[Boolean]].map(_ ⇒ VenueTest.venueGen.sample)
+    newChatMember ← arbitrary[Option[Boolean]].map(_ ⇒ UserTest.userGen.sample)
+    leftChatMember ← arbitrary[Option[Boolean]].map(_ ⇒ UserTest.userGen.sample)
     newChatTitle ← arbitrary[Option[String]]
-    // newChatPhoto: Option[Vector[PhotoSize]] = None, TODO
+    newChatPhoto ← arbitrary[Option[Boolean]].flatMap(_ ⇒ Gen.nonEmptyListOf(PhotoSizeTest.photoSizeGen).sample.map(_.toVector))
     deleteChatPhoto ← arbitrary[Option[Boolean]]
     groupChatCreated ← arbitrary[Option[Boolean]]
     superGroupChatCreated ← arbitrary[Option[Boolean]]
@@ -74,27 +73,27 @@ object MessageTest extends tags.Syntax {
   } yield Message(messageId,
                   date,
                   chat,
-                  None,
-                  None,
+                  from,
+                  forwardFrom,
                   forwardFromChat,
                   forwardDate,
                   replyToMessage,
                   text,
                   entities,
                   audio,
+                  document,
+                  photo,
                   None,
-                  None,
-                  None,
-                  None,
-                  None,
+                  video,
+                  voice,
                   caption,
                   contact,
-                  None,
-                  None,
-                  None,
-                  None,
+                  location,
+                  venue,
+                  newChatMember,
+                  leftChatMember,
                   newChatTitle,
-                  None,
+                  newChatPhoto,
                   deleteChatPhoto,
                   groupChatCreated,
                   superGroupChatCreated,

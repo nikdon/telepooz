@@ -22,7 +22,6 @@ class AudioTest extends FlatSpec
   import AudioTest._
 
   it should "convert to a json and back to a model" in {
-
     forAll(auidoGen) { audio ⇒
       val json = audio.asJson.noSpaces
       io.circe.parser.decode[Audio](json) foreach (res ⇒ res shouldEqual audio)

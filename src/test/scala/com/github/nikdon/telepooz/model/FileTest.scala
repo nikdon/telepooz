@@ -20,7 +20,6 @@ class FileTest extends FlatSpec
   import FileTest._
 
   it should "convert to a json and back to a model" in {
-
     forAll(fileGen) { file ⇒
       val json = file.asJson.noSpaces
       io.circe.parser.decode[File](json) foreach (res ⇒ res shouldEqual file)

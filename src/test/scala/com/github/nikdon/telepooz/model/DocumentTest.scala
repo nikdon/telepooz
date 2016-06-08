@@ -20,7 +20,6 @@ class DocumentTest extends FlatSpec
   import DocumentTest._
 
   it should "convert to a json and back to a model" in {
-
     forAll(documentGen) { document ⇒
       val json = document.asJson.noSpaces
       io.circe.parser.decode[Document](json) foreach (res ⇒ res shouldEqual document)

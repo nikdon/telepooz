@@ -23,7 +23,6 @@ class VideoTest extends FlatSpec
   import VideoTest._
 
   it should "convert to a json and back to a model" in {
-
     forAll(videoGen) { video ⇒
       val json = video.asJson.noSpaces
       io.circe.parser.decode[Video](json) foreach (res ⇒ res shouldEqual video)

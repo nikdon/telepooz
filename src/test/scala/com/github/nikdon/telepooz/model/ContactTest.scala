@@ -20,7 +20,6 @@ class ContactTest extends FlatSpec
   import ContactTest._
 
   it should "convert to a json and back to a model" in {
-
     forAll(contactGen) { contact ⇒
       val json = contact.asJson.noSpaces
       io.circe.parser.decode[Contact](json) foreach (res ⇒ res shouldEqual contact)

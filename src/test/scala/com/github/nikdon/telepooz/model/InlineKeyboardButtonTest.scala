@@ -20,7 +20,6 @@ class InlineKeyboardButtonTest extends FlatSpec
   import InlineKeyboardButtonTest._
 
   it should "convert to a json and back to a model" in {
-
     forAll(inlineKeyboardButtonGen) { inlineKeyboardButton ⇒
       val json = inlineKeyboardButton.asJson.noSpaces
       io.circe.parser.decode[InlineKeyboardButton](json) foreach (res ⇒ res shouldEqual inlineKeyboardButton)

@@ -20,7 +20,6 @@ class VenueTest extends FlatSpec
   import VenueTest._
 
   it should "convert to a json and back to a model" in {
-
     forAll(venueGen) { venue ⇒
       val json = venue.asJson.noSpaces
       io.circe.parser.decode[Venue](json) foreach (res ⇒ res shouldEqual venue)

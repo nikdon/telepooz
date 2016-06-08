@@ -22,7 +22,6 @@ class MessageEntityTest extends FlatSpec
   import MessageEntityTest._
 
   it should "convert to a json and back to a model" in {
-
     forAll(messageEntityGen) { messageEntity ⇒
       val json = messageEntity.asJson.noSpaces
       io.circe.parser.decode[MessageEntity](json) foreach (res ⇒ res shouldEqual messageEntity)

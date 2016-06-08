@@ -20,7 +20,6 @@ class PhotoSizeTest extends FlatSpec
   import PhotoSizeTest._
 
   it should "convert to a json and back to a model" in {
-
     forAll(photoSizeGen) { photoSize ⇒
       val json = photoSize.asJson.noSpaces
       io.circe.parser.decode[PhotoSize](json) foreach (res ⇒ res shouldEqual photoSize)

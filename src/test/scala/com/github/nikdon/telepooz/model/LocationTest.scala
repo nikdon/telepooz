@@ -19,7 +19,6 @@ class LocationTest extends FlatSpec
   import LocationTest._
 
   it should "convert to a json and back to a model" in {
-
     forAll(locationGen) { location ⇒
       val json = location.asJson.noSpaces
       io.circe.parser.decode[Location](json) foreach (res ⇒ res shouldEqual location)
