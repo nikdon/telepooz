@@ -73,5 +73,4 @@ trait CirceDecoders {
   implicit def updateDecoder(implicit D: Decoder[Int @@ UpdateId]) = Decoder[Update]
 
   implicit def responseDecoder[T](implicit D: Decoder[T]) = Decoder[Response[T]]
-
 }

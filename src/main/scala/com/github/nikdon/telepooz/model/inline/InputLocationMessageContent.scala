@@ -7,5 +7,5 @@ package com.github.nikdon.telepooz.model.inline
   * @param latitude   Latitude of the location in degrees
   * @param longitude  Longitude of the location in degrees
   */
-class InputLocationMessageContent(latitude: Double,
-                                  longitude: Double)
+case class InputLocationMessageContent(latitude: Double,
+                                       longitude: Double)
