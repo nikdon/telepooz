@@ -5,6 +5,7 @@ import com.github.nikdon.telepooz.tags.FoursquareId
 import shapeless.tag._
 
 
+/** This object represents the content of a message to be sent as a result of an inline query. */
 sealed trait InputMessageContent
 
 
