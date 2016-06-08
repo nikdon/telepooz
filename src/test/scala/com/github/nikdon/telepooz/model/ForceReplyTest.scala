@@ -16,7 +16,7 @@ class ForceReplyTest extends FlatSpec
                              with CirceEncoders
                              with CirceDecoders {
 
-  behavior of "UserProfilePhotos"
+  behavior of "ForceReply"
 
   import ForceReplyTest._
 
