@@ -21,9 +21,9 @@ sealed trait ReplyMarkup extends Product with Serializable
   *                           2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.
   */
 case class ReplyKeyboardMarkup(keyboard: Vector[Vector[KeyboardButton]],
-                               resize_keyboard: Option[Boolean],
-                               one_time_keyboard: Option[Boolean],
-                               selective: Option[Boolean]) extends ReplyMarkup
+                               resize_keyboard: Option[Boolean] = None,
+                               one_time_keyboard: Option[Boolean] = None,
+                               selective: Option[Boolean] = None) extends ReplyMarkup
 
 /**
   * Upon receiving a message with this object, Telegram clients will hide the current custom keyboard and
@@ -37,7 +37,7 @@ case class ReplyKeyboardMarkup(keyboard: Vector[Vector[KeyboardButton]],
   *                         1) users that are @mentioned in the text of the Message object;
   *                         2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.
   */
-case class ReplyKeyboardHide(hide_keyboard: Boolean, selective: Option[Boolean]) extends ReplyMarkup
+case class ReplyKeyboardHide(hide_keyboard: Boolean, selective: Option[Boolean] = None) extends ReplyMarkup
 
 /**
   * This object represents an inline keyboard that appears right next to the message it belongs to.
@@ -58,4 +58,4 @@ case class InlineKeyboardMarkup(keyboard: Vector[Vector[InlineKeyboardButton]]) 
   *                       1) users that are @mentioned in the text of the Message object;
   *                       2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.
   */
-case class ForceReply(force_reply: Boolean, selective: Option[Boolean]) extends ReplyMarkup
+case class ForceReply(force_reply: Boolean, selective: Option[Boolean] = None) extends ReplyMarkup
