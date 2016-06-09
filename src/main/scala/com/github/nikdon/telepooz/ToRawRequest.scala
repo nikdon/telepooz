@@ -108,4 +108,7 @@ object ToRawRequest extends CirceEncoders {
 
   implicit def getChatAdministratorsToRawRequest[A: IsResourceId](implicit E: Encoder[A @@ ChatId]): ToRawRequest[methods.GetChatAdministrators[A], RawRequest.GetChatAdministrators] =
     ToRawRequest(m ⇒ RawRequest.GetChatAdministrators(m.asJson))
+
+  implicit def getChatMembersCountToRawRequest[A: IsResourceId](implicit E: Encoder[A @@ ChatId]): ToRawRequest[methods.GetChatMembersCount[A], RawRequest.GetChatMembersCount] =
+    ToRawRequest(m ⇒ RawRequest.GetChatMembersCount(m.asJson))
 }
