@@ -46,6 +46,11 @@ object ToRawRequest extends CirceEncoders {
                                                       EEE: Encoder[String @@ FileId]): ToRawRequest[methods.SendPhoto[A], RawRequest.SendPhoto] =
     ToRawRequest(m ⇒ RawRequest.SendPhoto(m.asJson))
 
+  implicit def sendAudioToRawRequest[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
+                                                      EE: Encoder[Long @@ MessageId],
+                                                      EEE: Encoder[String @@ FileId]): ToRawRequest[methods.SendAudio[A], RawRequest.SendAudio] =
+    ToRawRequest(m ⇒ RawRequest.SendAudio(m.asJson))
+
   implicit def sendDocumentToRawRequest[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
                                                          EE: Encoder[Long @@ MessageId],
                                                          EEE: Encoder[String @@ FileId]): ToRawRequest[methods.SendDocument[A], RawRequest.SendDocument] =
@@ -60,4 +65,9 @@ object ToRawRequest extends CirceEncoders {
                                                       EE: Encoder[Long @@ MessageId],
                                                       EEE: Encoder[String @@ FileId]): ToRawRequest[methods.SendVideo[A], RawRequest.SendVideo] =
     ToRawRequest(m ⇒ RawRequest.SendVideo(m.asJson))
+
+  implicit def sendVoiceToRawRequest[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
+                                                      EE: Encoder[Long @@ MessageId],
+                                                      EEE: Encoder[String @@ FileId]): ToRawRequest[methods.SendVoice[A], RawRequest.SendVoice] =
+    ToRawRequest(m ⇒ RawRequest.SendVoice(m.asJson))
 }

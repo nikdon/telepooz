@@ -105,4 +105,8 @@ trait CirceEncoders {
   implicit def sendVideoEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
                                                  EE: Encoder[Long @@ MessageId],
                                                  EEE: Encoder[String @@ FileId]): Encoder[SendVideo[A]] = deriveEncoder[SendVideo[A]]
+
+  implicit def sendVoiceEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
+                                                 EE: Encoder[Long @@ MessageId],
+                                                 EEE: Encoder[String @@ FileId]): Encoder[SendVoice[A]] = deriveEncoder[SendVoice[A]]
 }
