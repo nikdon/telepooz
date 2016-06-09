@@ -32,4 +32,5 @@ object RawRequest {
   case class GetUserProfilePhotos(payload: Json) extends RawRequest[Response[UserProfilePhotos]]
   case class GetFile(payload: Json) extends RawRequest[Response[File]]
   case class KickChatMember(payload: Json) extends RawRequest[Response[Boolean]]
+  case class LeaveChat(payload: Json) extends RawRequest[Response[Boolean]]
 }

@@ -128,4 +128,6 @@ trait CirceEncoders {
 
   implicit def kickChatMemberEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
                                                       EE: Encoder[Int @@ UserId]): Encoder[KickChatMember[A]] = deriveEncoder[KickChatMember[A]]
+
+  implicit def leaveChatEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId]): Encoder[LeaveChat[A]] = deriveEncoder[LeaveChat[A]]
 }

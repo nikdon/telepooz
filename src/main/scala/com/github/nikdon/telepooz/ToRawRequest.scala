@@ -95,4 +95,7 @@ object ToRawRequest extends CirceEncoders {
   implicit def kickChatMemberToRawRequest[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
                                                            EE: Encoder[Int @@ UserId]): ToRawRequest[methods.KickChatMember[A], RawRequest.KickChatMember] =
     ToRawRequest(m ⇒ RawRequest.KickChatMember(m.asJson))
+
+  implicit def leaveChatToRawRequest[A: IsResourceId](implicit E: Encoder[A @@ ChatId]): ToRawRequest[methods.LeaveChat[A], RawRequest.LeaveChat] =
+    ToRawRequest(m ⇒ RawRequest.LeaveChat(m.asJson))
 }
