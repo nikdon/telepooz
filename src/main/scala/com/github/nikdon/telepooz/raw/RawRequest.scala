@@ -26,4 +26,5 @@ object RawRequest {
   case class SendVideo(payload: Json) extends RawRequest[Response[Message]]
   case class SendVoice(payload: Json) extends RawRequest[Response[Message]]
   case class SendLocation(payload: Json) extends RawRequest[Response[Message]]
+  case class SendVenue(payload: Json) extends RawRequest[Response[Message]]
 }

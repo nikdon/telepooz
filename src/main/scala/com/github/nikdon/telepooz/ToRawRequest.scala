@@ -74,4 +74,8 @@ object ToRawRequest extends CirceEncoders {
   implicit def sendLocationToRawRequest[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
                                                          EE: Encoder[Long @@ MessageId]): ToRawRequest[methods.SendLocation[A], RawRequest.SendLocation] =
     ToRawRequest(m ⇒ RawRequest.SendLocation(m.asJson))
+
+  implicit def sendVenueToRawRequest[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
+                                                      EE: Encoder[Long @@ MessageId]): ToRawRequest[methods.SendVenue[A], RawRequest.SendVenue] =
+    ToRawRequest(m ⇒ RawRequest.SendVenue(m.asJson))
 }
