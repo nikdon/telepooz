@@ -1,0 +1,18 @@
+language: scala
+scala:
+  - 2.11.8
+
+jdk:
+  - oraclejdk8
+  - oraclejdk7
+  - openjdk6
+
+before_install:
+  - pip install --user codecov
+
+script:
+  - sbt ++$TRAVIS_SCALA_VERSION test
+  - sbt clean coverage test
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
