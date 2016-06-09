@@ -23,4 +23,5 @@ object RawRequest {
   case class SendAudio(payload: Json) extends RawRequest[Response[Message]]
   case class SendDocument(payload: Json) extends RawRequest[Response[Message]]
   case class SendSticker(payload: Json) extends RawRequest[Response[Message]]
+  case class SendVideo(payload: Json) extends RawRequest[Response[Message]]
 }

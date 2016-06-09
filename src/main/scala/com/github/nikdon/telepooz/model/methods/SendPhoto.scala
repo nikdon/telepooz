@@ -22,7 +22,7 @@ import shapeless.tag.@@
   */
 case class SendPhoto[A: IsResourceId](chat_id: A @@ ChatId,
                                       photo: String @@ FileId, // TODO Add file upload
-                                      caption: Option[String],
+                                      caption: Option[String] = None,
                                       disable_notification: Option[Boolean] = None,
                                       reply_to_message_id: Option[Long @@ MessageId] = None,
                                       reply_markup: Option[ReplyMarkup] = None)

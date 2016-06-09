@@ -55,4 +55,9 @@ object ToRawRequest extends CirceEncoders {
                                                         EE: Encoder[Long @@ MessageId],
                                                         EEE: Encoder[String @@ FileId]): ToRawRequest[methods.SendSticker[A], RawRequest.SendSticker] =
     ToRawRequest(m ⇒ RawRequest.SendSticker(m.asJson))
+
+  implicit def sendVideoToRawRequest[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
+                                                      EE: Encoder[Long @@ MessageId],
+                                                      EEE: Encoder[String @@ FileId]): ToRawRequest[methods.SendVideo[A], RawRequest.SendVideo] =
+    ToRawRequest(m ⇒ RawRequest.SendVideo(m.asJson))
 }
