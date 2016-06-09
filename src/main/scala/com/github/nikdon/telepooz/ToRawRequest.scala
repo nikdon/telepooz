@@ -80,6 +80,9 @@ object ToRawRequest extends CirceEncoders {
     ToRawRequest(m ⇒ RawRequest.SendVenue(m.asJson))
 
   implicit def sendContactToRawRequest[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
-                                                      EE: Encoder[Long @@ MessageId]): ToRawRequest[methods.SendContact[A], RawRequest.SendContact] =
+                                                        EE: Encoder[Long @@ MessageId]): ToRawRequest[methods.SendContact[A], RawRequest.SendContact] =
     ToRawRequest(m ⇒ RawRequest.SendContact(m.asJson))
+
+  implicit def sendChatActionToRawRequest[A: IsResourceId](implicit E: Encoder[A @@ ChatId]): ToRawRequest[methods.SendChatAction[A], RawRequest.SendChatAction] =
+    ToRawRequest(m ⇒ RawRequest.SendChatAction(m.asJson))
 }

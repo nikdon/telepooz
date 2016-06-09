@@ -28,4 +28,5 @@ object RawRequest {
   case class SendLocation(payload: Json) extends RawRequest[Response[Message]]
   case class SendVenue(payload: Json) extends RawRequest[Response[Message]]
   case class SendContact(payload: Json) extends RawRequest[Response[Message]]
+  case class SendChatAction(payload: Json) extends RawRequest[Response[Boolean]]
 }
