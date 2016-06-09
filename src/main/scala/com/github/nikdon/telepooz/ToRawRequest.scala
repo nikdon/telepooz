@@ -2,7 +2,7 @@ package com.github.nikdon.telepooz
 
 import com.github.nikdon.telepooz.model.methods
 import com.github.nikdon.telepooz.raw.{CirceEncoders, RawRequest}
-import com.github.nikdon.telepooz.tags.{ChatId, MessageId, UpdateId}
+import com.github.nikdon.telepooz.tags.{ChatId, FileId, MessageId, UpdateId}
 import io.circe.Encoder
 import io.circe.syntax._
 import shapeless.tag.@@
@@ -28,16 +28,21 @@ object ToRawRequest extends CirceEncoders {
   implicit val getMeToRawRequest: ToRawRequest[methods.GetMe.type, RawRequest.GetMe.type] =
     ToRawRequest(m ⇒ RawRequest.GetMe)
 
-  implicit def sendMessageToRawRequest[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Int @@ MessageId])
+  implicit def sendMessageToRawRequest[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId])
   : ToRawRequest[methods.SendMessage[A], RawRequest.SendMessage] =
     ToRawRequest(m ⇒ RawRequest.SendMessage(m.asJson))
 
   implicit def forwardMessageToRawRequest[A: IsResourceId, B: IsResourceId](implicit E: Encoder[A @@ ChatId],
                                                                             EE: Encoder[B @@ ChatId],
-                                                                            EEE: Encoder[Int @@ MessageId])
+                                                                            EEE: Encoder[Long @@ MessageId])
   : ToRawRequest[methods.ForwardMessage[A, B], RawRequest.ForwardMessage] =
     ToRawRequest(m ⇒ RawRequest.ForwardMessage(m.asJson))
 
-  implicit def getUpdatesToRawRequest(implicit E: Encoder[Int @@ UpdateId]): ToRawRequest[methods.GetUpdates, RawRequest.GetUpdates] =
+  implicit def getUpdatesToRawRequest(implicit E: Encoder[Long @@ UpdateId]): ToRawRequest[methods.GetUpdates, RawRequest.GetUpdates] =
     ToRawRequest(m ⇒ RawRequest.GetUpdates(m.asJson))
+
+  implicit def sendPhotoToRawRequest[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
+                                                      EE: Encoder[Long @@ MessageId],
+                                                      EEE: Encoder[String @@ FileId]): ToRawRequest[methods.SendPhoto[A], RawRequest.SendPhoto] =
+    ToRawRequest(m ⇒ RawRequest.SendPhoto(m.asJson))
 }

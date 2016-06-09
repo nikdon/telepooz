@@ -42,7 +42,7 @@ object SendMessageTest extends tags.Syntax {
     parseMode ← arbitrary[Option[Boolean]].map(_ ⇒ Gen.oneOf(ParseMode.HTML, ParseMode.Markdown).sample)
     disableWebPagePreview ← arbitrary[Option[Boolean]]
     disableNotification ← arbitrary[Option[Boolean]]
-    replyToMessageId ← arbitrary[Option[Int]].map(_.map(_.messageId))
+    replyToMessageId ← arbitrary[Option[Long]].map(_.map(_.messageId))
     // replyMarkup TODO
   } yield SendMessage(id, text, parseMode, disableWebPagePreview, disableNotification, replyToMessageId, None)
 
@@ -52,7 +52,7 @@ object SendMessageTest extends tags.Syntax {
     parseMode ← arbitrary[Option[Boolean]].map(_ ⇒ Gen.oneOf(ParseMode.HTML, ParseMode.Markdown).sample)
     disableWebPagePreview ← arbitrary[Option[Boolean]]
     disableNotification ← arbitrary[Option[Boolean]]
-    replyToMessageId ← arbitrary[Option[Int]].map(_.map(_.messageId))
+    replyToMessageId ← arbitrary[Option[Long]].map(_.map(_.messageId))
     // replyMarkup TODO
   } yield SendMessage(id, text, parseMode, disableWebPagePreview, disableNotification, replyToMessageId, None)
 }

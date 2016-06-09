@@ -9,11 +9,11 @@ import org.scalatest.{FlatSpec, Matchers}
 
 
 class FileTest extends FlatSpec
-                        with Matchers
-                        with GeneratorDrivenPropertyChecks
-                        with tags.Syntax
-                        with CirceEncoders
-                        with CirceDecoders {
+                       with Matchers
+                       with GeneratorDrivenPropertyChecks
+                       with tags.Syntax
+                       with CirceEncoders
+                       with CirceDecoders {
 
   behavior of "File"
 

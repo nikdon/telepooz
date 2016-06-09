@@ -43,7 +43,7 @@ import shapeless.tag.@@
   * @param pinned_message           Specified message was pinned. Note that the Message object in this field
   *                                 will not contain further reply_to_message fields even if it is itself a reply.
   */
-case class Message(message_id: Int @@ MessageId,
+case class Message(message_id: Long @@ MessageId,
                    date: Date,
                    chat: Chat,
                    from: Option[User] = None,

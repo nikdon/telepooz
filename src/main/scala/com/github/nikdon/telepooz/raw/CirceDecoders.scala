@@ -61,7 +61,7 @@ trait CirceDecoders {
   implicit def videoDecoder(implicit D: Decoder[String @@ FileId]) = Decoder[Video]
   implicit def voiceDecoder(implicit D: Decoder[String @@ FileId]) = Decoder[Voice]
 
-  implicit def messageDecoder(implicit D: Decoder[Int @@ MessageId], DD: Decoder[Long @@ ChatId]) = Decoder[Message]
+  implicit def messageDecoder(implicit D: Decoder[Long @@ MessageId], DD: Decoder[Long @@ ChatId]) = Decoder[Message]
   implicit def callbackQueryDecoder(implicit D: Decoder[String @@ QueryId]) = Decoder[CallbackQuery]
 
   // Inline
@@ -73,6 +73,6 @@ trait CirceDecoders {
   implicit val inputTextMessageContentDecoder = Decoder[InputTextMessageContent]
 
 
-  implicit def updateDecoder(implicit D: Decoder[Int @@ UpdateId]) = Decoder[Update]
+  implicit def updateDecoder(implicit D: Decoder[Long @@ UpdateId]) = Decoder[Update]
   implicit def responseDecoder[T](implicit D: Decoder[T]) = Decoder[Response[T]]
 }

@@ -18,7 +18,7 @@ import shapeless.tag.@@
   * @param chosen_inline_result The result of an inline query that was chosen by a user and sent to their chat partner
   * @param callback_query       New incoming callback query
   */
-case class Update(update_id: Int @@ UpdateId,
+case class Update(update_id: Long @@ UpdateId,
                   message: Option[Message] = None,
                   edited_message: Option[Message] = None,
                   inline_query: Option[InlineQuery] = None,

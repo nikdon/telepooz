@@ -5,7 +5,7 @@ import java.util.Date
 
 import com.github.nikdon.telepooz.IsResourceId
 import com.github.nikdon.telepooz.model._
-import com.github.nikdon.telepooz.model.methods.{ForwardMessage, GetMe, GetUpdates, SendMessage}
+import com.github.nikdon.telepooz.model.methods.{ForwardMessage, GetMe, GetUpdates, SendMessage, SendPhoto}
 import com.github.nikdon.telepooz.tags._
 import com.github.nikdon.telepooz.utils._
 import io.circe.Encoder
@@ -45,7 +45,7 @@ trait CirceEncoders {
   implicit val keyboardButtonEncoder      : Encoder[KeyboardButton]       = deriveEncoder[KeyboardButton]
   implicit val locationEncoder            : Encoder[Location]             = deriveEncoder[Location]
 
-  implicit def messageEncoder(implicit E: Encoder[Int @@ MessageId], EE: Encoder[Long @@ ChatId]): Encoder[Message] = deriveEncoder[Message]
+  implicit def messageEncoder(implicit E: Encoder[Long @@ MessageId], EE: Encoder[Long @@ ChatId]): Encoder[Message] = deriveEncoder[Message]
 
   implicit val messageEntityTypeEncoder: Encoder[MessageEntityType] = Encoder[String].contramap[MessageEntityType](e ⇒ snakenize {e.productPrefix})
   implicit val messageEntityEncoder    : Encoder[MessageEntity]     = deriveEncoder[MessageEntity]
@@ -65,7 +65,7 @@ trait CirceEncoders {
   implicit def venueEncoder(implicit E: Encoder[String @@ FoursquareId]): Encoder[Venue] = deriveEncoder[Venue]
   implicit def videoEncoder(implicit E: Encoder[String @@ FileId]): Encoder[Video] = deriveEncoder[Video]
   implicit def voiceEncoder(implicit E: Encoder[String @@ FileId]): Encoder[Voice] = deriveEncoder[Voice]
-  implicit def updateEncoder(implicit E: Encoder[Int @@ UpdateId]): Encoder[Update] = deriveEncoder[Update]
+  implicit def updateEncoder(implicit E: Encoder[Long @@ UpdateId]): Encoder[Update] = deriveEncoder[Update]
 
   // Inline
   implicit def inlineQueryEncoder(implicit E: Encoder[String @@ QueryId]): Encoder[inline.InlineQuery] = deriveEncoder[inline.InlineQuery]
@@ -80,10 +80,13 @@ trait CirceEncoders {
   // Methods
   implicit val getMeJsonEncoder: Encoder[GetMe.type] = Encoder.instance(_ ⇒ io.circe.Json.Null)
   implicit def sendMessageJsonEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
-                                                       EE: Encoder[Int @@ MessageId]): Encoder[SendMessage[A]] = deriveEncoder[SendMessage[A]]
+                                                       EE: Encoder[Long @@ MessageId]): Encoder[SendMessage[A]] = deriveEncoder[SendMessage[A]]
   implicit def forwardMessageJsonEncoder[A: IsResourceId, B: IsResourceId](implicit E: Encoder[A @@ ChatId],
                                                                            EE: Encoder[B @@ ChatId],
-                                                                           EEE: Encoder[Int @@ MessageId])
+                                                                           EEE: Encoder[Long @@ MessageId])
   : Encoder[ForwardMessage[A, B]] = deriveEncoder[ForwardMessage[A, B]]
-  implicit def getUpdatesJsonEncoder(implicit E: Encoder[Int @@ UpdateId]): Encoder[GetUpdates] = deriveEncoder[GetUpdates]
+  implicit def getUpdatesJsonEncoder(implicit E: Encoder[Long @@ UpdateId]): Encoder[GetUpdates] = deriveEncoder[GetUpdates]
+  implicit def sendPhotoEncoder[A : IsResourceId](implicit E: Encoder[A @@ ChatId],
+                                                  EE: Encoder[Long @@ MessageId],
+                                                  EEE: Encoder[String @@ FileId]): Encoder[SendPhoto[A]] = deriveEncoder[SendPhoto[A]]
 }

@@ -18,4 +18,6 @@ object RawRequest {
   case class ForwardMessage(payload: Json) extends RawRequest[Response[Message]]
   case class GetUpdates(payload: Json) extends RawRequest[Response[Vector[Update]]]
 
+  // TODO Add an ability to upload files as multipart form
+  case class SendPhoto(payload: Json) extends RawRequest[Response[Message]]
 }

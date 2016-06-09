@@ -29,7 +29,7 @@ class UpdateTest extends FlatSpec
 
 object UpdateTest extends tags.Syntax {
   val updateGen = for {
-    updateId ← arbitrary[Int].map(_.updateId)
+    updateId ← arbitrary[Long].map(_.updateId)
     message ← arbitrary[Option[Boolean]].map(_ ⇒ MessageTest.fullMessageGen.sample)
     editedMessage ← arbitrary[Option[Boolean]].map(_ ⇒ MessageTest.fullMessageGen.sample)
     // inlineQuery ← TODO

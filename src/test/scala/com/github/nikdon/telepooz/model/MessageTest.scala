@@ -33,13 +33,13 @@ class MessageTest extends FlatSpec
 
 object MessageTest extends tags.Syntax {
   val simpleMessageGen: Gen[Message] = for {
-    id ← arbitrary[Int].map(_.messageId)
+    id ← arbitrary[Long].map(_.messageId)
     date ← arbitrary[Date]
     chat ← ChatTest.chatGen
   } yield Message(id, date, chat)
 
   val fullMessageGen: Gen[Message] = for {
-    messageId ← arbitrary[Int].map(_.messageId)
+    messageId ← arbitrary[Long].map(_.messageId)
     date ← arbitrary[Date]
     chat ← ChatTest.chatGen
     from ← arbitrary[Option[Boolean]].map(_ ⇒ UserTest.userGen.sample)
