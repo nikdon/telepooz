@@ -37,4 +37,5 @@ object RawRequest {
   case class GetChat(payload: Json) extends RawRequest[Response[Chat]]
   case class GetChatAdministrators(payload: Json) extends RawRequest[Response[Vector[ChatMember]]]
   case class GetChatMembersCount(payload: Json) extends RawRequest[Response[Int]]
+  case class GetChatMember(payload: Json) extends RawRequest[Response[ChatMember]]
 }

@@ -139,4 +139,6 @@ trait CirceEncoders {
   implicit def getChatEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId]): Encoder[GetChat[A]] = deriveEncoder[GetChat[A]]
   implicit def getChatAdministratorsEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId]): Encoder[GetChatAdministrators[A]] = deriveEncoder[GetChatAdministrators[A]]
   implicit def getChatMembersCountEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId]): Encoder[GetChatMembersCount[A]] = deriveEncoder[GetChatMembersCount[A]]
+  implicit def getChatMemberEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
+                                                     EE: Encoder[Int @@ UserId]): Encoder[GetChatMember[A]] = deriveEncoder[GetChatMember[A]]
 }
