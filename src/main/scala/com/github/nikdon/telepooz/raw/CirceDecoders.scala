@@ -64,6 +64,9 @@ trait CirceDecoders {
   implicit def messageDecoder(implicit D: Decoder[Long @@ MessageId], DD: Decoder[Long @@ ChatId]) = Decoder[Message]
   implicit def callbackQueryDecoder(implicit D: Decoder[String @@ QueryId]) = Decoder[CallbackQuery]
 
+  implicit val memberStatusDecoder: Decoder[MemberStatus] = Decoder[String].map(a ⇒ MemberStatus.unsafe( pascalize(a) ))
+  implicit val chatMemberDecoder = Decoder[ChatMember]
+
   // Inline
   implicit def inlineQueryDecoder(implicit D: Decoder[String @@ QueryId]) = Decoder[InlineQuery]
   implicit def chosenInlineQueryDecoder(implicit D: Decoder[String @@ ResultId], DD: Decoder[String @@ MessageId]) = Decoder[ChosenInlineQuery]

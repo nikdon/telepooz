@@ -35,4 +35,5 @@ object RawRequest {
   case class LeaveChat(payload: Json) extends RawRequest[Response[Boolean]]
   case class UnbanChatMember(payload: Json) extends RawRequest[Response[Boolean]]
   case class GetChat(payload: Json) extends RawRequest[Response[Chat]]
+  case class GetChatAdministrators(payload: Json) extends RawRequest[Response[Vector[ChatMember]]]
 }
