@@ -121,4 +121,6 @@ trait CirceEncoders {
 
   implicit val chatActionEncoder: Encoder[ChatAction] = Encoder[String].contramap[ChatAction](e ⇒ snakenize {e.productPrefix})
   implicit def sendChatActionEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId]): Encoder[SendChatAction[A]] = deriveEncoder[SendChatAction[A]]
+
+  implicit def getUserProfilePhotosEncoder(implicit E: Encoder[Int @@ UserId]): Encoder[GetUserProfilePhotos] = deriveEncoder[GetUserProfilePhotos]
 }

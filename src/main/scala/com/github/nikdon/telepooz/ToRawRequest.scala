@@ -2,7 +2,7 @@ package com.github.nikdon.telepooz
 
 import com.github.nikdon.telepooz.model.methods
 import com.github.nikdon.telepooz.raw.{CirceEncoders, RawRequest}
-import com.github.nikdon.telepooz.tags.{ChatId, FileId, MessageId, UpdateId}
+import com.github.nikdon.telepooz.tags.{ChatId, FileId, MessageId, UpdateId, UserId}
 import io.circe.Encoder
 import io.circe.syntax._
 import shapeless.tag.@@
@@ -85,4 +85,7 @@ object ToRawRequest extends CirceEncoders {
 
   implicit def sendChatActionToRawRequest[A: IsResourceId](implicit E: Encoder[A @@ ChatId]): ToRawRequest[methods.SendChatAction[A], RawRequest.SendChatAction] =
     ToRawRequest(m ⇒ RawRequest.SendChatAction(m.asJson))
+
+  implicit def getUserProfilePhotosToRawRequest(implicit E: Encoder[Int @@ UserId]): ToRawRequest[methods.GetUserProfilePhotos, RawRequest.GetUserProfilePhotos] =
+    ToRawRequest(m ⇒ RawRequest.GetUserProfilePhotos(m.asJson))
 }
