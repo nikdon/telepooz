@@ -123,4 +123,6 @@ trait CirceEncoders {
   implicit def sendChatActionEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId]): Encoder[SendChatAction[A]] = deriveEncoder[SendChatAction[A]]
 
   implicit def getUserProfilePhotosEncoder(implicit E: Encoder[Int @@ UserId]): Encoder[GetUserProfilePhotos] = deriveEncoder[GetUserProfilePhotos]
+
+  implicit def getFileEncoder(implicit E: Encoder[String @@ FileId]): Encoder[GetFile] = deriveEncoder[GetFile]
 }

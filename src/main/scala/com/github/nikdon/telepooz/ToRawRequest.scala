@@ -88,4 +88,7 @@ object ToRawRequest extends CirceEncoders {
 
   implicit def getUserProfilePhotosToRawRequest(implicit E: Encoder[Int @@ UserId]): ToRawRequest[methods.GetUserProfilePhotos, RawRequest.GetUserProfilePhotos] =
     ToRawRequest(m ⇒ RawRequest.GetUserProfilePhotos(m.asJson))
+
+  implicit def getFileToRawRequest(implicit E: Encoder[String @@ FileId]): ToRawRequest[methods.GetFile, RawRequest.GetFile] =
+    ToRawRequest(m ⇒ RawRequest.GetFile(m.asJson))
 }

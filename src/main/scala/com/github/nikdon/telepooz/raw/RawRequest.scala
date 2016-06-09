@@ -1,6 +1,6 @@
 package com.github.nikdon.telepooz.raw
 
-import com.github.nikdon.telepooz.model.{Message, Response, Update, User, UserProfilePhotos}
+import com.github.nikdon.telepooz.model._
 import io.circe.Json
 
 
@@ -30,4 +30,5 @@ object RawRequest {
   case class SendContact(payload: Json) extends RawRequest[Response[Message]]
   case class SendChatAction(payload: Json) extends RawRequest[Response[Boolean]]
   case class GetUserProfilePhotos(payload: Json) extends RawRequest[Response[UserProfilePhotos]]
+  case class GetFile(payload: Json) extends RawRequest[Response[File]]
 }
