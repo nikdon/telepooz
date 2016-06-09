@@ -141,4 +141,6 @@ trait CirceEncoders {
   implicit def getChatMembersCountEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId]): Encoder[GetChatMembersCount[A]] = deriveEncoder[GetChatMembersCount[A]]
   implicit def getChatMemberEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
                                                      EE: Encoder[Int @@ UserId]): Encoder[GetChatMember[A]] = deriveEncoder[GetChatMember[A]]
+
+  implicit def answerCallbackQueryEncoder(implicit E: Encoder[String @@ QueryId]): Encoder[AnswerCallbackQuery] = deriveEncoder[AnswerCallbackQuery]
 }
