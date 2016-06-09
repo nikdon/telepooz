@@ -115,4 +115,7 @@ trait CirceEncoders {
 
   implicit def sendVenueEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
                                                  EE: Encoder[Long @@ MessageId]): Encoder[SendVenue[A]] = deriveEncoder[SendVenue[A]]
+
+  implicit def sendContactEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
+                                                   EE: Encoder[Long @@ MessageId]): Encoder[SendContact[A]] = deriveEncoder[SendContact[A]]
 }
