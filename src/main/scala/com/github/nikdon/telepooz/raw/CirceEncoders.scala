@@ -5,7 +5,7 @@ import java.util.Date
 
 import com.github.nikdon.telepooz.IsResourceId
 import com.github.nikdon.telepooz.model._
-import com.github.nikdon.telepooz.model.methods.{ForwardMessage, GetMe, GetUpdates, SendMessage, SendPhoto}
+import com.github.nikdon.telepooz.model.methods._
 import com.github.nikdon.telepooz.tags._
 import com.github.nikdon.telepooz.utils._
 import io.circe.Encoder
@@ -86,7 +86,19 @@ trait CirceEncoders {
                                                                            EEE: Encoder[Long @@ MessageId])
   : Encoder[ForwardMessage[A, B]] = deriveEncoder[ForwardMessage[A, B]]
   implicit def getUpdatesJsonEncoder(implicit E: Encoder[Long @@ UpdateId]): Encoder[GetUpdates] = deriveEncoder[GetUpdates]
-  implicit def sendPhotoEncoder[A : IsResourceId](implicit E: Encoder[A @@ ChatId],
-                                                  EE: Encoder[Long @@ MessageId],
-                                                  EEE: Encoder[String @@ FileId]): Encoder[SendPhoto[A]] = deriveEncoder[SendPhoto[A]]
+  implicit def sendPhotoEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
+                                                 EE: Encoder[Long @@ MessageId],
+                                                 EEE: Encoder[String @@ FileId]): Encoder[SendPhoto[A]] = deriveEncoder[SendPhoto[A]]
+
+  implicit def sendAudioEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
+                                                 EE: Encoder[Long @@ MessageId],
+                                                 EEE: Encoder[String @@ FileId]): Encoder[SendAudio[A]] = deriveEncoder[SendAudio[A]]
+
+  implicit def sendDocumentEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
+                                                    EE: Encoder[Long @@ MessageId],
+                                                    EEE: Encoder[String @@ FileId]): Encoder[SendDocument[A]] = deriveEncoder[SendDocument[A]]
+
+  implicit def sendStickerEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
+                                                    EE: Encoder[Long @@ MessageId],
+                                                    EEE: Encoder[String @@ FileId]): Encoder[SendSticker[A]] = deriveEncoder[SendSticker[A]]
 }

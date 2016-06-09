@@ -45,4 +45,14 @@ object ToRawRequest extends CirceEncoders {
                                                       EE: Encoder[Long @@ MessageId],
                                                       EEE: Encoder[String @@ FileId]): ToRawRequest[methods.SendPhoto[A], RawRequest.SendPhoto] =
     ToRawRequest(m ⇒ RawRequest.SendPhoto(m.asJson))
+
+  implicit def sendDocumentToRawRequest[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
+                                                         EE: Encoder[Long @@ MessageId],
+                                                         EEE: Encoder[String @@ FileId]): ToRawRequest[methods.SendDocument[A], RawRequest.SendDocument] =
+    ToRawRequest(m ⇒ RawRequest.SendDocument(m.asJson))
+
+  implicit def sendStickerToRawRequest[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
+                                                        EE: Encoder[Long @@ MessageId],
+                                                        EEE: Encoder[String @@ FileId]): ToRawRequest[methods.SendSticker[A], RawRequest.SendSticker] =
+    ToRawRequest(m ⇒ RawRequest.SendSticker(m.asJson))
 }

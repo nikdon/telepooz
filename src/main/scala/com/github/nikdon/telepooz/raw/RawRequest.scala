@@ -20,4 +20,7 @@ object RawRequest {
 
   // TODO Add an ability to upload files as multipart form
   case class SendPhoto(payload: Json) extends RawRequest[Response[Message]]
+  case class SendAudio(payload: Json) extends RawRequest[Response[Message]]
+  case class SendDocument(payload: Json) extends RawRequest[Response[Message]]
+  case class SendSticker(payload: Json) extends RawRequest[Response[Message]]
 }
