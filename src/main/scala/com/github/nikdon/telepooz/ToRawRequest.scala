@@ -91,4 +91,8 @@ object ToRawRequest extends CirceEncoders {
 
   implicit def getFileToRawRequest(implicit E: Encoder[String @@ FileId]): ToRawRequest[methods.GetFile, RawRequest.GetFile] =
     ToRawRequest(m ⇒ RawRequest.GetFile(m.asJson))
+
+  implicit def kickChatMemberToRawRequest[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
+                                                           EE: Encoder[Int @@ UserId]): ToRawRequest[methods.KickChatMember[A], RawRequest.KickChatMember] =
+    ToRawRequest(m ⇒ RawRequest.KickChatMember(m.asJson))
 }

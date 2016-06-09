@@ -125,4 +125,7 @@ trait CirceEncoders {
   implicit def getUserProfilePhotosEncoder(implicit E: Encoder[Int @@ UserId]): Encoder[GetUserProfilePhotos] = deriveEncoder[GetUserProfilePhotos]
 
   implicit def getFileEncoder(implicit E: Encoder[String @@ FileId]): Encoder[GetFile] = deriveEncoder[GetFile]
+
+  implicit def kickChatMemberEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
+                                                      EE: Encoder[Int @@ UserId]): Encoder[KickChatMember[A]] = deriveEncoder[KickChatMember[A]]
 }
