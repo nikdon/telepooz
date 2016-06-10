@@ -30,6 +30,7 @@ and [shapeless][shapeless].
 telepooz is far from completion, here is a list of some desired features to implemented in future:
 
 - File uploading via multipart/form-data
+- [Webhooks][webhooks]
 
 ## Usage
 
@@ -64,3 +65,4 @@ limitations under the License.
 [cats]: https://github.com/typelevel/cats
 [shapeless]: https://github.com/milessabin/shapeless
 [telegram-api]: https://core.telegram.org/bots/api
+[webhooks]: https://core.telegram.org/bots/api#getting-updates
