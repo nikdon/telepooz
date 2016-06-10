@@ -16,7 +16,8 @@ import com.github.nikdon.telepooz.raw.RawRequest._
 import com.github.nikdon.telepooz.raw._
 import com.typesafe.config.{Config, ConfigFactory}
 import de.heikoseeberger.akkahttpcirce.CirceSupport
-import io.circe.{Decoder, Json}
+import io.circe.syntax._
+import io.circe.{Decoder, Json, JsonObject}
 
 import scala.concurrent.{ExecutionContext, ExecutionContextExecutor, Future}
 
@@ -49,10 +50,15 @@ trait ApiRequestExecutor extends (RawRequest ~> Future)
 
   override def apply[A](fa: RawRequest[A]): Future[A] = {
 
+    def dropNulls(j: Json): Json = j.withObject { c ⇒
+      val fields = c.toList.filterNot { case (f, v) ⇒ v.isNull }
+      JsonObject.fromIterable(fields).asJson
+    }
+
     def go[B: Decoder](methodName: String, payload: Json): Future[Response[B]] = {
       val uri = "https://" |+| telegramHost |+| "/bot" + token |+| "/" + methodName
       for {
-        response ← telegramRequest(RequestBuilding.Post(Uri(uri), content = payload)).run()
+        response ← telegramRequest(RequestBuilding.Post(Uri(uri), content = dropNulls(payload))).run()
         decoded ← circeUnmarshaller(responseDecoder).apply(response.entity)
       } yield decoded
     }
