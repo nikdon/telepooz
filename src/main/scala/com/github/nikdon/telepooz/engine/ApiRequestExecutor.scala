@@ -49,7 +49,6 @@ trait ApiRequestExecutor extends (RawRequest ~> Future)
     Source.single(request).via(telegramConnectionFlow).toMat(Sink.head)(Keep.right)
 
   override def apply[A](fa: RawRequest[A]): Future[A] = {
-
     def dropNulls(j: Json): Json = j.withObject { c ⇒
       val fields = c.toList.filterNot { case (f, v) ⇒ v.isNull }
       JsonObject.fromIterable(fields).asJson
