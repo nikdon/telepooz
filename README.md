@@ -40,7 +40,7 @@ telepooz is far from completion, here is a list of some desired features to impl
     object EchoPooz extends Telepooz with ApiRequestExecutor {
       override def reactions = Map(
         "/echo" → (implicit message ⇒ args ⇒ {
-          reply(message.text.fold("")(identity))
+          reply(message.text.fold("")(identity)).map(_ ⇒ Done) 
         })
       )
     }
