@@ -60,8 +60,6 @@ libraryDependencies ++= Seq(
 
   "com.chuusai" %% "shapeless" % shapelessVersion,
 
-  "com.github.nikdon" % "scalaz-interpreter" % "745a060",
-
   "org.scalatest"  %% "scalatest"  % scalaTestV  % "test",
   "org.scalacheck" %% "scalacheck" % scalaCheckV % "test",
 
