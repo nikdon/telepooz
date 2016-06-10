@@ -1,5 +1,6 @@
 package com.github.nikdon.telepooz
 
+import akka.Done
 import com.github.nikdon.telepooz.engine.{MockApiRequestExecutor, Telepooz}
 import com.github.nikdon.telepooz.raw.CirceEncoders
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
@@ -60,7 +61,7 @@ class ExecutorSpec extends FlatSpec
     val telebot = new Telepooz with MockApiRequestExecutor {
       override def reactions: Map[String, Reaction] = Map(
         "/test" → (implicit message ⇒ args ⇒ {
-          reply("Hi there!")
+          reply("Hi there!").map(_ ⇒ Done)
         })
       )
     }
