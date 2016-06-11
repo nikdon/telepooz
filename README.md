@@ -46,11 +46,13 @@ And configure telepooz via the `reference.conf` or `aplication.conf` or by, for 
 
 ## Why?
 
-The only one reason to write was curiosity. Telepooz written on top of **[akka][akka]** 
+The only one reason to write was curiosity. Telepooz written on top of **[Akka Streams][akka]** 
 with intention to maximize using of functional abstractions provided by **[cats][cats]** 
-and [shapeless][shapeless]. For example, request are composable:
+and [shapeless][shapeless]. For example, api request are composable:
 
     ```scala
+    // def execute[F[_], R](m: F[R]): Free[F, R] = m.step
+    
     val req = for {
       a ← api.execute(model.methods.GetMe.toRawRequest)
       b ← api.execute(model.methods.SendMessage(123.chatId, a.result.fold("empty")(_.first_name)).toRawRequest)
