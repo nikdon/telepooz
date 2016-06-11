@@ -1,23 +1,30 @@
 package com.github.nikdon.telepooz.engine
 
+import akka.NotUsed
+import akka.event.LoggingAdapter
 import akka.stream._
 import akka.stream.scaladsl.{Broadcast, Flow, GraphDSL, Merge, Source, ZipWith}
+import cats.implicits._
 import com.github.nikdon.telepooz.ToRawRequest._
 import com.github.nikdon.telepooz.ToRawRequest.syntax._
 import com.github.nikdon.telepooz.api
 import com.github.nikdon.telepooz.model.{Update, methods}
+import com.github.nikdon.telepooz.tags.syntax._
+import com.typesafe.config.{Config, ConfigFactory}
 
 import scala.collection.immutable
+import scala.concurrent.ExecutionContextExecutor
 import scala.concurrent.duration._
 
 
-trait Poller { apiRequestExecutor: ApiRequestExecutor ⇒
+class Polling(implicit apiRequestExecutor: ApiRequestExecutor, ec: ExecutionContextExecutor, logger: LoggingAdapter) {
 
-  private[this] def interval = apiRequestExecutor.config.getInt("telegram.update.interval").millis
-  private[this] def limit = apiRequestExecutor.config.getInt("telegram.update.limit")
-  private[this] def parallelism = apiRequestExecutor.config.getInt("telegram.parallelism")
+  private[this] val config     : Config         = ConfigFactory.load()
+  private[this] val interval   : FiniteDuration = config.getInt("telegram.poller.interval").millis
+  private[this] val limit      : Int            = config.getInt("telegram.poller.limit")
+  private[this] val parallelism: Int            = config.getInt("telegram.poller.parallelism")
 
-  def pollGraph = GraphDSL.create() { implicit builder ⇒
+  val pollGraph: Graph[SourceShape[Update], NotUsed] = GraphDSL.create() { implicit builder ⇒
     import GraphDSL.Implicits._
 
     case object Trigger
@@ -41,7 +48,8 @@ trait Poller { apiRequestExecutor: ApiRequestExecutor ⇒
         case updates ⇒
           logger.debug(s"Received ${updates.length} updates: ${updates.map(_.update_id).mkString(", ")}")
           val lastUpdate = updates.maxBy(_.update_id.toInt)
-          methods.GetUpdates(Some(lastUpdate.update_id), Some(limit))
+          val akkUpdateId = (lastUpdate.update_id + 1).updateId
+          methods.GetUpdates(Some(akkUpdateId), Some(limit))
       })
 
     /** Execute a [[methods.GetUpdates]] via the provided api */

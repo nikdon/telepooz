@@ -2,16 +2,19 @@ package com.github.nikdon.telepooz.engine
 
 import java.util.Date
 
+import akka.actor.ActorSystem
+import akka.stream.Materializer
 import com.github.nikdon.telepooz.model._
 import com.github.nikdon.telepooz.raw.RawRequest
 import com.github.nikdon.telepooz.raw.RawRequest._
 import com.github.nikdon.telepooz.tags
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContextExecutor, Future}
 import scala.util.Random
 
 
-trait MockApiRequestExecutor extends ApiRequestExecutor with tags.Syntax {
+class MockApiRequestExecutor(nUpdates: Int = 1)(implicit system: ActorSystem, materializer: Materializer, ec: ExecutionContextExecutor)
+  extends ApiRequestExecutor()(system, materializer, ec) with tags.Syntax {
 
   def r = Random
 
@@ -21,14 +24,16 @@ trait MockApiRequestExecutor extends ApiRequestExecutor with tags.Syntax {
   val fakeUserProfilePhotos = UserProfilePhotos(r.nextInt, Vector.empty)
   val fakeUser = User(r.nextInt.userId, r.nextString(3))
 
+  lazy val updates =
+    Vector.tabulate(nUpdates)(_ ⇒ Update(r.nextLong.updateId, Some(Message(r.nextLong.messageId, new Date(r.nextLong), fakeChat))))
+
   override def apply[A](fa: RawRequest[A]): Future[A] = fa match {
     case m@GetMe                   =>
       Future.successful(Response(ok = true, Some(User(r.nextInt.userId, r.nextString(5)))))
     case m@SendMessage(payload)    =>
-      println("payload = " + payload.spaces2)
-      Future.successful(Response(ok = true, io.circe.parser.decode[Message](payload.noSpaces).toOption))
+      Future.successful(Response(ok = true, Some(fakeMessage)))
     case m@ForwardMessage(payload) =>
-      Future.successful(Response(ok = true, io.circe.parser.decode[Message](payload.noSpaces).toOption))
+      Future.successful(Response(ok = true, Some(fakeMessage)))
 
     case m@SendPhoto(payload) ⇒
       Future.successful(Response(ok = true, Some(fakeMessage)))
@@ -72,15 +77,7 @@ trait MockApiRequestExecutor extends ApiRequestExecutor with tags.Syntax {
       Future.successful(Response(ok = true, Some(true)))
 
     case m@GetUpdates(payload)     =>
-      Future.successful(Response(ok = true, Some(Vector(Update(r.nextLong.updateId,
-                                                               Some(Message(r.nextLong.messageId,
-                                                                            new Date(r.nextLong),
-                                                                            fakeChat))),
-                                                        Update(r.nextLong.updateId,
-                                                               Some(Message(r.nextLong.messageId,
-                                                                            new Date(r.nextLong),
-                                                                            fakeChat,
-                                                                            text = Some("/test"))))))))
+      Future.successful(Response(ok = true, Some(updates)))
   }
 
 }
