@@ -26,8 +26,7 @@ lazy val baseSettings = Seq(
   scalacOptions in(Compile, test) := compilerOptions,
   resolvers ++= Seq(
     Resolver.sonatypeRepo("releases"),
-    Resolver.sonatypeRepo("snapshots"),
-    "jitpack" at "https://jitpack.io"
+    Resolver.sonatypeRepo("snapshots")
   )
 )
 
@@ -43,13 +42,10 @@ lazy val shapelessVersion = "2.3.0"
 lazy val scalaTestV = "2.2.6"
 lazy val scalaCheckV = "1.12.5"
 
-lazy val kindProjectorV = "0.7.1"
-
 libraryDependencies ++= Seq(
   "org.typelevel" %% "cats" % catsV,
 
   "com.typesafe.akka" %% "akka-actor" % akkaVersion,
-  "com.typesafe.akka" %% "akka-remote" % akkaVersion,
   "com.typesafe.akka" %% "akka-http-core" % akkaVersion,
   "com.typesafe.akka" %% "akka-http-experimental" % akkaVersion,
 
@@ -61,7 +57,5 @@ libraryDependencies ++= Seq(
   "com.chuusai" %% "shapeless" % shapelessVersion,
 
   "org.scalatest"  %% "scalatest"  % scalaTestV  % "test",
-  "org.scalacheck" %% "scalacheck" % scalaCheckV % "test",
-
-  compilerPlugin("org.spire-math" %% "kind-projector" % kindProjectorV)
+  "org.scalacheck" %% "scalacheck" % scalaCheckV % "test"
 )
