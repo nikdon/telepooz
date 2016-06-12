@@ -31,7 +31,7 @@ class ExecutorSpec extends FlatSpec
   implicit val materializer = ActorMaterializer()
   val mockApiReqExe = new MockApiRequestExecutor
 
-  it should "allow to compose a requests" in {
+  it should "allow to compose requests" in {
     val req = for {
       a ← api.execute(methods.GetMe.toRawRequest)
       c ← api.execute(methods.AnswerCallbackQuery("query".queryId).toRawRequest)
