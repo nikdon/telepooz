@@ -23,7 +23,7 @@ import shapeless.tag._
 case class SendContact[A: IsResourceId](chat_id: A @@ ChatId,
                                         phone_number: String,
                                         first_name: String,
-                                        last_name: Option[String],
+                                        last_name: Option[String] = None,
                                         disable_notification: Option[Boolean] = None,
                                         reply_to_message_id: Option[Long @@ MessageId] = None,
                                         reply_markup: Option[ReplyMarkup] = None)

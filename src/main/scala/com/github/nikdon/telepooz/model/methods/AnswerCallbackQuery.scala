@@ -14,5 +14,5 @@ import shapeless.tag.@@
   *                           chat screen. Defaults to false.
   */
 case class AnswerCallbackQuery(callback_query_id: String @@ QueryId,
-                               text: Option[String],
-                               show_alert: Option[Boolean])
+                               text: Option[String] = None,
+                               show_alert: Option[Boolean] = None)
