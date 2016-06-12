@@ -28,6 +28,8 @@ abstract class ApiRequestExecutor(implicit system: ActorSystem, materializer: Ma
   protected val telegramHost: String = config.getString("telegram.host")
   protected val token       : String = config.getString("telegram.token")
 
+  private[this] val http = Http()
+
   private[this] def dropNulls(j: Json): Json = j.withObject { c ⇒
     val fields = c.toList.filterNot { case (f, v) ⇒ v.isNull }
     JsonObject.fromIterable(fields).asJson
@@ -36,7 +38,7 @@ abstract class ApiRequestExecutor(implicit system: ActorSystem, materializer: Ma
   private[this] def go[B: Decoder](methodName: String, payload: Json): Future[Response[B]] = {
     val uri = "https://" |+| telegramHost |+| "/bot" + token |+| "/" + methodName
     for {
-      response ← Http().singleRequest(RequestBuilding.Post(Uri(uri), content = dropNulls(payload)))
+      response ← http.singleRequest(RequestBuilding.Post(Uri(uri), content = dropNulls(payload)))
       decoded ← circeUnmarshaller(responseDecoder).apply(response.entity)
     } yield decoded
   }
