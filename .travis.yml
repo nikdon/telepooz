@@ -5,12 +5,13 @@ scala:
 jdk:
   - oraclejdk8
 
-before_install:
+install:
   - pip install --user codecov
 
 script:
   - sbt ++$TRAVIS_SCALA_VERSION test
-  - sbt clean coverage test
+  - sbt ++$TRAVIS_SCALA_VERSION clean coverage test &&
+    sbt ++$TRAVIS_SCALA_VERSION coverageReport && codecov
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
