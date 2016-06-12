@@ -46,9 +46,10 @@ And configure telepooz via the `reference.conf` or `aplication.conf` or by, for 
 
 ## Why?
 
-The only one reason to write was curiosity. Telepooz written on top of **[Akka Streams][akka]** 
-with intention to maximize using of functional abstractions provided by **[cats][cats]** 
-and [shapeless][shapeless]. For example, api request are composable:
+
+The only one reason to write was curiosity. Telepooz written on top of **[Akka Streams][akka]** with intention to 
+maximize using of functional abstractions provided by **[cats][cats]** and [shapeless][shapeless]. For example, API 
+requests are composable:
 
     ```scala
     // def execute[F[_], R](m: F[R]): Free[F, R] = m.step
@@ -76,13 +77,13 @@ telepooz is far from completion, here is a list of some desired features to impl
 
 ## Usage
 
-In general bot consists of three parts: `ApiRequestExecutor`, `Polling` or `WebHook` and `Reactor`. 
-`ApiRequestExecutor` creates requests to the telegram bot api endpoint. `Polling` asks telegram sever about new updates 
-via `ApiRequestExecutor` and send them to the `Reactor`. `WebHook` receives new updates via incoming request from 
-telegram. Finally `Reactor` reacts on an input stream of incoming updates from the `Polling` or `WebHook`. 
+In general, bot consists of three parts: `ApiRequestExecutor`, `Polling` or `WebHook` and `Reactor`. 
+`ApiRequestExecutor` creates requests to the telegram bot API endpoint. `Polling` asks telegram server about new 
+updates via `ApiRequestExecutor` and send them to the `Reactor`. `WebHook` receives new updates via incoming requests 
+from telegram. Finally `Reactor` reacts on an input stream of incoming updates from the `Polling` or `WebHook`. 
 Toplevel `Telepooz` trait provides a method `instance` that is a 
-`ReaderT[Future, (ApiRequestExecutor, Polling, Reactor), Done]`. To start a bot it is necessary to provide a valid 
-input for `instance.run(...)` with all three ingredients described above.
+`ReaderT[Future, (ApiRequestExecutor, Polling, Reactor), Done]`. To start a bot provide a valid input 
+for `instance.run(...)` with all three components described above.
 
     ```scala
     /** Just an example of how the bot might look like */
