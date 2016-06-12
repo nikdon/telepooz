@@ -23,55 +23,51 @@ libraryDependencies += "com.github.nikdon" % "telepooz" % "-SNAPSHOT"
 
 And configure telepooz via the `reference.conf` or `aplication.conf` or by, for ex., env variables:
  
-    ```scala
-    telegram {
-      host = "api.telegram.org"
-      token = "123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11"
-      token = ${?telegram_token}
-    
-      polling {
-        interval = 1000 // in milliseconds
-        interval = ${?telegram_update_interval}
-        limit = 100
-        limit = ${?telegram_update_limit}
-        parallelism = 2
-        parallelism = ${?telegram_polling_parallelism}
-      }
-    
-      reactor {
-        parallelism = 2
-        parallelism = ${?telegram_reactor_parallelism}
-      }
-    } 
-    ```
- 
+```scala
+telegram {
+  host = "api.telegram.org"
+  token = "123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11"
+  token = ${?telegram_token}
 
+  polling {
+    interval = 1000 // in milliseconds
+    interval = ${?telegram_update_interval}
+    limit = 100
+    limit = ${?telegram_update_limit}
+    parallelism = 2
+    parallelism = ${?telegram_polling_parallelism}
+  }
+
+  reactor {
+    parallelism = 2
+    parallelism = ${?telegram_reactor_parallelism}
+  }
+} 
+```
 
 ## Why?
-
 
 The only one reason to write was curiosity. Telepooz written on top of **[Akka Streams][akka]** with intention to 
 maximize using of functional abstractions provided by **[cats][cats]** and [shapeless][shapeless]. For example, API 
 requests are composable:
 
-    ```scala
-    // def execute[F[_], R](m: F[R]): Free[F, R] = m.step
-    
-    val req = for {
-      a ← api.execute(model.methods.GetMe.toRawRequest)
-      b ← api.execute(model.methods.SendMessage(123.chatId, a.result.fold("empty")(_.first_name)).toRawRequest)
-    } yield b
+```scala
+// def execute[F[_], R](m: F[R]): Free[F, R] = m.step
 
-    val res = req.foldMap(apiRequestExecutor)
+val req = for {
+  a ← api.execute(model.methods.GetMe.toRawRequest)
+  b ← api.execute(model.methods.SendMessage(123.chatId, a.result.fold("empty")(_.first_name)).toRawRequest)
+} yield b
 
-    whenReady(res){ m ⇒
-      m shouldBe a [Response[_]]
-      m.ok shouldEqual true
-      m.result shouldBe defined
-      m.result.value shouldBe a [model.Message]
-    }
-    ```
+val res = req.foldMap(apiRequestExecutor)
 
+whenReady(res){ m ⇒
+  m shouldBe a [Response[_]]
+  m.ok shouldEqual true
+  m.result shouldBe defined
+  m.result.value shouldBe a [model.Message]
+}
+```
 
 telepooz is far from completion, here is a list of some desired features to implemented in future:
 
@@ -88,29 +84,28 @@ Toplevel `Telepooz` trait provides a method `instance` that is a
 `ReaderT[Future, (ApiRequestExecutor, Polling, Reactor), Done]`. To start a bot provide a valid input 
 for `instance.run(...)` with all three components described above.
 
-    ```scala
-    /** Just an example of how the bot might look like */
-    object NaiveBot extends Telepooz with App {
-    
-      implicit val are = new ApiRequestExecutor {}
-      val poller  = new Polling
-      val reactor = new Reactor {
-    
-        /** Initialize as lazy val */
-        lazy val reactions: Map[String, Reaction] = Map(
-          "/start" → (implicit message ⇒ args ⇒ {
-            reply("You are started!")
-          }),
-          "/test" → (implicit message ⇒ args ⇒ {
-            reply("Hi there!")
-          })
-        )
-      }
-    
-      instance.run((are, poller, reactor))
-    }
-    ```
+```scala
+/** Just an example of how the bot might look like */
+object NaiveBot extends Telepooz with App {
 
+  implicit val are = new ApiRequestExecutor {}
+  val poller  = new Polling
+  val reactor = new Reactor {
+
+    /** Initialize as lazy val */
+    lazy val reactions: Map[String, Reaction] = Map(
+      "/start" → (implicit message ⇒ args ⇒ {
+        reply("You are started!")
+      }),
+      "/test" → (implicit message ⇒ args ⇒ {
+        reply("Hi there!")
+      })
+    )
+  }
+
+  instance.run((are, poller, reactor))
+}
+```
 
 ## License
 
