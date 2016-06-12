@@ -6,10 +6,11 @@ import com.github.nikdon.telepooz.tags
 import io.circe.syntax._
 import org.scalacheck.Arbitrary._
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{FlatSpec, Matchers, OptionValues}
 
 
 class CallbackQueryTest extends FlatSpec
+                                with OptionValues
                                 with Matchers
                                 with GeneratorDrivenPropertyChecks
                                 with tags.Syntax
@@ -22,7 +23,7 @@ class CallbackQueryTest extends FlatSpec
   it should "convert to a json and back to a model" in {
     forAll(callbackQueryGen) { callbackQuery ⇒
       val json = callbackQuery.asJson.noSpaces
-      io.circe.parser.decode[CallbackQuery](json) foreach (res ⇒ res shouldEqual callbackQuery)
+      io.circe.parser.decode[CallbackQuery](json).toOption.value shouldEqual callbackQuery
     }
   }
 }

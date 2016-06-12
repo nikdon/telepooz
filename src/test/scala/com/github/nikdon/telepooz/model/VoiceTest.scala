@@ -7,10 +7,11 @@ import com.github.nikdon.telepooz.tags
 import io.circe.syntax._
 import org.scalacheck.Arbitrary._
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{FlatSpec, Matchers, OptionValues}
 
 
 class VoiceTest extends FlatSpec
+                        with OptionValues
                         with Matchers
                         with GeneratorDrivenPropertyChecks
                         with tags.Syntax
@@ -23,7 +24,7 @@ class VoiceTest extends FlatSpec
   it should "convert to a json and back to a model" in {
     forAll(voiceGen) { voice ⇒
       val json = voice.asJson.noSpaces
-      io.circe.parser.decode[Voice](json) foreach (res ⇒ res shouldEqual voice)
+      io.circe.parser.decode[Voice](json).toOption.value shouldEqual voice
     }
   }
 }

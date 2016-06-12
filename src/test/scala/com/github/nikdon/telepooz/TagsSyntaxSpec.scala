@@ -1,6 +1,6 @@
 package com.github.nikdon.telepooz
 
-import com.github.nikdon.telepooz.tags.{FileId, UserId}
+import com.github.nikdon.telepooz.tags.{FileId, ResultId, UserId}
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
 import org.scalatest.{FlatSpec, Matchers}
@@ -22,6 +22,10 @@ class TagsSyntaxSpec extends FlatSpec
 
     forAll(arbitrary[String]) { s ⇒
       s.fileId shouldBe tag[FileId](s)
+    }
+
+    forAll(arbitrary[String]) { s ⇒
+      s.resultId shouldBe tag[ResultId](s)
     }
   }
 

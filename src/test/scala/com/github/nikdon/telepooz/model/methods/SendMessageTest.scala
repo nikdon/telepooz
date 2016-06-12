@@ -1,8 +1,9 @@
 package com.github.nikdon.telepooz.model.methods
 
-import com.github.nikdon.telepooz.model.ParseMode
+import com.github.nikdon.telepooz.model.{ForceReplyTest, InlineKeyboardMarkupTest, ParseMode, ReplyKeyboardHideTest, ReplyKeyboardMarkupTest}
 import com.github.nikdon.telepooz.raw.CirceEncoders
 import com.github.nikdon.telepooz.tags
+import io.circe.Json
 import io.circe.syntax._
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.Gen
@@ -21,15 +22,13 @@ class SendMessageTest extends FlatSpec
 
   it should "convert to json with chat id of type String" in {
     forAll(sendMessageStringChatIdGen) { sendMessage ⇒
-      val json = sendMessage.asJson
-      // println("json = " + json)
+      sendMessage.asJson should not be Json.Null
     }
   }
 
   it should "convert to json with chat id of type Int" in {
     forAll(sendMessageIntChatIdGen) { sendMessage ⇒
-      val json = sendMessage.asJson
-      // println("json = " + json)
+      sendMessage.asJson should not be Json.Null
     }
   }
 
@@ -43,8 +42,11 @@ object SendMessageTest extends tags.Syntax {
     disableWebPagePreview ← arbitrary[Option[Boolean]]
     disableNotification ← arbitrary[Option[Boolean]]
     replyToMessageId ← arbitrary[Option[Long]].map(_.map(_.messageId))
-    // replyMarkup TODO
-  } yield SendMessage(id, text, parseMode, disableWebPagePreview, disableNotification, replyToMessageId, None)
+    replyMarkup ← arbitrary[Option[Boolean]].map(_ ⇒ Gen.oneOf(ReplyKeyboardMarkupTest.replyKeyboardMarkupGen,
+                                                               InlineKeyboardMarkupTest.inlineKeyboardMarkupGen,
+                                                               ReplyKeyboardHideTest.replyKeyboardHideGen,
+                                                               ForceReplyTest.forceReplyGen).sample)
+  } yield SendMessage(id, text, parseMode, disableWebPagePreview, disableNotification, replyToMessageId, replyMarkup)
 
   val sendMessageIntChatIdGen = for {
     id ← arbitrary[Long].map(_.chatId)
@@ -53,6 +55,9 @@ object SendMessageTest extends tags.Syntax {
     disableWebPagePreview ← arbitrary[Option[Boolean]]
     disableNotification ← arbitrary[Option[Boolean]]
     replyToMessageId ← arbitrary[Option[Long]].map(_.map(_.messageId))
-    // replyMarkup TODO
-  } yield SendMessage(id, text, parseMode, disableWebPagePreview, disableNotification, replyToMessageId, None)
+    replyMarkup ← arbitrary[Option[Boolean]].map(_ ⇒ Gen.oneOf(ReplyKeyboardMarkupTest.replyKeyboardMarkupGen,
+                                                               InlineKeyboardMarkupTest.inlineKeyboardMarkupGen,
+                                                               ReplyKeyboardHideTest.replyKeyboardHideGen,
+                                                               ForceReplyTest.forceReplyGen).sample)
+  } yield SendMessage(id, text, parseMode, disableWebPagePreview, disableNotification, replyToMessageId, replyMarkup)
 }

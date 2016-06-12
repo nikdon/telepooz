@@ -6,14 +6,15 @@ import com.github.nikdon.telepooz.tags
 import io.circe.syntax._
 import org.scalacheck.Gen
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{FlatSpec, Matchers, OptionValues}
 
 class ChatMemberTest extends FlatSpec
-                       with Matchers
-                       with GeneratorDrivenPropertyChecks
-                       with tags.Syntax
-                       with CirceEncoders
-                       with CirceDecoders {
+                             with OptionValues
+                             with Matchers
+                             with GeneratorDrivenPropertyChecks
+                             with tags.Syntax
+                             with CirceEncoders
+                             with CirceDecoders {
 
   behavior of "ChatMember"
   import ChatMemberTest._
@@ -21,7 +22,7 @@ class ChatMemberTest extends FlatSpec
   it should "convert to a json and back to a model" in {
     forAll(chatMemberGen) { chatMember ⇒
       val json = chatMember.asJson.noSpaces
-      io.circe.parser.decode[Chat](json) foreach (res ⇒ res shouldEqual chatMember)
+      io.circe.parser.decode[ChatMember](json).toOption.value shouldEqual chatMember
     }
   }
 }

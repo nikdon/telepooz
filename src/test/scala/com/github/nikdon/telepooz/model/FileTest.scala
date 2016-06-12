@@ -5,10 +5,11 @@ import com.github.nikdon.telepooz.tags
 import io.circe.syntax._
 import org.scalacheck.Arbitrary._
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{FlatSpec, Matchers, OptionValues}
 
 
 class FileTest extends FlatSpec
+                       with OptionValues
                        with Matchers
                        with GeneratorDrivenPropertyChecks
                        with tags.Syntax
@@ -22,7 +23,7 @@ class FileTest extends FlatSpec
   it should "convert to a json and back to a model" in {
     forAll(fileGen) { file ⇒
       val json = file.asJson.noSpaces
-      io.circe.parser.decode[File](json) foreach (res ⇒ res shouldEqual file)
+      io.circe.parser.decode[File](json).toOption.value shouldEqual file
     }
   }
 

@@ -5,10 +5,11 @@ import com.github.nikdon.telepooz.tags
 import io.circe.syntax._
 import org.scalacheck.Arbitrary._
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{FlatSpec, Matchers, OptionValues}
 
 
 class LocationTest extends FlatSpec
+                           with OptionValues
                            with Matchers
                            with GeneratorDrivenPropertyChecks
                            with tags.Syntax
@@ -21,7 +22,7 @@ class LocationTest extends FlatSpec
   it should "convert to a json and back to a model" in {
     forAll(locationGen) { location ⇒
       val json = location.asJson.noSpaces
-      io.circe.parser.decode[Location](json) foreach (res ⇒ res shouldEqual location)
+      io.circe.parser.decode[Location](json).toOption.value shouldEqual location
     }
   }
 }

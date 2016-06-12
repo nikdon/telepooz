@@ -7,10 +7,11 @@ import io.circe.syntax._
 import org.scalacheck.Arbitrary._
 import org.scalacheck.Gen
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{FlatSpec, Matchers, OptionValues}
 
 
 class UserProfilePhotosTest extends FlatSpec
+                                    with OptionValues
                                     with Matchers
                                     with GeneratorDrivenPropertyChecks
                                     with tags.Syntax
@@ -24,7 +25,7 @@ class UserProfilePhotosTest extends FlatSpec
   it should "convert to a json and back to a model" in {
     forAll(stickerGen) { sticker ⇒
       val json = sticker.asJson.noSpaces
-      io.circe.parser.decode[UserProfilePhotos](json) foreach (res ⇒ res shouldEqual sticker)
+      io.circe.parser.decode[UserProfilePhotos](json).toOption.value shouldEqual sticker
     }
   }
 }

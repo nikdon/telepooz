@@ -6,15 +6,16 @@ import com.github.nikdon.telepooz.tags
 import io.circe.syntax._
 import org.scalacheck.Arbitrary._
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{FlatSpec, Matchers, OptionValues}
 
 
 class StickerTest extends FlatSpec
-                            with Matchers
-                            with GeneratorDrivenPropertyChecks
-                            with tags.Syntax
-                            with CirceEncoders
-                            with CirceDecoders {
+                          with OptionValues
+                          with Matchers
+                          with GeneratorDrivenPropertyChecks
+                          with tags.Syntax
+                          with CirceEncoders
+                          with CirceDecoders {
 
   behavior of "Sticker"
 
@@ -23,7 +24,7 @@ class StickerTest extends FlatSpec
   it should "convert to a json and back to a model" in {
     forAll(stickerGen) { sticker ⇒
       val json = sticker.asJson.noSpaces
-      io.circe.parser.decode[Sticker](json) foreach (res ⇒ res shouldEqual sticker)
+      io.circe.parser.decode[Sticker](json).toOption.value shouldEqual sticker
     }
   }
 }

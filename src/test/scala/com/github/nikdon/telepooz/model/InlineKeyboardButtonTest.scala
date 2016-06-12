@@ -6,10 +6,11 @@ import com.github.nikdon.telepooz.tags
 import io.circe.syntax._
 import org.scalacheck.Arbitrary._
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{FlatSpec, Matchers, OptionValues}
 
 
 class InlineKeyboardButtonTest extends FlatSpec
+                                       with OptionValues
                                        with Matchers
                                        with GeneratorDrivenPropertyChecks
                                        with tags.Syntax
@@ -22,7 +23,7 @@ class InlineKeyboardButtonTest extends FlatSpec
   it should "convert to a json and back to a model" in {
     forAll(inlineKeyboardButtonGen) { inlineKeyboardButton ⇒
       val json = inlineKeyboardButton.asJson.noSpaces
-      io.circe.parser.decode[InlineKeyboardButton](json) foreach (res ⇒ res shouldEqual inlineKeyboardButton)
+      io.circe.parser.decode[InlineKeyboardButton](json).toOption.value shouldEqual inlineKeyboardButton
     }
   }
 }

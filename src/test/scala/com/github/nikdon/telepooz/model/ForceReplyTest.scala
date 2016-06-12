@@ -6,10 +6,11 @@ import com.github.nikdon.telepooz.tags
 import io.circe.syntax._
 import org.scalacheck.Arbitrary._
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{FlatSpec, Matchers, OptionValues}
 
 
 class ForceReplyTest extends FlatSpec
+                             with OptionValues
                              with Matchers
                              with GeneratorDrivenPropertyChecks
                              with tags.Syntax
@@ -23,7 +24,7 @@ class ForceReplyTest extends FlatSpec
   it should "convert to a json and back to a model" in {
     forAll(forceReplyGen) { forceReply ⇒
       val json = forceReply.asJson.noSpaces
-      io.circe.parser.decode[ForceReply](json) foreach (res ⇒ res shouldEqual forceReply)
+      io.circe.parser.decode[ForceReply](json).toOption.value shouldEqual forceReply
     }
   }
 }

@@ -7,10 +7,11 @@ import io.circe.syntax._
 import org.scalacheck.Arbitrary._
 import org.scalacheck.Gen
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{FlatSpec, Matchers, OptionValues}
 
 
 class ReplyKeyboardMarkupTest extends FlatSpec
+                                      with OptionValues
                                       with Matchers
                                       with GeneratorDrivenPropertyChecks
                                       with tags.Syntax
@@ -23,7 +24,7 @@ class ReplyKeyboardMarkupTest extends FlatSpec
   it should "convert to a json and back to a model" in {
     forAll(replyKeyboardMarkupGen) { replyKeyboardMarkup ⇒
       val json = replyKeyboardMarkup.asJson.noSpaces
-      io.circe.parser.decode[ReplyKeyboardMarkup](json) foreach (res ⇒ res shouldEqual replyKeyboardMarkup)
+      io.circe.parser.decode[ReplyKeyboardMarkup](json).toOption.value shouldEqual replyKeyboardMarkup
     }
   }
 }

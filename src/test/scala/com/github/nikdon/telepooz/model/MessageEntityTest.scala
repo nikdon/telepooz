@@ -7,10 +7,11 @@ import io.circe.syntax._
 import org.scalacheck.Arbitrary._
 import org.scalacheck.Gen
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{FlatSpec, Matchers, OptionValues}
 
 
 class MessageEntityTest extends FlatSpec
+                                with OptionValues
                                 with Matchers
                                 with GeneratorDrivenPropertyChecks
                                 with tags.Syntax
@@ -24,7 +25,7 @@ class MessageEntityTest extends FlatSpec
   it should "convert to a json and back to a model" in {
     forAll(messageEntityGen) { messageEntity ⇒
       val json = messageEntity.asJson.noSpaces
-      io.circe.parser.decode[MessageEntity](json) foreach (res ⇒ res shouldEqual messageEntity)
+      io.circe.parser.decode[MessageEntity](json).toOption.value shouldEqual messageEntity
     }
   }
 
