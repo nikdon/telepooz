@@ -1,6 +1,7 @@
 # telepooz
 [![Build Status](https://travis-ci.org/nikdon/telepooz.svg?branch=master)](https://travis-ci.org/nikdon/telepooz)
 [![codecov](https://codecov.io/gh/nikdon/telepooz/branch/master/graph/badge.svg)](https://codecov.io/gh/nikdon/telepooz)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/42eedce6ec0d4c03bab471f610020aec)](https://www.codacy.com/app/nd/telepooz?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=nikdon/telepooz&amp;utm_campaign=Badge_Grade)
 [![](https://jitpack.io/v/nikdon/telepooz.svg)](https://jitpack.io/#nikdon/telepooz)
 
 telepooz is a scala wrapper for **[Telegram Bot API][telegram-api]**.
