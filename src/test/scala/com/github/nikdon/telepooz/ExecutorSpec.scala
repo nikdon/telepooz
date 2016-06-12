@@ -9,14 +9,18 @@ import com.github.nikdon.telepooz.model.methods.ChatAction
 import com.github.nikdon.telepooz.model.{Response, methods}
 import com.github.nikdon.telepooz.raw.CirceEncoders
 import com.github.nikdon.telepooz.tags.syntax._
-import org.scalatest.concurrent.ScalaFutures
+import org.scalatest.concurrent.{Eventually, ScalaFutures}
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
 import org.scalatest.{FlatSpec, Matchers, OptionValues}
+
+import scala.concurrent.duration._
+import scala.language.postfixOps
 
 
 class ExecutorSpec extends FlatSpec
                            with ScalaFutures
                            with OptionValues
+                           with Eventually
                            with Matchers
                            with GeneratorDrivenPropertyChecks
                            with CirceEncoders {
@@ -57,11 +61,13 @@ class ExecutorSpec extends FlatSpec
 
     val res = req.foldMap(mockApiReqExe)
 
-    whenReady(res){ m ⇒
-      m shouldBe a [Response[_]]
-      m.ok shouldEqual true
-      m.result shouldBe defined
-      m.result.value shouldBe a [model.Message]
+    eventually(timeout(10 seconds), interval(500 millis)) {
+      whenReady(res) { m ⇒
+        m shouldBe a[Response[_]]
+        m.ok shouldEqual true
+        m.result shouldBe defined
+        m.result.value shouldBe a[model.Message]
+      }
     }
   }
 }
