@@ -20,9 +20,9 @@ import scala.concurrent.duration._
 class Polling(implicit apiRequestExecutor: ApiRequestExecutor, ec: ExecutionContextExecutor, logger: LoggingAdapter) {
 
   private[this] val config     : Config         = ConfigFactory.load()
-  private[this] val interval   : FiniteDuration = config.getInt("telegram.poller.interval").millis
-  private[this] val limit      : Int            = config.getInt("telegram.poller.limit")
-  private[this] val parallelism: Int            = config.getInt("telegram.poller.parallelism")
+  private[this] val interval   : FiniteDuration = config.getInt("telegram.polling.interval").millis
+  private[this] val limit      : Int            = config.getInt("telegram.polling.limit")
+  private[this] val parallelism: Int            = config.getInt("telegram.polling.parallelism")
 
   val pollGraph: Graph[SourceShape[Update], NotUsed] = GraphDSL.create() { implicit builder ⇒
     import GraphDSL.Implicits._
