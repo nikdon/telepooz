@@ -77,6 +77,12 @@ trait CirceEncoders {
   implicit val inputLocationMessageContentEncoder: Encoder[inline.InputLocationMessageContent] = deriveEncoder[inline.InputLocationMessageContent]
   implicit val inputTextMessageContentEncoder: Encoder[inline.InputTextMessageContent] = deriveEncoder[inline.InputTextMessageContent]
 
+  implicit def inlineQueryResultArticle(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultArticle] = deriveEncoder[inline.InlineQueryResultArticle]
+  implicit def inlineQueryResultPhoto(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultPhoto] = deriveEncoder[inline.InlineQueryResultPhoto]
+  implicit def inlineQueryResultGif(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultGif] = deriveEncoder[inline.InlineQueryResultGif]
+
+  implicit def answerInlineQueryEncoder(implicit E: Encoder[String @@ QueryId]): Encoder[inline.AnswerInlineQuery] = deriveEncoder[inline.AnswerInlineQuery]
+
   // Methods
   implicit val getMeJsonEncoder: Encoder[GetMe.type] = Encoder.instance(_ ⇒ io.circe.Json.Null)
   implicit def sendMessageJsonEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId]): Encoder[SendMessage[A]] = deriveEncoder[SendMessage[A]]
