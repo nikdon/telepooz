@@ -11,7 +11,7 @@ import com.github.nikdon.telepooz.model._
 import com.github.nikdon.telepooz.tags
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContextExecutor, Future}
@@ -21,7 +21,8 @@ class ReactorTest extends FlatSpec
                           with Matchers
                           with GeneratorDrivenPropertyChecks
                           with tags.Syntax
-                          with ScalaFutures {
+                          with ScalaFutures
+                          with BeforeAndAfterAll {
 
   implicit val system: ActorSystem = ActorSystem("ReactorTestSystem")
   implicit val executor: ExecutionContextExecutor = system.dispatcher
@@ -48,7 +49,6 @@ class ReactorTest extends FlatSpec
   }
 
   it should "react on the update with `/test` command" in {
-
     val probe = TestProbe()
 
     val triggeringReactor = new Reactor() {
@@ -70,5 +70,32 @@ class ReactorTest extends FlatSpec
         probe.expectMsg(100.millis, "test")
       }
     }
+  }
+
+  it should "not react on the update without proper command" in {
+    val probe = TestProbe()
+
+    val triggeringReactor = new Reactor() {
+      /** Override as lazy val */
+      override lazy val reactions: Map[String, Reaction] = Map(
+        "/test" → (implicit message ⇒ args ⇒ {
+          Future.successful("test") pipeTo probe.ref
+        })
+      )
+    }
+
+    val update = UpdateTest.updateGen.sample.get
+    val msg = update.message.map(_.copy(text = Some("/nottest")))
+    val upd = update.copy(message = msg)
+    val future = Source.single(upd).runWith(triggeringReactor.react)
+
+    whenReady(future) { res ⇒
+      res shouldBe Done
+      probe.expectNoMsg(100.millis)
+    }
+  }
+
+  override protected def afterAll(): Unit = {
+    system.terminate().futureValue
   }
 }
