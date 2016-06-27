@@ -3,15 +3,18 @@ package com.github.nikdon.telepooz.engine
 import akka.Done
 import akka.actor.ActorSystem
 import akka.event.Logging
+import akka.pattern.pipe
 import akka.stream.scaladsl.Source
 import akka.stream.{ActorMaterializer, Materializer}
-import com.github.nikdon.telepooz.model.Update
+import akka.testkit.TestProbe
+import com.github.nikdon.telepooz.model._
 import com.github.nikdon.telepooz.tags
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
 import org.scalatest.{FlatSpec, Matchers}
 
-import scala.concurrent.ExecutionContextExecutor
+import scala.concurrent.duration._
+import scala.concurrent.{ExecutionContextExecutor, Future}
 
 
 class ReactorTest extends FlatSpec
@@ -26,19 +29,45 @@ class ReactorTest extends FlatSpec
   implicit val logger = Logging(system, getClass)
   implicit val are = new ApiRequestExecutor() {}
 
-  val reactor = new Reactor() {
-    /** Override as lazy val */
-    override lazy val reactions: Map[String, Reaction] = Map()
-  }
-
 
   behavior of "Reactor"
 
-  it should "handle input Updates" in {
+  it should "handle input Update" in {
+
+    val reactor = new Reactor() {
+      /** Override as lazy val */
+      override lazy val reactions: Map[String, Reaction] = Map()
+    }
+
     forAll { id: Long ⇒
       val future = Source.single(Update(id.updateId)).runWith(reactor.react)
       whenReady(future) {
         res ⇒ res shouldBe Done
+      }
+    }
+  }
+
+  it should "react on the update with `/test` command" in {
+
+    val probe = TestProbe()
+
+    val triggeringReactor = new Reactor() {
+      /** Override as lazy val */
+      override lazy val reactions: Map[String, Reaction] = Map(
+        "/test" → (implicit message ⇒ args ⇒ {
+          Future.successful("test") pipeTo probe.ref
+        })
+      )
+    }
+
+    forAll(UpdateTest.updateGen) { update ⇒
+      val msg = update.message.map(_.copy(text = Some("/test")))
+      val upd = update.copy(message = msg)
+      val future = Source.single(upd).runWith(triggeringReactor.react)
+
+      whenReady(future) { res ⇒
+        res shouldBe Done
+        probe.expectMsg(100.millis, "test")
       }
     }
   }
