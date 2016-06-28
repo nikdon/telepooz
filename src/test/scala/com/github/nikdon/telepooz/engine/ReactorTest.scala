@@ -9,7 +9,7 @@ import akka.stream.{ActorMaterializer, Materializer}
 import akka.testkit.TestProbe
 import com.github.nikdon.telepooz.model._
 import com.github.nikdon.telepooz.tags
-import org.scalatest.concurrent.ScalaFutures
+import org.scalatest.concurrent.{ScalaFutures, ScaledTimeSpans}
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
 import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 
@@ -22,7 +22,10 @@ class ReactorTest extends FlatSpec
                           with GeneratorDrivenPropertyChecks
                           with tags.Syntax
                           with ScalaFutures
-                          with BeforeAndAfterAll {
+                          with BeforeAndAfterAll
+                          with ScaledTimeSpans {
+
+  override def spanScaleFactor: Double = 2.0
 
   implicit val system: ActorSystem = ActorSystem("ReactorTestSystem")
   implicit val executor: ExecutionContextExecutor = system.dispatcher
@@ -96,6 +99,6 @@ class ReactorTest extends FlatSpec
   }
 
   override protected def afterAll(): Unit = {
-    system.terminate().futureValue
+    system.terminate()
   }
 }
