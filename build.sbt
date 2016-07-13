@@ -34,10 +34,10 @@ buildSettings ++ baseSettings
 
 
 lazy val akkaHttpJsonV = "1.7.0"
-lazy val circeVersion = "0.4.1"
-lazy val akkaVersion = "2.4.7"
-lazy val catsV = "0.5.0"
-lazy val shapelessVersion = "2.3.0"
+lazy val circeVersion = "0.5.0-M2"
+lazy val akkaVersion = "2.4.8"
+lazy val catsV = "0.6.0"
+lazy val shapelessVersion = "2.3.1"
 
 lazy val scalaTestV = "2.2.6"
 lazy val scalaCheckV = "1.12.5"
@@ -45,14 +45,14 @@ lazy val scalaCheckV = "1.12.5"
 libraryDependencies ++= Seq(
   "org.typelevel" %% "cats" % catsV,
 
-  "com.typesafe.akka" %% "akka-actor" % akkaVersion,
-  "com.typesafe.akka" %% "akka-http-core" % akkaVersion,
+  "com.typesafe.akka" %% "akka-actor"             % akkaVersion,
+  "com.typesafe.akka" %% "akka-http-core"         % akkaVersion,
   "com.typesafe.akka" %% "akka-http-experimental" % akkaVersion,
-  "com.typesafe.akka" %% "akka-testkit" % akkaVersion,
+  "com.typesafe.akka" %% "akka-testkit"           % akkaVersion,
 
-  "io.circe" %% "circe-core" % circeVersion,
+  "io.circe" %% "circe-core"    % circeVersion,
   "io.circe" %% "circe-generic" % circeVersion,
-  "io.circe" %% "circe-parser" % circeVersion,
+  "io.circe" %% "circe-parser"  % circeVersion,
   "de.heikoseeberger" %% "akka-http-circe" % akkaHttpJsonV,
 
   "com.chuusai" %% "shapeless" % shapelessVersion,
