@@ -33,14 +33,14 @@ lazy val baseSettings = Seq(
 buildSettings ++ baseSettings
 
 
-lazy val akkaHttpJsonV = "1.7.0"
-lazy val circeVersion = "0.5.0-M2"
-lazy val akkaVersion = "2.4.8"
-lazy val catsV = "0.6.0"
+lazy val akkaHttpJsonV = "1.9.0"
+lazy val circeVersion = "0.5.0-M3"
+lazy val akkaVersion = "2.4.9"
+lazy val catsV = "0.7.0"
 lazy val shapelessVersion = "2.3.1"
 
-lazy val scalaTestV = "2.2.6"
-lazy val scalaCheckV = "1.12.5"
+lazy val scalaTestV = "3.0.0"
+lazy val scalaCheckV = "1.13.2"
 
 libraryDependencies ++= Seq(
   "org.typelevel" %% "cats" % catsV,
