@@ -231,3 +231,30 @@ case class InlineQueryResultDocument(`type`: String = "document",
                                      thumb_height: Option[Int] = None,
                                      reply_markup: Option[InlineKeyboardMarkup] = None,
                                      input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+
+
+/**
+  * Represents a location on a map. By default, the location will be sent by the user. Alternatively, you can use
+  * input_message_content to send a message with the specified content instead of the location.
+  *
+  * @param `type`                 Type of the result, must be location
+  * @param id                     Unique identifier for this result, 1-64 Bytes
+  * @param title                  Location title
+  * @param latitude               Location latitude in degrees
+  * @param longitude              Location longitude in degrees
+  * @param thumb_url              URL of the thumbnail (jpeg only) for the file
+  * @param thumb_width            Thumbnail width
+  * @param thumb_height           Thumbnail height
+  * @param reply_markup           Inline keyboard attached to the message
+  * @param input_message_content  Content of the message to be sent instead of the file
+  */
+case class InlineQueryResultLocation(`type`: String = "location",
+                                     id: String,
+                                     title: String,
+                                     latitude: Double,
+                                     longitude: Double,
+                                     thumb_url: Option[String] = None,
+                                     thumb_width: Option[Int] = None,
+                                     thumb_height: Option[Int] = None,
+                                     reply_markup: Option[InlineKeyboardMarkup] = None,
+                                     input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult

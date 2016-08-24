@@ -60,4 +60,10 @@ class InlineQueryResultTest extends FlatSpec
       inlineQueryResultDocument.asJson should not be Json.Null
     }
   }
+
+  "InlineQueryResultLocation" should "convert to json" in {
+    forAll { inlineQueryResultLocation: InlineQueryResultLocation ⇒
+      inlineQueryResultLocation.asJson should not be Json.Null
+    }
+  }
 }
