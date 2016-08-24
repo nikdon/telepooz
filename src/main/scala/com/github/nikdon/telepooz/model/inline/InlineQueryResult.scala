@@ -177,3 +177,25 @@ case class InlineQueryResultAudio(`type`: String = "audio",
                                   audio_duration: Option[Int],
                                   reply_markup: Option[InlineKeyboardMarkup] = None,
                                   input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+
+
+/**
+  * Represents a link to a voice recording in an .ogg container encoded with OPUS. By default, this voice recording will
+  * be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content
+  * instead of the the voice message.
+  *
+  * @param `type`                 Type of the result, must be voice
+  * @param id                     Unique identifier for this result, 1-64 bytes
+  * @param voice_url              A valid URL for the voice recording
+  * @param title                  Recording title
+  * @param voice_duration         Recording duration in seconds
+  * @param reply_markup           Inline keyboard attached to the message
+  * @param input_message_content  Content of the message to be sent instead of the voice recording
+  */
+case class InlineQueryResultVoice(`type`: String = "voice",
+                                  id: String @@ ResultId,
+                                  voice_url: String,
+                                  title: String,
+                                  voice_duration: Option[Int],
+                                  reply_markup: Option[InlineKeyboardMarkup] = None,
+                                  input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
