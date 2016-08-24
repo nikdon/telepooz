@@ -289,3 +289,30 @@ case class InlineQueryResultVenue(`type`: String = "venue",
                                   thumb_height: Option[Int] = None,
                                   reply_markup: Option[InlineKeyboardMarkup] = None,
                                   input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+
+
+/**
+  * Represents a contact with a phone number. By default, this contact will be sent by the user. Alternatively, you can
+  * use input_message_content to send a message with the specified content instead of the contact.
+  *
+  * @param `type`                 Type of the result, must be contact
+  * @param id                     Unique identifier for this result, 1-64 Bytes
+  * @param phone_number           Contact's phone number
+  * @param first_name             Contact's first name
+  * @param last_name              Contact's last name
+  * @param thumb_url              URL of the thumbnail (jpeg only) for the file
+  * @param thumb_width            Thumbnail width
+  * @param thumb_height           Thumbnail height
+  * @param reply_markup           Inline keyboard attached to the message
+  * @param input_message_content  Content of the message to be sent instead of the file
+  */
+case class InlineQueryResultContact(`type`: String = "contact",
+                                    id: String,
+                                    phone_number: String,
+                                    first_name: String,
+                                    last_name: Option[String] = None,
+                                    thumb_url: Option[String] = None,
+                                    thumb_width: Option[Int] = None,
+                                    thumb_height: Option[Int] = None,
+                                    reply_markup: Option[InlineKeyboardMarkup] = None,
+                                    input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult

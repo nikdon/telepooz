@@ -72,4 +72,10 @@ class InlineQueryResultTest extends FlatSpec
       inlineQueryResultVenue.asJson should not be Json.Null
     }
   }
+
+  "InlineQueryResultContact" should "convert to json" in {
+    forAll { inlineQueryResultContact: InlineQueryResultContact ⇒
+      inlineQueryResultContact.asJson should not be Json.Null
+    }
+  }
 }

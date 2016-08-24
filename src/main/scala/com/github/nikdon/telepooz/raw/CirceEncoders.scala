@@ -87,6 +87,7 @@ trait CirceEncoders {
   implicit def inlineQueryResultDocumentEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultDocument] = deriveEncoder[inline.InlineQueryResultDocument]
   implicit def inlineQueryResultLocationEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultLocation] = deriveEncoder[inline.InlineQueryResultLocation]
   implicit def inlineQueryResultVenueEncoder(implicit E: Encoder[String @@ ResultId], EE: Encoder[String @@ FoursquareId]): Encoder[inline.InlineQueryResultVenue] = deriveEncoder[inline.InlineQueryResultVenue]
+  implicit def inlineQueryResultContactEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultContact] = deriveEncoder[inline.InlineQueryResultContact]
 
   implicit def answerInlineQueryEncoder(implicit E: Encoder[String @@ QueryId]): Encoder[inline.AnswerInlineQuery] = deriveEncoder[inline.AnswerInlineQuery]
 
