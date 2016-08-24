@@ -120,3 +120,37 @@ case class InlineQueryResultMpeg4Gif(`type`: String = "mpeg4_gif",
                                      caption: Option[String] = None,
                                      reply_markup: Option[InlineKeyboardMarkup] = None,
                                      input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+
+
+/**
+  * Represents a link to a page containing an embedded video player or a video file. By default, this video file will be
+  * sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with
+  * the specified content instead of the video.
+  *
+  * @param `type`                 Type of the result, must be video
+  * @param id                     Unique identifier for this result, 1-64 bytes
+  * @param video_url              A valid URL for the embedded video player or video file
+  * @param mime_type              Mime type of the content of video url, “text/html” or “video/mp4”
+  * @param thumb_url              URL of the thumbnail (jpeg only) for the video
+  * @param title                  Title for the result
+  * @param caption                Caption of the video to be sent, 0-200 characters
+  * @param video_width            Video width
+  * @param video_height           Video height
+  * @param video_duration         Video duration in seconds
+  * @param description            Short description of the result
+  * @param reply_markup           Inline keyboard attached to the message
+  * @param input_message_content  Content of the message to be sent instead of the video
+  */
+case class InlineQueryResultVideo(`type`: String = "video",
+                                  id: String @@ ResultId,
+                                  video_url: String,
+                                  mime_type: String,
+                                  thumb_url: String,
+                                  title: String,
+                                  caption: Option[String] = None,
+                                  video_width: Option[Int] = None,
+                                  video_height: Option[Int] = None,
+                                  video_duration: Option[Int] = None,
+                                  description: Option[String] = None,
+                                  reply_markup: Option[InlineKeyboardMarkup] = None,
+                                  input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
