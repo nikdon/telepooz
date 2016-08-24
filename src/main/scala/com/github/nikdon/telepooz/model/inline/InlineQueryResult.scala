@@ -199,3 +199,35 @@ case class InlineQueryResultVoice(`type`: String = "voice",
                                   voice_duration: Option[Int],
                                   reply_markup: Option[InlineKeyboardMarkup] = None,
                                   input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+
+
+/**
+  * Represents a link to a file. By default, this file will be sent by the user with an optional caption. Alternatively,
+  * you can use input_message_content to send a message with the specified content instead of the file. Currently, only
+  * .PDF and .ZIP files can be sent using this method.
+  *
+  * @param `type`                 Type of the result, must be document
+  * @param id                     Unique identifier for this result, 1-64 bytes
+  * @param title                  Title for the result
+  * @param caption                Caption of the document to be sent, 0-200 characters
+  * @param document_url           A valid URL for the file
+  * @param mime_type              Mime type of the content of the file, either “application/pdf” or “application/zip”
+  * @param description            Short description of the result
+  * @param thumb_url              URL of the thumbnail (jpeg only) for the file
+  * @param thumb_width            Thumbnail width
+  * @param thumb_height           Thumbnail height
+  * @param reply_markup           Inline keyboard attached to the message
+  * @param input_message_content  Content of the message to be sent instead of the file
+  */
+case class InlineQueryResultDocument(`type`: String = "document",
+                                     id: String,
+                                     title: String,
+                                     caption: Option[String] = None,
+                                     document_url: String,
+                                     mime_type: String,
+                                     description: Option[String] = None,
+                                     thumb_url: Option[String] = None,
+                                     thumb_width: Option[Int] = None,
+                                     thumb_height: Option[Int] = None,
+                                     reply_markup: Option[InlineKeyboardMarkup] = None,
+                                     input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult

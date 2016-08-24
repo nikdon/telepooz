@@ -54,4 +54,10 @@ class InlineQueryResultTest extends FlatSpec
       inlineQueryResultVoice.asJson should not be Json.Null
     }
   }
+
+  "InlineQueryResultDocument" should "convert to json" in {
+    forAll { inlineQueryResultDocument: InlineQueryResultDocument ⇒
+      inlineQueryResultDocument.asJson should not be Json.Null
+    }
+  }
 }
