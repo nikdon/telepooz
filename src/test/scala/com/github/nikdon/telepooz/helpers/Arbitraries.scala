@@ -135,6 +135,7 @@ object Arbitraries extends tags.Syntax {
   implicit val inlineQueryResultVideoArb   : Arbitrary[InlineQueryResultVideo]    = Arbitrary(Gen.resultOf(InlineQueryResultVideo))
   implicit val inlineQueryResultAudioArb   : Arbitrary[InlineQueryResultAudio]    = Arbitrary(Gen.resultOf(InlineQueryResultAudio))
   implicit val inlineQueryResultVoiceArb   : Arbitrary[InlineQueryResultVoice]    = Arbitrary(Gen.resultOf(InlineQueryResultVoice))
+  implicit val inlineQueryResultDocumentArb   : Arbitrary[InlineQueryResultDocument]    = Arbitrary(Gen.resultOf(InlineQueryResultDocument))
   implicit val inlineQueryResultArb        : Arbitrary[InlineQueryResult]         = Arbitrary(Gen.oneOf(
     inlineQueryResultArticleArb.arbitrary,
     inlineQueryResultPhotoArb.arbitrary,
@@ -142,7 +143,8 @@ object Arbitraries extends tags.Syntax {
     inlineQueryResultMpeg4GifArb.arbitrary,
     inlineQueryResultVideoArb.arbitrary,
     inlineQueryResultAudioArb.arbitrary,
-    inlineQueryResultVoiceArb.arbitrary
+    inlineQueryResultVoiceArb.arbitrary,
+    inlineQueryResultDocumentArb.arbitrary
   ))
 
   /** Methods */
