@@ -77,15 +77,19 @@ trait CirceEncoders {
   implicit val inputLocationMessageContentEncoder: Encoder[inline.InputLocationMessageContent] = deriveEncoder[inline.InputLocationMessageContent]
   implicit val inputTextMessageContentEncoder: Encoder[inline.InputTextMessageContent] = deriveEncoder[inline.InputTextMessageContent]
 
-  implicit def inlineQueryResultArticle(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultArticle] = deriveEncoder[inline.InlineQueryResultArticle]
-  implicit def inlineQueryResultPhoto(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultPhoto] = deriveEncoder[inline.InlineQueryResultPhoto]
-  implicit def inlineQueryResultGif(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultGif] = deriveEncoder[inline.InlineQueryResultGif]
+  implicit def inlineQueryResultArticleEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultArticle] = deriveEncoder[inline.InlineQueryResultArticle]
+  implicit def inlineQueryResultPhotoEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultPhoto] = deriveEncoder[inline.InlineQueryResultPhoto]
+  implicit def inlineQueryResultGifEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultGif] = deriveEncoder[inline.InlineQueryResultGif]
+  implicit def inlineQueryResultMpeg4GifEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultMpeg4Gif] = deriveEncoder[inline.InlineQueryResultMpeg4Gif]
+  implicit def inlineQueryResultVideoEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultVideo] = deriveEncoder[inline.InlineQueryResultVideo]
+  implicit def inlineQueryResultAudioEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultAudio] = deriveEncoder[inline.InlineQueryResultAudio]
+  implicit def inlineQueryResultVoiceEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultVoice] = deriveEncoder[inline.InlineQueryResultVoice]
 
   implicit def answerInlineQueryEncoder(implicit E: Encoder[String @@ QueryId]): Encoder[inline.AnswerInlineQuery] = deriveEncoder[inline.AnswerInlineQuery]
 
   // Methods
   implicit val getMeJsonEncoder: Encoder[GetMe.type] = Encoder.instance(_ ⇒ io.circe.Json.Null)
-  implicit def sendMessageJsonEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId]): Encoder[SendMessage[A]] = deriveEncoder[SendMessage[A]]
+  implicit def sendMessageJsonEncoder(implicit E: Encoder[Long @@ ChatId], EE: Encoder[Long @@ MessageId]): Encoder[SendMessage] = deriveEncoder[SendMessage]
   implicit def forwardMessageJsonEncoder[A: IsResourceId, B: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[B @@ ChatId], EEE: Encoder[Long @@ MessageId]): Encoder[ForwardMessage[A, B]] = deriveEncoder[ForwardMessage[A, B]]
   implicit def getUpdatesJsonEncoder(implicit E: Encoder[Long @@ UpdateId]): Encoder[GetUpdates] = deriveEncoder[GetUpdates]
   implicit def sendPhotoEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId], EEE: Encoder[String @@ FileId]): Encoder[SendPhoto[A]] = deriveEncoder[SendPhoto[A]]

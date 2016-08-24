@@ -7,8 +7,9 @@ import akka.pattern.pipe
 import akka.stream.scaladsl.Source
 import akka.stream.{ActorMaterializer, Materializer}
 import akka.testkit.TestProbe
+import com.github.nikdon.telepooz.helpers.Arbitraries._
 import com.github.nikdon.telepooz.model._
-import com.github.nikdon.telepooz.tags
+import org.scalacheck.Arbitrary.arbitrary
 import org.scalatest.concurrent.{ScalaFutures, ScaledTimeSpans}
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
 import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
@@ -20,12 +21,11 @@ import scala.concurrent.{ExecutionContextExecutor, Future}
 class ReactorTest extends FlatSpec
                           with Matchers
                           with GeneratorDrivenPropertyChecks
-                          with tags.Syntax
                           with ScalaFutures
                           with BeforeAndAfterAll
                           with ScaledTimeSpans {
 
-  override def spanScaleFactor: Double = 2.0
+  override def spanScaleFactor: Double = 10.0
 
   implicit val system: ActorSystem = ActorSystem("ReactorTestSystem")
   implicit val executor: ExecutionContextExecutor = system.dispatcher
@@ -63,9 +63,9 @@ class ReactorTest extends FlatSpec
       )
     }
 
-    forAll(UpdateTest.updateGen) { update ⇒
-      val msg = update.message.map(_.copy(text = Some("/test")))
-      val upd = update.copy(message = msg)
+    forAll { (update: Update, message: Message) ⇒
+      val msg = message.copy(text = Some("/test"))
+      val upd = update.copy(message = Some(msg))
       val future = Source.single(upd).runWith(triggeringReactor.react)
 
       whenReady(future) { res ⇒
@@ -87,7 +87,7 @@ class ReactorTest extends FlatSpec
       )
     }
 
-    val update = UpdateTest.updateGen.sample.get
+    val update = arbitrary[Update].sample.get
     val msg = update.message.map(_.copy(text = Some("/nottest")))
     val upd = update.copy(message = msg)
     val future = Source.single(upd).runWith(triggeringReactor.react)

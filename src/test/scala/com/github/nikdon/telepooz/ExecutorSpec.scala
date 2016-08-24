@@ -56,7 +56,7 @@ class ExecutorSpec extends FlatSpec
       v ← api.execute(methods.SendVideo(123.chatId, "video".fileId).toRawRequest)
       w ← api.execute(methods.SendVoice(123.chatId, "voice".fileId).toRawRequest)
       x ← api.execute(methods.UnbanChatMember(123.chatId, 321.userId).toRawRequest)
-      b ← api.execute(methods.SendMessage(123.chatId, a.result.fold("empty")(_.first_name)).toRawRequest)
+      b ← api.execute(methods.SendMessage(123L.chatId, a.result.fold("empty")(_.first_name)).toRawRequest)
     } yield b
 
     val res = req.foldMap(mockApiReqExe)
