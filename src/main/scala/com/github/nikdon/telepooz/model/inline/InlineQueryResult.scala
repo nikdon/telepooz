@@ -1,7 +1,7 @@
 package com.github.nikdon.telepooz.model.inline
 
 import com.github.nikdon.telepooz.model.InlineKeyboardMarkup
-import com.github.nikdon.telepooz.tags.ResultId
+import com.github.nikdon.telepooz.tags.{FoursquareId, ResultId}
 import shapeless.tag.@@
 
 
@@ -258,3 +258,34 @@ case class InlineQueryResultLocation(`type`: String = "location",
                                      thumb_height: Option[Int] = None,
                                      reply_markup: Option[InlineKeyboardMarkup] = None,
                                      input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+
+
+/**
+  * Represents a venue. By default, the venue will be sent by the user. Alternatively, you can use input_message_content
+  * to send a message with the specified content instead of the venue.
+  *
+  * @param `type`                 Type of the result, must be venue
+  * @param id                     Unique identifier for this result, 1-64 Bytes
+  * @param title                  Title of the venue
+  * @param latitude               Latitude of the venue location in degrees
+  * @param longitude              Longitude of the venue location in degrees
+  * @param address                Address of the venue
+  * @param foursquare_id          Foursquare identifier of the venue if known
+  * @param thumb_url              URL of the thumbnail (jpeg only) for the file
+  * @param thumb_width            Thumbnail width
+  * @param thumb_height           Thumbnail height
+  * @param reply_markup           Inline keyboard attached to the message
+  * @param input_message_content  Content of the message to be sent instead of the file
+  */
+case class InlineQueryResultVenue(`type`: String = "venue",
+                                  id: String,
+                                  title: String,
+                                  latitude: Double,
+                                  longitude: Double,
+                                  address: String,
+                                  foursquare_id: Option[String @@ FoursquareId] = None,
+                                  thumb_url: Option[String] = None,
+                                  thumb_width: Option[Int] = None,
+                                  thumb_height: Option[Int] = None,
+                                  reply_markup: Option[InlineKeyboardMarkup] = None,
+                                  input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
