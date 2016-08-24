@@ -42,4 +42,10 @@ class InlineQueryResultTest extends FlatSpec
       inlineQueryResultVideo.asJson should not be Json.Null
     }
   }
+
+  "InlineQueryResultAudio" should "convert to json" in {
+    forAll { inlineQueryResultAudio: InlineQueryResultAudio ⇒
+      inlineQueryResultAudio.asJson should not be Json.Null
+    }
+  }
 }

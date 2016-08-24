@@ -154,3 +154,26 @@ case class InlineQueryResultVideo(`type`: String = "video",
                                   description: Option[String] = None,
                                   reply_markup: Option[InlineKeyboardMarkup] = None,
                                   input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+
+
+/**
+  * Represents a link to an mp3 audio file. By default, this audio file will be sent by the user. Alternatively, you can
+  * use input_message_content to send a message with the specified content instead of the audio.
+  *
+  * @param `type`                 Type of the result, must be audio
+  * @param id                     Unique identifier for this result, 1-64 bytes
+  * @param audio_url              A valid URL for the audio file
+  * @param title                  Title
+  * @param performer              Performer
+  * @param audio_duration         Audio duration in seconds
+  * @param reply_markup           Inline keyboard attached to the message
+  * @param input_message_content  Content of the message to be sent instead of the audio
+  */
+case class InlineQueryResultAudio(`type`: String = "audio",
+                                  id: String @@ ResultId,
+                                  audio_url: String,
+                                  title: String,
+                                  performer: Option[String],
+                                  audio_duration: Option[Int],
+                                  reply_markup: Option[InlineKeyboardMarkup] = None,
+                                  input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
