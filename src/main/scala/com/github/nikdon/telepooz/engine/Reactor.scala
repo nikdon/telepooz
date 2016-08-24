@@ -8,7 +8,6 @@ import com.github.nikdon.telepooz.api
 import com.github.nikdon.telepooz.model.{methods, _}
 import com.github.nikdon.telepooz.raw.CirceEncoders
 import com.github.nikdon.telepooz.tags.MessageId
-import com.github.nikdon.telepooz.tags.syntax._
 import com.github.nikdon.telepooz.ToRawRequest.syntax._
 import com.typesafe.config.{Config, ConfigFactory}
 import shapeless.tag._
@@ -68,7 +67,7 @@ abstract class Reactor(implicit are: ApiRequestExecutor, ec: ExecutionContext, l
             replyToMessageId: Option[Long @@ MessageId] = None,
             replyMarkup: Option[ReplyMarkup] = Some(ReplyKeyboardHide(hide_keyboard = true, None)))
            (implicit message: Message): Future[Response[Message]] = {
-    val m = methods.SendMessage(message.chat.id.toLong.chatId, // As chat id might be only a Long
+    val m = methods.SendMessage(message.chat.id,
                                 text = text,
                                 parse_mode = parseMode,
                                 disable_web_page_preview = disableWebPagePreview,

@@ -92,3 +92,31 @@ case class InlineQueryResultGif(`type`: String = "gif", // TODO Move inside?
                                 caption: Option[String] = None,
                                 reply_markup: Option[InlineKeyboardMarkup] = None,
                                 input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+
+
+/**
+  * Represents a link to a video animation (H.264/MPEG-4 AVC video without sound). By default, this animated MPEG-4 file
+  * will be sent by the user with optional caption. Alternatively, you can use input_message_content to send a message
+  * with the specified content instead of the animation.
+  *
+  * @param `type`                 Type of the result, must be mpeg4_gif
+  * @param id                     Unique identifier for this result, 1-64 bytes
+  * @param mpeg4_url              A valid URL for the MP4 file. File size must not exceed 1MB
+  * @param mpeg4_width            Video width
+  * @param mpeg4_height           Video height
+  * @param thumb_url              URL of the static thumbnail (jpeg or gif) for the result
+  * @param title                  Title for the result
+  * @param caption                Caption of the MPEG-4 file to be sent, 0-200 characters
+  * @param reply_markup           Inline keyboard attached to the message
+  * @param input_message_content  Content of the message to be sent instead of the video animation
+  */
+case class InlineQueryResultMpeg4Gif(`type`: String = "mpeg4_gif",
+                                     id: String @@ ResultId,
+                                     mpeg4_url: String,
+                                     mpeg4_width: Option[Int] = None,
+                                     mpeg4_height: Option[Int] = None,
+                                     thumb_url: String,
+                                     title: Option[String] = None,
+                                     caption: Option[String] = None,
+                                     reply_markup: Option[InlineKeyboardMarkup] = None,
+                                     input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
