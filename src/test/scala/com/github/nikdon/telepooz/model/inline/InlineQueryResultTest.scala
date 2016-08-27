@@ -90,4 +90,10 @@ class InlineQueryResultTest extends FlatSpec
       inlineQueryResultCachedGif.asJson should not be Json.Null
     }
   }
+
+  "InlineQueryResultCachedMpeg4Gif" should "convert to json" in {
+    forAll { inlineQueryResultCachedMpeg4Gif: InlineQueryResultCachedMpeg4Gif ⇒
+      inlineQueryResultCachedMpeg4Gif.asJson should not be Json.Null
+    }
+  }
 }
