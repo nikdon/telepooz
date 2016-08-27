@@ -464,3 +464,21 @@ case class InlineQueryResultCachedVoice(`type`: String = "voice",
                                         title: String,
                                         reply_markup: Option[InlineKeyboardMarkup] = None,
                                         input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+
+
+/**
+  * Represents a link to an mp3 audio file stored on the Telegram servers. By default, this audio file will be sent by
+  * the user. Alternatively, you can use input_message_content to send a message with the specified content instead of
+  * the audio.
+  *
+  * @param `type`                 Type of the result, must be audio
+  * @param id                     Unique identifier for this result, 1-64 bytes
+  * @param audio_file_id          A valid file identifier for the audio file
+  * @param reply_markup           An Inline keyboard attached to the message
+  * @param input_message_content  Content of the message to be sent instead of the audio
+  */
+case class InlineQueryResultCachedAudio(`type`: String = "audio",
+                                        id: String @@ ResultId,
+                                        audio_file_id: String,
+                                        reply_markup: Option[InlineKeyboardMarkup] = None,
+                                        input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
