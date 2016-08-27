@@ -316,3 +316,27 @@ case class InlineQueryResultContact(`type`: String = "contact",
                                     thumb_height: Option[Int] = None,
                                     reply_markup: Option[InlineKeyboardMarkup] = None,
                                     input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+
+
+/**
+  * Represents a link to a photo stored on the Telegram servers. By default, this photo will be sent by the user with an
+  * optional caption. Alternatively, you can use input_message_content to send a message with the specified content
+  * instead of the photo.
+  *
+  * @param `type`                 Type of the result, must be photo
+  * @param id                     Unique identifier for this result, 1-64 bytes
+  * @param photo_file_id          A valid file identifier of the photo
+  * @param title                  Title for the result
+  * @param description            Short description of the result
+  * @param caption                Caption of the photo to be sent, 0-200 characters
+  * @param reply_markup           Inline keyboard attached to the message
+  * @param input_message_content  Content of the message to be sent instead of the photo
+  */
+case class InlineQueryResultCachedPhoto(`type`: String = "photo",
+                                        id: String,
+                                        photo_file_id: String,
+                                        title: Option[String] = None,
+                                        description: Option[String] = None,
+                                        caption: Option[String] = None,
+                                        reply_markup: Option[InlineKeyboardMarkup] = None,
+                                        input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult

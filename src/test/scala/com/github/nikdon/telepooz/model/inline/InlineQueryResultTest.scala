@@ -78,4 +78,10 @@ class InlineQueryResultTest extends FlatSpec
       inlineQueryResultContact.asJson should not be Json.Null
     }
   }
+
+  "InlineQueryResultCachedPhoto" should "convert to json" in {
+    forAll { inlineQueryResultCachedPhoto: InlineQueryResultCachedPhoto ⇒
+      inlineQueryResultCachedPhoto.asJson should not be Json.Null
+    }
+  }
 }
