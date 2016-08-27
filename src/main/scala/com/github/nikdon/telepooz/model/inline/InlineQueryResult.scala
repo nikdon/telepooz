@@ -384,3 +384,20 @@ case class InlineQueryResultCachedMpeg4Gif(`type`: String = "mpeg4_gif",
                                            caption: Option[String] = None,
                                            reply_markup: Option[InlineKeyboardMarkup] = None,
                                            input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+
+
+/**
+  * Represents a link to a sticker stored on the Telegram servers. By default, this sticker will be sent by the user.
+  * Alternatively, you can use input_message_content to send a message with the specified content instead of the sticker.
+  *
+  * @param `type`                 Type of the result, must be sticker
+  * @param id                     Unique identifier for this result, 1-64 bytes
+  * @param sticker_file_id        A valid file identifier of the sticker
+  * @param reply_markup           An Inline keyboard attached to the message
+  * @param input_message_content  Content of the message to be sent instead of the sticker
+  */
+case class InlineQueryResultCachedSticker(`type`: String = "sticker",
+                                          id: String @@ ResultId,
+                                          sticker_file_id: String,
+                                          reply_markup: Option[InlineKeyboardMarkup] = None,
+                                          input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
