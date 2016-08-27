@@ -143,6 +143,7 @@ object Arbitraries extends tags.Syntax {
   implicit val inlineQueryResultCachedGifArb     : Arbitrary[InlineQueryResultCachedGif]      = Arbitrary(Gen.resultOf(InlineQueryResultCachedGif))
   implicit val inlineQueryResultCachedMpeg4GifArb: Arbitrary[InlineQueryResultCachedMpeg4Gif] = Arbitrary(Gen.resultOf(InlineQueryResultCachedMpeg4Gif))
   implicit val inlineQueryResultCachedStickerArb : Arbitrary[InlineQueryResultCachedSticker]  = Arbitrary(Gen.resultOf(InlineQueryResultCachedSticker))
+  implicit val inlineQueryResultCachedDocumentArb: Arbitrary[InlineQueryResultCachedDocument] = Arbitrary(Gen.resultOf(InlineQueryResultCachedDocument))
   implicit val inlineQueryResultArb              : Arbitrary[InlineQueryResult]               = Arbitrary(Gen.oneOf(
     inlineQueryResultArticleArb.arbitrary,
     inlineQueryResultPhotoArb.arbitrary,
@@ -158,7 +159,8 @@ object Arbitraries extends tags.Syntax {
     inlineQueryResultCachedPhotoArb.arbitrary,
     inlineQueryResultCachedGifArb.arbitrary,
     inlineQueryResultCachedMpeg4GifArb.arbitrary,
-    inlineQueryResultCachedStickerArb.arbitrary
+    inlineQueryResultCachedStickerArb.arbitrary,
+    inlineQueryResultCachedDocumentArb.arbitrary
   ))
 
   /** Methods */

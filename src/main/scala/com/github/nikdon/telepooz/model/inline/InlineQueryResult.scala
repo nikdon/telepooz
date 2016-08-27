@@ -401,3 +401,25 @@ case class InlineQueryResultCachedSticker(`type`: String = "sticker",
                                           sticker_file_id: String,
                                           reply_markup: Option[InlineKeyboardMarkup] = None,
                                           input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+
+
+/**
+  * Represents a link to a file stored on the Telegram servers. By default, this file will be sent by the user with an
+  * optional caption. Alternatively, you can use input_message_content to send a message with the specified content
+  * instead of the file. Currently, only pdf-files and zip archives can be sent using this method.
+  *
+  * @param `type`                 Unique identifier for this result, 1-64 bytes
+  * @param id                     Title for the result
+  * @param title                  A valid file identifier for the file
+  * @param document_file_id       Short description of the result
+  * @param description            Caption of the document to be sent, 0-200 characters
+  * @param caption                An Inline keyboard attached to the message
+  * @param input_message_content  Content of the message to be sent instead of the file
+  */
+case class InlineQueryResultCachedDocument(`type`: String = "document",
+                                           id: String,
+                                           title: String,
+                                           document_file_id: String,
+                                           description: Option[String] = None,
+                                           caption: Option[String] = None,
+                                           input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult

@@ -92,6 +92,7 @@ trait CirceEncoders {
   implicit def inlineQueryResultCachedGifEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultCachedGif] = deriveEncoder[inline.InlineQueryResultCachedGif]
   implicit def inlineQueryResultCachedMpeg4GifEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultCachedMpeg4Gif] = deriveEncoder[inline.InlineQueryResultCachedMpeg4Gif]
   implicit def inlineQueryResultCachedStickerEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultCachedSticker] = deriveEncoder[inline.InlineQueryResultCachedSticker]
+  implicit def inlineQueryResultCachedDocumentEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultCachedDocument] = deriveEncoder[inline.InlineQueryResultCachedDocument]
 
   implicit def answerInlineQueryEncoder(implicit E: Encoder[String @@ QueryId]): Encoder[inline.AnswerInlineQuery] = deriveEncoder[inline.AnswerInlineQuery]
 
