@@ -140,6 +140,7 @@ object Arbitraries extends tags.Syntax {
   implicit val inlineQueryResultVenueArb      : Arbitrary[InlineQueryResultVenue]       = Arbitrary(Gen.resultOf(InlineQueryResultVenue))
   implicit val inlineQueryResultContactArb    : Arbitrary[InlineQueryResultContact]     = Arbitrary(Gen.resultOf(InlineQueryResultContact))
   implicit val inlineQueryResultCachedPhotoArb: Arbitrary[InlineQueryResultCachedPhoto] = Arbitrary(Gen.resultOf(InlineQueryResultCachedPhoto))
+  implicit val inlineQueryResultCachedGifArb  : Arbitrary[InlineQueryResultCachedGif]   = Arbitrary(Gen.resultOf(InlineQueryResultCachedGif))
   implicit val inlineQueryResultArb           : Arbitrary[InlineQueryResult]            = Arbitrary(Gen.oneOf(
     inlineQueryResultArticleArb.arbitrary,
     inlineQueryResultPhotoArb.arbitrary,
@@ -152,7 +153,8 @@ object Arbitraries extends tags.Syntax {
     inlineQueryResultLocationArb.arbitrary,
     inlineQueryResultVenueArb.arbitrary,
     inlineQueryResultContactArb.arbitrary,
-    inlineQueryResultCachedPhotoArb.arbitrary
+    inlineQueryResultCachedPhotoArb.arbitrary,
+    inlineQueryResultCachedGifArb.arbitrary
   ))
 
   /** Methods */

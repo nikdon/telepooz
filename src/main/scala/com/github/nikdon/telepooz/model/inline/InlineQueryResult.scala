@@ -340,3 +340,25 @@ case class InlineQueryResultCachedPhoto(`type`: String = "photo",
                                         caption: Option[String] = None,
                                         reply_markup: Option[InlineKeyboardMarkup] = None,
                                         input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+
+
+/**
+  * Represents a link to an animated GIF file stored on the Telegram servers. By default, this animated GIF file will be
+  * sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with
+  * specified content instead of the animation.
+  *
+  * @param `type`                 Type of the result, must be gif
+  * @param id                     Unique identifier for this result, 1-64 bytes
+  * @param gif_file_id            A valid file identifier for the GIF file
+  * @param title                  Title for the result
+  * @param caption                Caption of the GIF file to be sent, 0-200 characters
+  * @param reply_markup           An Inline keyboard attached to the message
+  * @param input_message_content  Content of the message to be sent instead of the GIF animation
+  */
+case class InlineQueryResultCachedGif(`type`: String = "gif",
+  id: String @@ ResultId,
+  gif_file_id: String,
+  title: Option[String] = None,
+  caption: Option[String] = None,
+  reply_markup: Option[InlineKeyboardMarkup] = None,
+  input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
