@@ -108,4 +108,10 @@ class InlineQueryResultTest extends FlatSpec
       inlineQueryResultCachedDocument.asJson should not be Json.Null
     }
   }
+
+  "InlineQueryResultCachedVideo" should "convert to json" in {
+    forAll { inlineQueryResultCachedVideo: InlineQueryResultCachedVideo ⇒
+      inlineQueryResultCachedVideo.asJson should not be Json.Null
+    }
+  }
 }

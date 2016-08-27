@@ -423,3 +423,24 @@ case class InlineQueryResultCachedDocument(`type`: String = "document",
                                            description: Option[String] = None,
                                            caption: Option[String] = None,
                                            input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+
+
+/**
+  *
+  * @param `type`                 Type of the result, must be video
+  * @param id                     Unique identifier for this result, 1-64 bytes
+  * @param video_file_id          A valid file identifier for the video file
+  * @param title                  Title for the result
+  * @param description            Short description of the result
+  * @param caption                Caption of the video to be sent, 0-200 characters
+  * @param reply_markup           An Inline keyboard attached to the message
+  * @param input_message_content  Content of the message to be sent instead of the video
+  */
+case class InlineQueryResultCachedVideo(`type`: String = "video",
+                                        id: String @@ ResultId,
+                                        video_file_id: String,
+                                        title: String,
+                                        description: Option[String] = None,
+                                        caption: Option[String] = None,
+                                        reply_markup: Option[InlineKeyboardMarkup] = None,
+                                        input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
