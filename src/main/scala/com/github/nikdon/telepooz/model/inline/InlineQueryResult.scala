@@ -12,7 +12,6 @@ sealed trait InlineQueryResult extends Product with Serializable
 /**
   * Represents a link to an article or web page.
   *
-  * @param `type`                 Type of the result, must be article
   * @param id                     Unique identifier for this result, 1-64 Bytes
   * @param title                  Title of the result
   * @param input_message_content  Content of the message to be sent
@@ -24,8 +23,7 @@ sealed trait InlineQueryResult extends Product with Serializable
   * @param thumb_width            Thumbnail width
   * @param thumb_height           Thumbnail height
   */
-case class InlineQueryResultArticle(`type`: String = "article", // TODO Move inside?
-                                    id: String @@ ResultId,
+case class InlineQueryResultArticle(id: String @@ ResultId,
                                     title: String,
                                     input_message_content: InputMessageContent,
                                     reply_markup: Option[InlineKeyboardMarkup] = None,
@@ -35,13 +33,15 @@ case class InlineQueryResultArticle(`type`: String = "article", // TODO Move ins
                                     thumb_url: Option[String] = None,
                                     thumb_width: Option[Int] = None,
                                     thumb_height: Option[Int] = None) extends InlineQueryResult
+object InlineQueryResultArticle {
+  final val `type` = Map("type" → "article")
+}
 
 
 /**
   * Represents a link to a photo. By default, this photo will be sent by the user with optional caption. Alternatively,
   * you can use input_message_content to send a message with the specified content instead of the photo.
   *
-  * @param `type`                 Type of the result, must be photo
   * @param id                     Unique identifier for this result, 1-64 bytes
   * @param photo_url              A valid URL of the photo. Photo must be in jpeg format. Photo size must not exceed 5MB
   * @param thumb_url              URL of the thumbnail for the photo
@@ -53,8 +53,7 @@ case class InlineQueryResultArticle(`type`: String = "article", // TODO Move ins
   * @param reply_markup           Inline keyboard attached to the message
   * @param input_message_content  Content of the message to be sent instead of the photo
   */
-case class InlineQueryResultPhoto(`type`: String = "photo", // TODO Move inside?
-                                  id: String @@ ResultId,
+case class InlineQueryResultPhoto(id: String @@ ResultId,
                                   photo_url: String,
                                   thumb_url: String,
                                   photo_width: Option[Int] = None,
@@ -64,6 +63,9 @@ case class InlineQueryResultPhoto(`type`: String = "photo", // TODO Move inside?
                                   caption: Option[String] = None,
                                   reply_markup: Option[InlineKeyboardMarkup] = None,
                                   input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+object InlineQueryResultPhoto {
+  final val `type` = Map("type" → "photo")
+}
 
 
 /**
@@ -71,7 +73,6 @@ case class InlineQueryResultPhoto(`type`: String = "photo", // TODO Move inside?
   * caption. Alternatively, you can use input_message_content to send a message with the specified content instead of
   * the animation.
   *
-  * @param `type`                 Type of the result, must be gif
   * @param id                     Unique identifier for this result, 1-64 bytes
   * @param gif_url                A valid URL for the GIF file. File size must not exceed 1MB
   * @param gif_width              Width of the GIF
@@ -82,8 +83,7 @@ case class InlineQueryResultPhoto(`type`: String = "photo", // TODO Move inside?
   * @param reply_markup           Inline keyboard attached to the message
   * @param input_message_content  Content of the message to be sent instead of the GIF animation
   */
-case class InlineQueryResultGif(`type`: String = "gif", // TODO Move inside?
-                                id: String @@ ResultId,
+case class InlineQueryResultGif(id: String @@ ResultId,
                                 gif_url: String,
                                 gif_width: Option[Int] = None,
                                 gif_height: Option[Int] = None,
@@ -92,6 +92,9 @@ case class InlineQueryResultGif(`type`: String = "gif", // TODO Move inside?
                                 caption: Option[String] = None,
                                 reply_markup: Option[InlineKeyboardMarkup] = None,
                                 input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+object InlineQueryResultGif {
+  final val `type` = Map("type" → "gif")
+}
 
 
 /**
@@ -99,7 +102,6 @@ case class InlineQueryResultGif(`type`: String = "gif", // TODO Move inside?
   * will be sent by the user with optional caption. Alternatively, you can use input_message_content to send a message
   * with the specified content instead of the animation.
   *
-  * @param `type`                 Type of the result, must be mpeg4_gif
   * @param id                     Unique identifier for this result, 1-64 bytes
   * @param mpeg4_url              A valid URL for the MP4 file. File size must not exceed 1MB
   * @param mpeg4_width            Video width
@@ -110,8 +112,7 @@ case class InlineQueryResultGif(`type`: String = "gif", // TODO Move inside?
   * @param reply_markup           Inline keyboard attached to the message
   * @param input_message_content  Content of the message to be sent instead of the video animation
   */
-case class InlineQueryResultMpeg4Gif(`type`: String = "mpeg4_gif",
-                                     id: String @@ ResultId,
+case class InlineQueryResultMpeg4Gif(id: String @@ ResultId,
                                      mpeg4_url: String,
                                      mpeg4_width: Option[Int] = None,
                                      mpeg4_height: Option[Int] = None,
@@ -120,6 +121,9 @@ case class InlineQueryResultMpeg4Gif(`type`: String = "mpeg4_gif",
                                      caption: Option[String] = None,
                                      reply_markup: Option[InlineKeyboardMarkup] = None,
                                      input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+object InlineQueryResultMpeg4Gif {
+  final val `type` = Map("type" → "mpeg4_gif")
+}
 
 
 /**
@@ -127,7 +131,6 @@ case class InlineQueryResultMpeg4Gif(`type`: String = "mpeg4_gif",
   * sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with
   * the specified content instead of the video.
   *
-  * @param `type`                 Type of the result, must be video
   * @param id                     Unique identifier for this result, 1-64 bytes
   * @param video_url              A valid URL for the embedded video player or video file
   * @param mime_type              Mime type of the content of video url, “text/html” or “video/mp4”
@@ -141,8 +144,7 @@ case class InlineQueryResultMpeg4Gif(`type`: String = "mpeg4_gif",
   * @param reply_markup           Inline keyboard attached to the message
   * @param input_message_content  Content of the message to be sent instead of the video
   */
-case class InlineQueryResultVideo(`type`: String = "video",
-                                  id: String @@ ResultId,
+case class InlineQueryResultVideo(id: String @@ ResultId,
                                   video_url: String,
                                   mime_type: String,
                                   thumb_url: String,
@@ -154,13 +156,15 @@ case class InlineQueryResultVideo(`type`: String = "video",
                                   description: Option[String] = None,
                                   reply_markup: Option[InlineKeyboardMarkup] = None,
                                   input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+object InlineQueryResultVideo {
+  final val `type` = Map("type" → "video")
+}
 
 
 /**
   * Represents a link to an mp3 audio file. By default, this audio file will be sent by the user. Alternatively, you can
   * use input_message_content to send a message with the specified content instead of the audio.
   *
-  * @param `type`                 Type of the result, must be audio
   * @param id                     Unique identifier for this result, 1-64 bytes
   * @param audio_url              A valid URL for the audio file
   * @param title                  Title
@@ -169,14 +173,16 @@ case class InlineQueryResultVideo(`type`: String = "video",
   * @param reply_markup           Inline keyboard attached to the message
   * @param input_message_content  Content of the message to be sent instead of the audio
   */
-case class InlineQueryResultAudio(`type`: String = "audio",
-                                  id: String @@ ResultId,
+case class InlineQueryResultAudio(id: String @@ ResultId,
                                   audio_url: String,
                                   title: String,
                                   performer: Option[String],
                                   audio_duration: Option[Int],
                                   reply_markup: Option[InlineKeyboardMarkup] = None,
                                   input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+object InlineQueryResultAudio {
+  final val `type` = Map("type" → "audio")
+}
 
 
 /**
@@ -184,7 +190,6 @@ case class InlineQueryResultAudio(`type`: String = "audio",
   * be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content
   * instead of the the voice message.
   *
-  * @param `type`                 Type of the result, must be voice
   * @param id                     Unique identifier for this result, 1-64 bytes
   * @param voice_url              A valid URL for the voice recording
   * @param title                  Recording title
@@ -192,13 +197,15 @@ case class InlineQueryResultAudio(`type`: String = "audio",
   * @param reply_markup           Inline keyboard attached to the message
   * @param input_message_content  Content of the message to be sent instead of the voice recording
   */
-case class InlineQueryResultVoice(`type`: String = "voice",
-                                  id: String @@ ResultId,
+case class InlineQueryResultVoice(id: String @@ ResultId,
                                   voice_url: String,
                                   title: String,
                                   voice_duration: Option[Int],
                                   reply_markup: Option[InlineKeyboardMarkup] = None,
                                   input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+object InlineQueryResultVoice {
+  final val `type` = Map("type" → "voice")
+}
 
 
 /**
@@ -206,7 +213,6 @@ case class InlineQueryResultVoice(`type`: String = "voice",
   * you can use input_message_content to send a message with the specified content instead of the file. Currently, only
   * .PDF and .ZIP files can be sent using this method.
   *
-  * @param `type`                 Type of the result, must be document
   * @param id                     Unique identifier for this result, 1-64 bytes
   * @param title                  Title for the result
   * @param caption                Caption of the document to be sent, 0-200 characters
@@ -219,8 +225,7 @@ case class InlineQueryResultVoice(`type`: String = "voice",
   * @param reply_markup           Inline keyboard attached to the message
   * @param input_message_content  Content of the message to be sent instead of the file
   */
-case class InlineQueryResultDocument(`type`: String = "document",
-                                     id: String,
+case class InlineQueryResultDocument(id: String,
                                      title: String,
                                      caption: Option[String] = None,
                                      document_url: String,
@@ -231,13 +236,15 @@ case class InlineQueryResultDocument(`type`: String = "document",
                                      thumb_height: Option[Int] = None,
                                      reply_markup: Option[InlineKeyboardMarkup] = None,
                                      input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+object InlineQueryResultDocument {
+  final val `type` = Map("type" → "document")
+}
 
 
 /**
   * Represents a location on a map. By default, the location will be sent by the user. Alternatively, you can use
   * input_message_content to send a message with the specified content instead of the location.
   *
-  * @param `type`                 Type of the result, must be location
   * @param id                     Unique identifier for this result, 1-64 Bytes
   * @param title                  Location title
   * @param latitude               Location latitude in degrees
@@ -248,8 +255,7 @@ case class InlineQueryResultDocument(`type`: String = "document",
   * @param reply_markup           Inline keyboard attached to the message
   * @param input_message_content  Content of the message to be sent instead of the file
   */
-case class InlineQueryResultLocation(`type`: String = "location",
-                                     id: String,
+case class InlineQueryResultLocation(id: String,
                                      title: String,
                                      latitude: Double,
                                      longitude: Double,
@@ -258,13 +264,15 @@ case class InlineQueryResultLocation(`type`: String = "location",
                                      thumb_height: Option[Int] = None,
                                      reply_markup: Option[InlineKeyboardMarkup] = None,
                                      input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+object InlineQueryResultLocation {
+  final val `type` = Map("type" → "location")
+}
 
 
 /**
   * Represents a venue. By default, the venue will be sent by the user. Alternatively, you can use input_message_content
   * to send a message with the specified content instead of the venue.
   *
-  * @param `type`                 Type of the result, must be venue
   * @param id                     Unique identifier for this result, 1-64 Bytes
   * @param title                  Title of the venue
   * @param latitude               Latitude of the venue location in degrees
@@ -277,8 +285,7 @@ case class InlineQueryResultLocation(`type`: String = "location",
   * @param reply_markup           Inline keyboard attached to the message
   * @param input_message_content  Content of the message to be sent instead of the file
   */
-case class InlineQueryResultVenue(`type`: String = "venue",
-                                  id: String,
+case class InlineQueryResultVenue(id: String,
                                   title: String,
                                   latitude: Double,
                                   longitude: Double,
@@ -289,6 +296,9 @@ case class InlineQueryResultVenue(`type`: String = "venue",
                                   thumb_height: Option[Int] = None,
                                   reply_markup: Option[InlineKeyboardMarkup] = None,
                                   input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+object InlineQueryResultVenue {
+  final val `type` = Map("type" → "venue")
+}
 
 
 /**
@@ -306,8 +316,7 @@ case class InlineQueryResultVenue(`type`: String = "venue",
   * @param reply_markup           Inline keyboard attached to the message
   * @param input_message_content  Content of the message to be sent instead of the file
   */
-case class InlineQueryResultContact(`type`: String = "contact",
-                                    id: String,
+case class InlineQueryResultContact(id: String,
                                     phone_number: String,
                                     first_name: String,
                                     last_name: Option[String] = None,
@@ -316,6 +325,9 @@ case class InlineQueryResultContact(`type`: String = "contact",
                                     thumb_height: Option[Int] = None,
                                     reply_markup: Option[InlineKeyboardMarkup] = None,
                                     input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+object InlineQueryResultContact {
+  final val `type` = Map("type" → "contact")
+}
 
 
 /**
@@ -323,7 +335,6 @@ case class InlineQueryResultContact(`type`: String = "contact",
   * optional caption. Alternatively, you can use input_message_content to send a message with the specified content
   * instead of the photo.
   *
-  * @param `type`                 Type of the result, must be photo
   * @param id                     Unique identifier for this result, 1-64 bytes
   * @param photo_file_id          A valid file identifier of the photo
   * @param title                  Title for the result
@@ -332,14 +343,16 @@ case class InlineQueryResultContact(`type`: String = "contact",
   * @param reply_markup           Inline keyboard attached to the message
   * @param input_message_content  Content of the message to be sent instead of the photo
   */
-case class InlineQueryResultCachedPhoto(`type`: String = "photo",
-                                        id: String,
+case class InlineQueryResultCachedPhoto(id: String,
                                         photo_file_id: String,
                                         title: Option[String] = None,
                                         description: Option[String] = None,
                                         caption: Option[String] = None,
                                         reply_markup: Option[InlineKeyboardMarkup] = None,
                                         input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+object InlineQueryResultCachedPhoto {
+  final val `type` = Map("type" → "photo")
+}
 
 
 /**
@@ -347,7 +360,6 @@ case class InlineQueryResultCachedPhoto(`type`: String = "photo",
   * sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with
   * specified content instead of the animation.
   *
-  * @param `type`                 Type of the result, must be gif
   * @param id                     Unique identifier for this result, 1-64 bytes
   * @param gif_file_id            A valid file identifier for the GIF file
   * @param title                  Title for the result
@@ -355,13 +367,15 @@ case class InlineQueryResultCachedPhoto(`type`: String = "photo",
   * @param reply_markup           An Inline keyboard attached to the message
   * @param input_message_content  Content of the message to be sent instead of the GIF animation
   */
-case class InlineQueryResultCachedGif(`type`: String = "gif",
-                                      id: String @@ ResultId,
+case class InlineQueryResultCachedGif(id: String @@ ResultId,
                                       gif_file_id: String,
                                       title: Option[String] = None,
                                       caption: Option[String] = None,
                                       reply_markup: Option[InlineKeyboardMarkup] = None,
                                       input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+object InlineQueryResultCachedGif {
+  final val `type` = Map("type" → "gif")
+}
 
 
 /**
@@ -369,7 +383,6 @@ case class InlineQueryResultCachedGif(`type`: String = "gif",
   * default, this animated MPEG-4 file will be sent by the user with an optional caption. Alternatively, you can use
   * input_message_content to send a message with the specified content instead of the animation.
   *
-  * @param `type`                 Type of the result, must be mpeg4_gif
   * @param id                     Unique identifier for this result, 1-64 bytes
   * @param mpeg4_file_id          A valid file identifier for the MP4 file
   * @param title                  Title for the result
@@ -377,30 +390,33 @@ case class InlineQueryResultCachedGif(`type`: String = "gif",
   * @param reply_markup           An Inline keyboard attached to the message
   * @param input_message_content  Content of the message to be sent instead of the video animation
   */
-case class InlineQueryResultCachedMpeg4Gif(`type`: String = "mpeg4_gif",
-                                           id: String @@ ResultId,
+case class InlineQueryResultCachedMpeg4Gif(id: String @@ ResultId,
                                            mpeg4_file_id: String,
                                            title: Option[String] = None,
                                            caption: Option[String] = None,
                                            reply_markup: Option[InlineKeyboardMarkup] = None,
                                            input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+object InlineQueryResultCachedMpeg4Gif {
+  final val `type` = Map("type" → "mpeg4_gif")
+}
 
 
 /**
   * Represents a link to a sticker stored on the Telegram servers. By default, this sticker will be sent by the user.
   * Alternatively, you can use input_message_content to send a message with the specified content instead of the sticker.
   *
-  * @param `type`                 Type of the result, must be sticker
   * @param id                     Unique identifier for this result, 1-64 bytes
   * @param sticker_file_id        A valid file identifier of the sticker
   * @param reply_markup           An Inline keyboard attached to the message
   * @param input_message_content  Content of the message to be sent instead of the sticker
   */
-case class InlineQueryResultCachedSticker(`type`: String = "sticker",
-                                          id: String @@ ResultId,
+case class InlineQueryResultCachedSticker(id: String @@ ResultId,
                                           sticker_file_id: String,
                                           reply_markup: Option[InlineKeyboardMarkup] = None,
                                           input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+object InlineQueryResultCachedSticker {
+  final val `type` = Map("type" → "sticker")
+}
 
 
 /**
@@ -408,7 +424,6 @@ case class InlineQueryResultCachedSticker(`type`: String = "sticker",
   * optional caption. Alternatively, you can use input_message_content to send a message with the specified content
   * instead of the file. Currently, only pdf-files and zip archives can be sent using this method.
   *
-  * @param `type`                 Unique identifier for this result, 1-64 bytes
   * @param id                     Title for the result
   * @param title                  A valid file identifier for the file
   * @param document_file_id       Short description of the result
@@ -416,18 +431,22 @@ case class InlineQueryResultCachedSticker(`type`: String = "sticker",
   * @param caption                An Inline keyboard attached to the message
   * @param input_message_content  Content of the message to be sent instead of the file
   */
-case class InlineQueryResultCachedDocument(`type`: String = "document",
-                                           id: String,
+case class InlineQueryResultCachedDocument(id: String,
                                            title: String,
                                            document_file_id: String,
                                            description: Option[String] = None,
                                            caption: Option[String] = None,
                                            input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+object InlineQueryResultCachedDocument {
+  final val `type` = Map("type" → "document")
+}
 
 
 /**
+  * Represents a link to a video file stored on the Telegram servers. By default, this video file will be sent by the
+  * user with an optional caption. Alternatively, you can use input_message_content to send a message with the specified
+  * content instead of the video.
   *
-  * @param `type`                 Type of the result, must be video
   * @param id                     Unique identifier for this result, 1-64 bytes
   * @param video_file_id          A valid file identifier for the video file
   * @param title                  Title for the result
@@ -436,14 +455,16 @@ case class InlineQueryResultCachedDocument(`type`: String = "document",
   * @param reply_markup           An Inline keyboard attached to the message
   * @param input_message_content  Content of the message to be sent instead of the video
   */
-case class InlineQueryResultCachedVideo(`type`: String = "video",
-                                        id: String @@ ResultId,
+case class InlineQueryResultCachedVideo(id: String @@ ResultId,
                                         video_file_id: String,
                                         title: String,
                                         description: Option[String] = None,
                                         caption: Option[String] = None,
                                         reply_markup: Option[InlineKeyboardMarkup] = None,
                                         input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+object InlineQueryResultCachedVideo {
+  final val `type` = Map("type" → "video")
+}
 
 
 /**
@@ -451,19 +472,20 @@ case class InlineQueryResultCachedVideo(`type`: String = "video",
   * the user. Alternatively, you can use input_message_content to send a message with the specified content instead of
   * the voice message.
   *
-  * @param `type`                 Type of the result, must be voice
   * @param id                     Unique identifier for this result, 1-64 bytes
   * @param voice_file_id          A valid file identifier for the voice message
   * @param title                  Voice message title
   * @param reply_markup           An Inline keyboard attached to the message
   * @param input_message_content  Content of the message to be sent instead of the voice message
   */
-case class InlineQueryResultCachedVoice(`type`: String = "voice",
-                                        id: String @@ ResultId,
+case class InlineQueryResultCachedVoice(id: String @@ ResultId,
                                         voice_file_id: String,
                                         title: String,
                                         reply_markup: Option[InlineKeyboardMarkup] = None,
                                         input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+object InlineQueryResultCachedVoice {
+  final val `type` = Map("type" → "voice")
+}
 
 
 /**
@@ -471,14 +493,15 @@ case class InlineQueryResultCachedVoice(`type`: String = "voice",
   * the user. Alternatively, you can use input_message_content to send a message with the specified content instead of
   * the audio.
   *
-  * @param `type`                 Type of the result, must be audio
   * @param id                     Unique identifier for this result, 1-64 bytes
   * @param audio_file_id          A valid file identifier for the audio file
   * @param reply_markup           An Inline keyboard attached to the message
   * @param input_message_content  Content of the message to be sent instead of the audio
   */
-case class InlineQueryResultCachedAudio(`type`: String = "audio",
-                                        id: String @@ ResultId,
+case class InlineQueryResultCachedAudio(id: String @@ ResultId,
                                         audio_file_id: String,
                                         reply_markup: Option[InlineKeyboardMarkup] = None,
                                         input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+object InlineQueryResultCachedAudio {
+  final val `type` = Map("type" → "audio")
+}
