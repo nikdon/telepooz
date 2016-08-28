@@ -57,7 +57,7 @@ requests are composable:
 
 val req = for {
   a ← api.execute(model.methods.GetMe.toRawRequest)
-  b ← api.execute(model.methods.SendMessage("123".chatId, a.result.fold("empty")(_.first_name)).toRawRequest)
+  b ← api.execute(model.methods.SendMessage(123L.chatId, a.result.fold("empty")(_.first_name)).toRawRequest)
 } yield b
 
 val res = req.foldMap(apiRequestExecutor)
