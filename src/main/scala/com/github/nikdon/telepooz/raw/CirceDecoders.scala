@@ -75,6 +75,7 @@ trait CirceDecoders {
   implicit val inputLocationMessageContentDecoder = Decoder[InputLocationMessageContent]
   implicit val inputTextMessageContentDecoder = Decoder[InputTextMessageContent]
 
+  implicit def eitherResponseDecoder[A, B](implicit D: Decoder[A], DD: Decoder[B]) = Decoder[Either[A, B]]
 
   implicit def updateDecoder(implicit D: Decoder[Long @@ UpdateId]) = Decoder[Update]
   implicit def responseDecoder[T](implicit D: Decoder[T]) = Decoder[Response[T]]

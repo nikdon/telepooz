@@ -2,16 +2,17 @@ package com.github.nikdon.telepooz
 
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
+import cats.free.Free
 import cats.implicits._
 import com.github.nikdon.telepooz.ToRawRequest.syntax._
 import com.github.nikdon.telepooz.engine.MockApiRequestExecutor
 import com.github.nikdon.telepooz.model.methods.ChatAction
-import com.github.nikdon.telepooz.model.{Response, methods}
-import com.github.nikdon.telepooz.raw.CirceEncoders
+import com.github.nikdon.telepooz.model.{Message, Response, methods}
+import com.github.nikdon.telepooz.raw.{CirceEncoders, RawRequest}
 import com.github.nikdon.telepooz.tags.syntax._
 import org.scalatest.concurrent.{Eventually, ScalaFutures}
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
-import org.scalatest.{FlatSpec, Matchers, OptionValues}
+import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers, OptionValues}
 
 import scala.concurrent.duration._
 import scala.language.postfixOps
@@ -23,8 +24,17 @@ class ExecutorSpec extends FlatSpec
                            with Eventually
                            with Matchers
                            with GeneratorDrivenPropertyChecks
-                           with CirceEncoders {
+                           with CirceEncoders
+                           with BeforeAndAfterAll {
+
+
+
   behavior of "Executor"
+
+  override protected def afterAll(): Unit = {
+      system.registerOnTermination(println("Actor System terminated"))
+      system.whenTerminated
+  }
 
   implicit val system = ActorSystem("ExecutorSpecActorSys")
   implicit val executor = system.dispatcher
@@ -32,7 +42,7 @@ class ExecutorSpec extends FlatSpec
   val mockApiReqExe = new MockApiRequestExecutor
 
   it should "allow to compose requests" in {
-    val req = for {
+    val req: Free[RawRequest, Response[Message]] = for {
       a ← api.execute(methods.GetMe.toRawRequest)
       c ← api.execute(methods.AnswerCallbackQuery("query".queryId).toRawRequest)
       d ← api.execute(methods.ForwardMessage("123".chatId, "321".chatId, 0L.messageId).toRawRequest)
@@ -57,6 +67,9 @@ class ExecutorSpec extends FlatSpec
       w ← api.execute(methods.SendVoice("123".chatId, "voice".fileId).toRawRequest)
       x ← api.execute(methods.UnbanChatMember("123".chatId, 321.userId).toRawRequest)
       b ← api.execute(methods.SendMessage("123".chatId, a.result.fold("empty")(_.first_name)).toRawRequest)
+      _ ← api.execute(methods.EditMessageReplyMarkup(123L.chatId, 333L.messageId, "bb".messageId).toRawRequest)
+      _ ← api.execute(methods.EditMessageCaption(123L.chatId, 333L.messageId, "aa".messageId).toRawRequest)
+      _ ← api.execute(methods.EditMessageText(123L.chatId, 333L.messageId, "cc".messageId, "TEST").toRawRequest)
     } yield b
 
     val res = req.foldMap(mockApiReqExe)
@@ -67,6 +80,26 @@ class ExecutorSpec extends FlatSpec
         m.ok shouldEqual true
         m.result shouldBe defined
         m.result.value shouldBe a[model.Message]
+      }
+    }
+  }
+
+  it should "allow to update messages" in {
+    val req = for {
+      a ← api.execute(methods.EditMessageReplyMarkup(123L.chatId, 333L.messageId, "bb".messageId).toRawRequest)
+      b ← api.execute(methods.EditMessageCaption(123L.chatId, 333L.messageId, "aa".messageId).toRawRequest)
+      c ← api.execute(methods.EditMessageText(123L.chatId, 333L.messageId, "cc".messageId, "TEST").toRawRequest)
+    } yield c
+
+    val res = req.foldMap(mockApiReqExe)
+
+    eventually(timeout(10 seconds), interval(500 millis)) {
+      whenReady(res) { m ⇒
+        m shouldBe a[Response[_]]
+        m.ok shouldEqual true
+        m.result shouldBe defined
+        m.result.value shouldBe a[Either[_, _]]
+        m.result.value.isRight shouldBe true
       }
     }
   }

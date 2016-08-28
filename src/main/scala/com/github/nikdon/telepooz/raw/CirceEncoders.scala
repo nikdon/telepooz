@@ -127,4 +127,8 @@ trait CirceEncoders {
   implicit def getChatMembersCountEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId]): Encoder[GetChatMembersCount[A]] = deriveEncoder[GetChatMembersCount[A]]
   implicit def getChatMemberEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Int @@ UserId]): Encoder[GetChatMember[A]] = deriveEncoder[GetChatMember[A]]
   implicit def answerCallbackQueryEncoder(implicit E: Encoder[String @@ QueryId]): Encoder[AnswerCallbackQuery] = deriveEncoder[AnswerCallbackQuery]
+
+  implicit def editMessageTextEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId], EEE: Encoder[String @@ MessageId]): Encoder[EditMessageText[A]] = deriveEncoder[EditMessageText[A]]
+  implicit def editMessageCaptionEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId], EEE: Encoder[String @@ MessageId]): Encoder[EditMessageCaption[A]] = deriveEncoder[EditMessageCaption[A]]
+  implicit def editMessageReplyMarkupEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId], EEE: Encoder[String @@ MessageId]): Encoder[EditMessageReplyMarkup[A]] = deriveEncoder[EditMessageReplyMarkup[A]]
 }

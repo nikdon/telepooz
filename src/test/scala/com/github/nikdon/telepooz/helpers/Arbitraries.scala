@@ -182,4 +182,8 @@ object Arbitraries extends tags.Syntax {
     ChatAction.RecordAudio, ChatAction.UploadAudio, ChatAction.UploadDocument, ChatAction.FindLocation
   ))
   implicit val sendChatActionArb       : Arbitrary[SendChatAction[Long]]        = Arbitrary(Gen.resultOf(SendChatAction[Long] _))
+
+  implicit val editMessageTextArb: Arbitrary[EditMessageText[Long]] = Arbitrary(Gen.resultOf(EditMessageText[Long] _))
+  implicit val editMessageCaptionArb: Arbitrary[EditMessageCaption[Long]] = Arbitrary(Gen.resultOf(EditMessageCaption[Long] _))
+  implicit val editMessageReplyMarkupArb: Arbitrary[EditMessageReplyMarkup[Long]] = Arbitrary(Gen.resultOf(EditMessageReplyMarkup[Long] _))
 }
