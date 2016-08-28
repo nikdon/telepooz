@@ -15,12 +15,14 @@ import shapeless.tag._
   * @param first_name First name of the other party in a private chat
   * @param last_name  Last name of the other party in a private chat
   */
-case class Chat(id: Long @@ ChatId,
-                `type`: ChatType,
-                title: Option[String] = None,
-                username: Option[String] = None,
-                first_name: Option[String] = None,
-                last_name: Option[String] = None)
+case class Chat(
+  id: String @@ ChatId,
+  `type`: ChatType,
+  title: Option[String] = None,
+  username: Option[String] = None,
+  first_name: Option[String] = None,
+  last_name: Option[String] = None
+)
 
 
 sealed trait ChatType extends Product with Serializable {

@@ -21,7 +21,7 @@ import shapeless.tag.@@
   *                                   custom reply keyboard, instructions to hide reply keyboard or to force a reply
   *                                   from the user.
   */
-case class SendMessage(chat_id: Long @@ ChatId,
+case class SendMessage(chat_id: String @@ ChatId,
                        text: String,
                        parse_mode: Option[ParseMode] = None,
                        disable_web_page_preview: Option[Boolean] = None,

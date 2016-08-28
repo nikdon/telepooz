@@ -33,7 +33,7 @@ trait CirceDecoders {
   implicit def audioDecoder(implicit D: Decoder[String @@ FileId]) = Decoder[Audio]
 
   implicit def chatTypeDecoder: Decoder[ChatType] = Decoder[String].map(a ⇒ ChatType.unsafe( pascalize(a) ))
-  implicit def chatDecoder(implicit D: Decoder[Long @@ ChatId]) = Decoder[Chat]
+  implicit def chatDecoder(implicit D: Decoder[String @@ ChatId]) = Decoder[Chat]
 
   implicit def contactDecoder(implicit D: Decoder[Int @@ UserId]) = Decoder[Contact]
   implicit def documentDecoder(implicit D: Decoder[String @@ FileId]) = Decoder[Document]
@@ -61,7 +61,7 @@ trait CirceDecoders {
   implicit def videoDecoder(implicit D: Decoder[String @@ FileId]) = Decoder[Video]
   implicit def voiceDecoder(implicit D: Decoder[String @@ FileId]) = Decoder[Voice]
 
-  implicit def messageDecoder(implicit D: Decoder[Long @@ MessageId], DD: Decoder[Long @@ ChatId]) = Decoder[Message]
+  implicit def messageDecoder(implicit D: Decoder[Long @@ MessageId], DD: Decoder[String @@ ChatId]) = Decoder[Message]
   implicit def callbackQueryDecoder(implicit D: Decoder[String @@ QueryId]) = Decoder[CallbackQuery]
 
   implicit val memberStatusDecoder: Decoder[MemberStatus] = Decoder[String].map(a ⇒ MemberStatus.unsafe( pascalize(a) ))

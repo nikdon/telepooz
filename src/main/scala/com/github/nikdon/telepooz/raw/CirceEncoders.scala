@@ -36,7 +36,7 @@ trait CirceEncoders {
   implicit def callbackQueryEncoder(implicit E: Encoder[String @@ QueryId]): Encoder[CallbackQuery] = deriveEncoder[CallbackQuery]
 
   implicit val chatTypeEncoder: Encoder[ChatType] = Encoder[String].contramap[ChatType](_.productPrefix)
-  implicit def chatEncoder(implicit E: Encoder[Long @@ ChatId]): Encoder[Chat] = deriveEncoder[Chat]
+  implicit def chatEncoder(implicit E: Encoder[String @@ ChatId]): Encoder[Chat] = deriveEncoder[Chat]
   implicit val memberStatusEncoder: Encoder[MemberStatus] = Encoder[String].contramap[MemberStatus](_.productPrefix)
   implicit val chatMemberEncoder: Encoder[ChatMember] = deriveEncoder[ChatMember]
 
@@ -48,7 +48,7 @@ trait CirceEncoders {
   implicit val keyboardButtonEncoder      : Encoder[KeyboardButton]       = deriveEncoder[KeyboardButton]
   implicit val locationEncoder            : Encoder[Location]             = deriveEncoder[Location]
 
-  implicit def messageEncoder(implicit E: Encoder[Long @@ MessageId], EE: Encoder[Long @@ ChatId]): Encoder[Message] = deriveEncoder[Message]
+  implicit def messageEncoder(implicit E: Encoder[Long @@ MessageId], EE: Encoder[String @@ ChatId]): Encoder[Message] = deriveEncoder[Message]
 
   implicit val messageEntityTypeEncoder: Encoder[MessageEntityType] = Encoder[String].contramap[MessageEntityType](e ⇒ snakenize {e.productPrefix})
   implicit val messageEntityEncoder    : Encoder[MessageEntity]     = deriveEncoder[MessageEntity]
@@ -103,7 +103,7 @@ trait CirceEncoders {
 
   // Methods
   implicit val getMeJsonEncoder: Encoder[GetMe.type] = Encoder.instance(_ ⇒ io.circe.Json.Null)
-  implicit def sendMessageJsonEncoder(implicit E: Encoder[Long @@ ChatId], EE: Encoder[Long @@ MessageId]): Encoder[SendMessage] = deriveEncoder[SendMessage]
+  implicit def sendMessageJsonEncoder(implicit E: Encoder[String @@ ChatId], EE: Encoder[Long @@ MessageId]): Encoder[SendMessage] = deriveEncoder[SendMessage]
   implicit def forwardMessageJsonEncoder[A: IsResourceId, B: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[B @@ ChatId], EEE: Encoder[Long @@ MessageId]): Encoder[ForwardMessage[A, B]] = deriveEncoder[ForwardMessage[A, B]]
   implicit def getUpdatesJsonEncoder(implicit E: Encoder[Long @@ UpdateId]): Encoder[GetUpdates] = deriveEncoder[GetUpdates]
   implicit def sendPhotoEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId], EEE: Encoder[String @@ FileId]): Encoder[SendPhoto[A]] = deriveEncoder[SendPhoto[A]]

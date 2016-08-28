@@ -28,7 +28,7 @@ object ToRawRequest extends CirceEncoders {
   implicit val getMe: ToRawRequest[methods.GetMe.type, RawRequest.GetMe.type] =
     ToRawRequest(m ⇒ RawRequest.GetMe)
 
-  implicit def sendMessage(implicit E: Encoder[Long @@ ChatId]): ToRawRequest[methods.SendMessage, RawRequest.SendMessage] =
+  implicit def sendMessage(implicit E: Encoder[String @@ ChatId]): ToRawRequest[methods.SendMessage, RawRequest.SendMessage] =
     ToRawRequest(m ⇒ RawRequest.SendMessage(m.asJson))
 
   implicit def forwardMessage[A: IsResourceId, B: IsResourceId](implicit E: Encoder[A @@ ChatId],

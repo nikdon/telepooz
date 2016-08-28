@@ -68,8 +68,8 @@ object Arbitraries extends tags.Syntax {
       groupChatCreated ← arbitrary[Option[Boolean]]
       superGroupChatCreated ← arbitrary[Option[Boolean]]
       channelChatCreated ← arbitrary[Option[Boolean]]
-      migrateToChatId ← arbitrary[Option[Long @@ ChatId]]
-      migrateFromChatId ← arbitrary[Option[Long @@ ChatId]]
+      migrateToChatId ← arbitrary[Option[String @@ ChatId]]
+      migrateFromChatId ← arbitrary[Option[String @@ ChatId]]
       pinnedMessage ← arbitrary[Option[Message]]
     } yield Message(
       messageId, date, chat, from, forwardFrom, forwardFromChat, forwardDate, replyToMessage, text, entities, audio,
