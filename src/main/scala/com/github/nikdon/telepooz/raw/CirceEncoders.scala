@@ -9,6 +9,7 @@ import com.github.nikdon.telepooz.model.methods._
 import com.github.nikdon.telepooz.tags._
 import com.github.nikdon.telepooz.utils._
 import io.circe.Encoder
+import io.circe.syntax._
 import io.circe.generic.auto._
 import io.circe.generic.semiauto._
 import shapeless.tag._
@@ -77,14 +78,26 @@ trait CirceEncoders {
   implicit val inputLocationMessageContentEncoder: Encoder[inline.InputLocationMessageContent] = deriveEncoder[inline.InputLocationMessageContent]
   implicit val inputTextMessageContentEncoder: Encoder[inline.InputTextMessageContent] = deriveEncoder[inline.InputTextMessageContent]
 
-  implicit def inlineQueryResultArticleEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultArticle] = deriveEncoder[inline.InlineQueryResultArticle]
-  implicit def inlineQueryResultPhotoEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultPhoto] = deriveEncoder[inline.InlineQueryResultPhoto]
-  implicit def inlineQueryResultGifEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultGif] = deriveEncoder[inline.InlineQueryResultGif]
-  implicit def inlineQueryResultMpeg4GifEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultMpeg4Gif] = deriveEncoder[inline.InlineQueryResultMpeg4Gif]
-  implicit def inlineQueryResultVideoEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultVideo] = deriveEncoder[inline.InlineQueryResultVideo]
-  implicit def inlineQueryResultAudioEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultAudio] = deriveEncoder[inline.InlineQueryResultAudio]
-  implicit def inlineQueryResultVoiceEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultVoice] = deriveEncoder[inline.InlineQueryResultVoice]
-  implicit def inlineQueryResultDocumentEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultDocument] = deriveEncoder[inline.InlineQueryResultDocument]
+  /** [[inline.InlineQueryResult]] */
+  implicit def inlineQueryResultArticleEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultArticle] = deriveEncoder[inline.InlineQueryResultArticle].mapJson(_.deepMerge(inline.InlineQueryResultArticle.`type`.asJson))
+  implicit def inlineQueryResultPhotoEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultPhoto] = deriveEncoder[inline.InlineQueryResultPhoto].mapJson(_.deepMerge(inline.InlineQueryResultPhoto.`type`.asJson))
+  implicit def inlineQueryResultGifEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultGif] = deriveEncoder[inline.InlineQueryResultGif].mapJson(_.deepMerge(inline.InlineQueryResultGif.`type`.asJson))
+  implicit def inlineQueryResultMpeg4GifEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultMpeg4Gif] = deriveEncoder[inline.InlineQueryResultMpeg4Gif].mapJson(_.deepMerge(inline.InlineQueryResultMpeg4Gif.`type`.asJson))
+  implicit def inlineQueryResultVideoEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultVideo] = deriveEncoder[inline.InlineQueryResultVideo].mapJson(_.deepMerge(inline.InlineQueryResultVideo.`type`.asJson))
+  implicit def inlineQueryResultAudioEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultAudio] = deriveEncoder[inline.InlineQueryResultAudio].mapJson(_.deepMerge(inline.InlineQueryResultAudio.`type`.asJson))
+  implicit def inlineQueryResultVoiceEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultVoice] = deriveEncoder[inline.InlineQueryResultVoice].mapJson(_.deepMerge(inline.InlineQueryResultVoice.`type`.asJson))
+  implicit def inlineQueryResultDocumentEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultDocument] = deriveEncoder[inline.InlineQueryResultDocument].mapJson(_.deepMerge(inline.InlineQueryResultDocument.`type`.asJson))
+  implicit def inlineQueryResultLocationEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultLocation] = deriveEncoder[inline.InlineQueryResultLocation].mapJson(_.deepMerge(inline.InlineQueryResultLocation.`type`.asJson))
+  implicit def inlineQueryResultVenueEncoder(implicit E: Encoder[String @@ ResultId], EE: Encoder[String @@ FoursquareId]): Encoder[inline.InlineQueryResultVenue] = deriveEncoder[inline.InlineQueryResultVenue].mapJson(_.deepMerge(inline.InlineQueryResultVenue.`type`.asJson))
+  implicit def inlineQueryResultContactEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultContact] = deriveEncoder[inline.InlineQueryResultContact].mapJson(_.deepMerge(inline.InlineQueryResultContact.`type`.asJson))
+  implicit def inlineQueryResultCachedPhotoEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultCachedPhoto] = deriveEncoder[inline.InlineQueryResultCachedPhoto].mapJson(_.deepMerge(inline.InlineQueryResultCachedPhoto.`type`.asJson))
+  implicit def inlineQueryResultCachedGifEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultCachedGif] = deriveEncoder[inline.InlineQueryResultCachedGif].mapJson(_.deepMerge(inline.InlineQueryResultCachedGif.`type`.asJson))
+  implicit def inlineQueryResultCachedMpeg4GifEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultCachedMpeg4Gif] = deriveEncoder[inline.InlineQueryResultCachedMpeg4Gif].mapJson(_.deepMerge(inline.InlineQueryResultCachedMpeg4Gif.`type`.asJson))
+  implicit def inlineQueryResultCachedStickerEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultCachedSticker] = deriveEncoder[inline.InlineQueryResultCachedSticker].mapJson(_.deepMerge(inline.InlineQueryResultCachedSticker.`type`.asJson))
+  implicit def inlineQueryResultCachedDocumentEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultCachedDocument] = deriveEncoder[inline.InlineQueryResultCachedDocument].mapJson(_.deepMerge(inline.InlineQueryResultCachedDocument.`type`.asJson))
+  implicit def inlineQueryResultCachedVideoEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultCachedVideo] = deriveEncoder[inline.InlineQueryResultCachedVideo].mapJson(_.deepMerge(inline.InlineQueryResultCachedVideo.`type`.asJson))
+  implicit def inlineQueryResultCachedVoiceEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultCachedVoice] = deriveEncoder[inline.InlineQueryResultCachedVoice].mapJson(_.deepMerge(inline.InlineQueryResultCachedVoice.`type`.asJson))
+  implicit def inlineQueryResultCachedAudioEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultCachedAudio] = deriveEncoder[inline.InlineQueryResultCachedAudio].mapJson(_.deepMerge(inline.InlineQueryResultCachedAudio.`type`.asJson))
 
   implicit def answerInlineQueryEncoder(implicit E: Encoder[String @@ QueryId]): Encoder[inline.AnswerInlineQuery] = deriveEncoder[inline.AnswerInlineQuery]
 

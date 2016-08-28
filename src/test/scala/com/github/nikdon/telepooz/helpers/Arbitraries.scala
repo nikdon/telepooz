@@ -128,15 +128,26 @@ object Arbitraries extends tags.Syntax {
   ))
 
   /** [[InlineQueryResult]] */
-  implicit val inlineQueryResultArticleArb : Arbitrary[InlineQueryResultArticle]  = Arbitrary(Gen.resultOf(InlineQueryResultArticle))
-  implicit val inlineQueryResultPhotoArb   : Arbitrary[InlineQueryResultPhoto]    = Arbitrary(Gen.resultOf(InlineQueryResultPhoto))
-  implicit val inlineQueryResultGifArb     : Arbitrary[InlineQueryResultGif]      = Arbitrary(Gen.resultOf(InlineQueryResultGif))
-  implicit val inlineQueryResultMpeg4GifArb: Arbitrary[InlineQueryResultMpeg4Gif] = Arbitrary(Gen.resultOf(InlineQueryResultMpeg4Gif))
-  implicit val inlineQueryResultVideoArb   : Arbitrary[InlineQueryResultVideo]    = Arbitrary(Gen.resultOf(InlineQueryResultVideo))
-  implicit val inlineQueryResultAudioArb   : Arbitrary[InlineQueryResultAudio]    = Arbitrary(Gen.resultOf(InlineQueryResultAudio))
-  implicit val inlineQueryResultVoiceArb   : Arbitrary[InlineQueryResultVoice]    = Arbitrary(Gen.resultOf(InlineQueryResultVoice))
-  implicit val inlineQueryResultDocumentArb   : Arbitrary[InlineQueryResultDocument]    = Arbitrary(Gen.resultOf(InlineQueryResultDocument))
-  implicit val inlineQueryResultArb        : Arbitrary[InlineQueryResult]         = Arbitrary(Gen.oneOf(
+  implicit val inlineQueryResultArticleArb       : Arbitrary[InlineQueryResultArticle]        = Arbitrary(Gen.resultOf(InlineQueryResultArticle.apply _))
+  implicit val inlineQueryResultPhotoArb         : Arbitrary[InlineQueryResultPhoto]          = Arbitrary(Gen.resultOf(InlineQueryResultPhoto.apply _))
+  implicit val inlineQueryResultGifArb           : Arbitrary[InlineQueryResultGif]            = Arbitrary(Gen.resultOf(InlineQueryResultGif.apply _))
+  implicit val inlineQueryResultMpeg4GifArb      : Arbitrary[InlineQueryResultMpeg4Gif]       = Arbitrary(Gen.resultOf(InlineQueryResultMpeg4Gif.apply _))
+  implicit val inlineQueryResultVideoArb         : Arbitrary[InlineQueryResultVideo]          = Arbitrary(Gen.resultOf(InlineQueryResultVideo.apply _))
+  implicit val inlineQueryResultAudioArb         : Arbitrary[InlineQueryResultAudio]          = Arbitrary(Gen.resultOf(InlineQueryResultAudio.apply _))
+  implicit val inlineQueryResultVoiceArb         : Arbitrary[InlineQueryResultVoice]          = Arbitrary(Gen.resultOf(InlineQueryResultVoice.apply _))
+  implicit val inlineQueryResultDocumentArb      : Arbitrary[InlineQueryResultDocument]       = Arbitrary(Gen.resultOf(InlineQueryResultDocument.apply _))
+  implicit val inlineQueryResultLocationArb      : Arbitrary[InlineQueryResultLocation]       = Arbitrary(Gen.resultOf(InlineQueryResultLocation.apply _))
+  implicit val inlineQueryResultVenueArb         : Arbitrary[InlineQueryResultVenue]          = Arbitrary(Gen.resultOf(InlineQueryResultVenue.apply _))
+  implicit val inlineQueryResultContactArb       : Arbitrary[InlineQueryResultContact]        = Arbitrary(Gen.resultOf(InlineQueryResultContact.apply _))
+  implicit val inlineQueryResultCachedPhotoArb   : Arbitrary[InlineQueryResultCachedPhoto]    = Arbitrary(Gen.resultOf(InlineQueryResultCachedPhoto.apply _))
+  implicit val inlineQueryResultCachedGifArb     : Arbitrary[InlineQueryResultCachedGif]      = Arbitrary(Gen.resultOf(InlineQueryResultCachedGif.apply _))
+  implicit val inlineQueryResultCachedMpeg4GifArb: Arbitrary[InlineQueryResultCachedMpeg4Gif] = Arbitrary(Gen.resultOf(InlineQueryResultCachedMpeg4Gif.apply _))
+  implicit val inlineQueryResultCachedStickerArb : Arbitrary[InlineQueryResultCachedSticker]  = Arbitrary(Gen.resultOf(InlineQueryResultCachedSticker.apply _))
+  implicit val inlineQueryResultCachedDocumentArb: Arbitrary[InlineQueryResultCachedDocument] = Arbitrary(Gen.resultOf(InlineQueryResultCachedDocument.apply _))
+  implicit val inlineQueryResultCachedVideoArb   : Arbitrary[InlineQueryResultCachedVideo]    = Arbitrary(Gen.resultOf(InlineQueryResultCachedVideo.apply _))
+  implicit val inlineQueryResultCachedVoiceArb   : Arbitrary[InlineQueryResultCachedVoice]    = Arbitrary(Gen.resultOf(InlineQueryResultCachedVoice.apply _))
+  implicit val inlineQueryResultCachedAudioArb   : Arbitrary[InlineQueryResultCachedAudio]    = Arbitrary(Gen.resultOf(InlineQueryResultCachedAudio.apply _))
+  implicit val inlineQueryResultArb              : Arbitrary[InlineQueryResult]               = Arbitrary(Gen.oneOf(
     inlineQueryResultArticleArb.arbitrary,
     inlineQueryResultPhotoArb.arbitrary,
     inlineQueryResultGifArb.arbitrary,
@@ -144,7 +155,18 @@ object Arbitraries extends tags.Syntax {
     inlineQueryResultVideoArb.arbitrary,
     inlineQueryResultAudioArb.arbitrary,
     inlineQueryResultVoiceArb.arbitrary,
-    inlineQueryResultDocumentArb.arbitrary
+    inlineQueryResultDocumentArb.arbitrary,
+    inlineQueryResultLocationArb.arbitrary,
+    inlineQueryResultVenueArb.arbitrary,
+    inlineQueryResultContactArb.arbitrary,
+    inlineQueryResultCachedPhotoArb.arbitrary,
+    inlineQueryResultCachedGifArb.arbitrary,
+    inlineQueryResultCachedMpeg4GifArb.arbitrary,
+    inlineQueryResultCachedStickerArb.arbitrary,
+    inlineQueryResultCachedDocumentArb.arbitrary,
+    inlineQueryResultCachedVideoArb.arbitrary,
+    inlineQueryResultCachedVoiceArb.arbitrary,
+    inlineQueryResultCachedAudioArb.arbitrary
   ))
 
   /** Methods */
