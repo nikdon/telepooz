@@ -68,8 +68,8 @@ object Arbitraries extends tags.Syntax {
       groupChatCreated ← arbitrary[Option[Boolean]]
       superGroupChatCreated ← arbitrary[Option[Boolean]]
       channelChatCreated ← arbitrary[Option[Boolean]]
-      migrateToChatId ← arbitrary[Option[String @@ ChatId]]
-      migrateFromChatId ← arbitrary[Option[String @@ ChatId]]
+      migrateToChatId ← arbitrary[Option[Long @@ ChatId]]
+      migrateFromChatId ← arbitrary[Option[Long @@ ChatId]]
       pinnedMessage ← arbitrary[Option[Message]]
     } yield Message(
       messageId, date, chat, from, forwardFrom, forwardFromChat, forwardDate, replyToMessage, text, entities, audio,
@@ -170,7 +170,7 @@ object Arbitraries extends tags.Syntax {
   ))
 
   /** Methods */
-  implicit val sendMessageArb          : Arbitrary[SendMessage]                 = Arbitrary(Gen.resultOf(SendMessage))
+  implicit val sendMessageArb          : Arbitrary[SendMessage[Long]]           = Arbitrary(Gen.resultOf(SendMessage[Long] _))
   implicit val forwardMessageArb       : Arbitrary[ForwardMessage[Long, Long]]  = Arbitrary(Gen.resultOf(ForwardMessage[Long, Long] _))
   implicit val answerCallbackQueryArb  : Arbitrary[AnswerCallbackQuery]         = Arbitrary(Gen.resultOf(AnswerCallbackQuery))
   implicit val getChatAdministratorsArb: Arbitrary[GetChatAdministrators[Long]] = Arbitrary(Gen.resultOf(GetChatAdministrators[Long] _))

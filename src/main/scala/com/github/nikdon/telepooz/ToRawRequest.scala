@@ -28,58 +28,41 @@ object ToRawRequest extends CirceEncoders {
   implicit val getMe: ToRawRequest[methods.GetMe.type, RawRequest.GetMe.type] =
     ToRawRequest(m ⇒ RawRequest.GetMe)
 
-  implicit def sendMessage(implicit E: Encoder[String @@ ChatId]): ToRawRequest[methods.SendMessage, RawRequest.SendMessage] =
+  implicit def sendMessage[A: IsResourceId](implicit E: Encoder[A @@ ChatId]): ToRawRequest[methods.SendMessage[A], RawRequest.SendMessage] =
     ToRawRequest(m ⇒ RawRequest.SendMessage(m.asJson))
 
-  implicit def forwardMessage[A: IsResourceId, B: IsResourceId](implicit E: Encoder[A @@ ChatId],
-                                                                EE: Encoder[B @@ ChatId],
-                                                                EEE: Encoder[Long @@ MessageId])
+  implicit def forwardMessage[A: IsResourceId, B: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[B @@ ChatId], EEE: Encoder[Long @@ MessageId])
   : ToRawRequest[methods.ForwardMessage[A, B], RawRequest.ForwardMessage] =
     ToRawRequest(m ⇒ RawRequest.ForwardMessage(m.asJson))
 
   implicit def getUpdates(implicit E: Encoder[Long @@ UpdateId]): ToRawRequest[methods.GetUpdates, RawRequest.GetUpdates] =
     ToRawRequest(m ⇒ RawRequest.GetUpdates(m.asJson))
 
-  implicit def sendPhoto[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
-                                          EE: Encoder[Long @@ MessageId],
-                                          EEE: Encoder[String @@ FileId]): ToRawRequest[methods.SendPhoto[A], RawRequest.SendPhoto] =
+  implicit def sendPhoto[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId], EEE: Encoder[String @@ FileId]): ToRawRequest[methods.SendPhoto[A], RawRequest.SendPhoto] =
     ToRawRequest(m ⇒ RawRequest.SendPhoto(m.asJson))
 
-  implicit def sendAudio[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
-                                          EE: Encoder[Long @@ MessageId],
-                                          EEE: Encoder[String @@ FileId]): ToRawRequest[methods.SendAudio[A], RawRequest.SendAudio] =
+  implicit def sendAudio[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId], EEE: Encoder[String @@ FileId]): ToRawRequest[methods.SendAudio[A], RawRequest.SendAudio] =
     ToRawRequest(m ⇒ RawRequest.SendAudio(m.asJson))
 
-  implicit def sendDocument[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
-                                             EE: Encoder[Long @@ MessageId],
-                                             EEE: Encoder[String @@ FileId]): ToRawRequest[methods.SendDocument[A], RawRequest.SendDocument] =
+  implicit def sendDocument[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId], EEE: Encoder[String @@ FileId]): ToRawRequest[methods.SendDocument[A], RawRequest.SendDocument] =
     ToRawRequest(m ⇒ RawRequest.SendDocument(m.asJson))
 
-  implicit def sendSticker[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
-                                            EE: Encoder[Long @@ MessageId],
-                                            EEE: Encoder[String @@ FileId]): ToRawRequest[methods.SendSticker[A], RawRequest.SendSticker] =
+  implicit def sendSticker[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId], EEE: Encoder[String @@ FileId]): ToRawRequest[methods.SendSticker[A], RawRequest.SendSticker] =
     ToRawRequest(m ⇒ RawRequest.SendSticker(m.asJson))
 
-  implicit def sendVideo[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
-                                          EE: Encoder[Long @@ MessageId],
-                                          EEE: Encoder[String @@ FileId]): ToRawRequest[methods.SendVideo[A], RawRequest.SendVideo] =
+  implicit def sendVideo[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId], EEE: Encoder[String @@ FileId]): ToRawRequest[methods.SendVideo[A], RawRequest.SendVideo] =
     ToRawRequest(m ⇒ RawRequest.SendVideo(m.asJson))
 
-  implicit def sendVoice[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
-                                          EE: Encoder[Long @@ MessageId],
-                                          EEE: Encoder[String @@ FileId]): ToRawRequest[methods.SendVoice[A], RawRequest.SendVoice] =
+  implicit def sendVoice[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId], EEE: Encoder[String @@ FileId]): ToRawRequest[methods.SendVoice[A], RawRequest.SendVoice] =
     ToRawRequest(m ⇒ RawRequest.SendVoice(m.asJson))
 
-  implicit def sendLocation[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
-                                             EE: Encoder[Long @@ MessageId]): ToRawRequest[methods.SendLocation[A], RawRequest.SendLocation] =
+  implicit def sendLocation[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId]): ToRawRequest[methods.SendLocation[A], RawRequest.SendLocation] =
     ToRawRequest(m ⇒ RawRequest.SendLocation(m.asJson))
 
-  implicit def sendVenue[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
-                                          EE: Encoder[Long @@ MessageId]): ToRawRequest[methods.SendVenue[A], RawRequest.SendVenue] =
+  implicit def sendVenue[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId]): ToRawRequest[methods.SendVenue[A], RawRequest.SendVenue] =
     ToRawRequest(m ⇒ RawRequest.SendVenue(m.asJson))
 
-  implicit def sendContact[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
-                                            EE: Encoder[Long @@ MessageId]): ToRawRequest[methods.SendContact[A], RawRequest.SendContact] =
+  implicit def sendContact[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId]): ToRawRequest[methods.SendContact[A], RawRequest.SendContact] =
     ToRawRequest(m ⇒ RawRequest.SendContact(m.asJson))
 
   implicit def sendChatAction[A: IsResourceId](implicit E: Encoder[A @@ ChatId]): ToRawRequest[methods.SendChatAction[A], RawRequest.SendChatAction] =
@@ -91,15 +74,13 @@ object ToRawRequest extends CirceEncoders {
   implicit def getFile(implicit E: Encoder[String @@ FileId]): ToRawRequest[methods.GetFile, RawRequest.GetFile] =
     ToRawRequest(m ⇒ RawRequest.GetFile(m.asJson))
 
-  implicit def kickChatMember[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
-                                               EE: Encoder[Int @@ UserId]): ToRawRequest[methods.KickChatMember[A], RawRequest.KickChatMember] =
+  implicit def kickChatMember[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Int @@ UserId]): ToRawRequest[methods.KickChatMember[A], RawRequest.KickChatMember] =
     ToRawRequest(m ⇒ RawRequest.KickChatMember(m.asJson))
 
   implicit def leaveChat[A: IsResourceId](implicit E: Encoder[A @@ ChatId]): ToRawRequest[methods.LeaveChat[A], RawRequest.LeaveChat] =
     ToRawRequest(m ⇒ RawRequest.LeaveChat(m.asJson))
 
-  implicit def unbanChatMember[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
-                                                EE: Encoder[Int @@ UserId]): ToRawRequest[methods.UnbanChatMember[A], RawRequest.UnbanChatMember] =
+  implicit def unbanChatMember[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Int @@ UserId]): ToRawRequest[methods.UnbanChatMember[A], RawRequest.UnbanChatMember] =
     ToRawRequest(m ⇒ RawRequest.UnbanChatMember(m.asJson))
 
   implicit def getChat[A: IsResourceId](implicit E: Encoder[A @@ ChatId]): ToRawRequest[methods.GetChat[A], RawRequest.GetChat] =
@@ -111,8 +92,7 @@ object ToRawRequest extends CirceEncoders {
   implicit def getChatMembersCount[A: IsResourceId](implicit E: Encoder[A @@ ChatId]): ToRawRequest[methods.GetChatMembersCount[A], RawRequest.GetChatMembersCount] =
     ToRawRequest(m ⇒ RawRequest.GetChatMembersCount(m.asJson))
 
-  implicit def getChatMember[A: IsResourceId](implicit E: Encoder[A @@ ChatId],
-                                              EE: Encoder[Int @@ UserId]): ToRawRequest[methods.GetChatMember[A], RawRequest.GetChatMember] =
+  implicit def getChatMember[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Int @@ UserId]): ToRawRequest[methods.GetChatMember[A], RawRequest.GetChatMember] =
     ToRawRequest(m ⇒ RawRequest.GetChatMember(m.asJson))
 
   implicit def answerCallbackQuery(implicit E: Encoder[String @@ UserId]): ToRawRequest[methods.AnswerCallbackQuery, RawRequest.AnswerCallbackQuery] =
