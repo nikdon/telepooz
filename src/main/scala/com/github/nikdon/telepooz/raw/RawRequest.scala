@@ -40,4 +40,8 @@ object RawRequest {
   case class GetChatMembersCount(payload: Json) extends RawRequest[Response[Int]]
   case class GetChatMember(payload: Json) extends RawRequest[Response[ChatMember]]
   case class AnswerCallbackQuery(payload: Json) extends RawRequest[Response[Boolean]]
+
+  case class EditMessageText(payload: Json) extends RawRequest[Response[Either[Boolean, Message]]]
+  case class EditMessageCaption(payload: Json) extends RawRequest[Response[Either[Boolean, Message]]]
+  case class EditMessageReplyMarkup(payload: Json) extends RawRequest[Response[Either[Boolean, Message]]]
 }

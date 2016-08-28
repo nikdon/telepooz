@@ -78,6 +78,13 @@ class MockApiRequestExecutor(nUpdates: Int = 1)(implicit system: ActorSystem, ma
 
     case m@GetUpdates(payload)     =>
       Future.successful(Response(ok = true, Some(updates)))
+
+    case m@EditMessageCaption(payload)     ⇒
+      Future.successful(Response(ok = true, Some(Right(fakeMessage))))
+    case m@EditMessageReplyMarkup(payload) ⇒
+      Future.successful(Response(ok = true, Some(Right(fakeMessage))))
+    case m@EditMessageText(payload)        ⇒
+      Future.successful(Response(ok = true, Some(Right(fakeMessage))))
   }
 
 }

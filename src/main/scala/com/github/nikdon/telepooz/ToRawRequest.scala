@@ -31,8 +31,7 @@ object ToRawRequest extends CirceEncoders {
   implicit def sendMessage[A: IsResourceId](implicit E: Encoder[A @@ ChatId]): ToRawRequest[methods.SendMessage[A], RawRequest.SendMessage] =
     ToRawRequest(m ⇒ RawRequest.SendMessage(m.asJson))
 
-  implicit def forwardMessage[A: IsResourceId, B: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[B @@ ChatId], EEE: Encoder[Long @@ MessageId])
-  : ToRawRequest[methods.ForwardMessage[A, B], RawRequest.ForwardMessage] =
+  implicit def forwardMessage[A: IsResourceId, B: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[B @@ ChatId], EEE: Encoder[Long @@ MessageId]): ToRawRequest[methods.ForwardMessage[A, B], RawRequest.ForwardMessage] =
     ToRawRequest(m ⇒ RawRequest.ForwardMessage(m.asJson))
 
   implicit def getUpdates(implicit E: Encoder[Long @@ UpdateId]): ToRawRequest[methods.GetUpdates, RawRequest.GetUpdates] =
@@ -97,4 +96,13 @@ object ToRawRequest extends CirceEncoders {
 
   implicit def answerCallbackQuery(implicit E: Encoder[String @@ UserId]): ToRawRequest[methods.AnswerCallbackQuery, RawRequest.AnswerCallbackQuery] =
     ToRawRequest(m ⇒ RawRequest.AnswerCallbackQuery(m.asJson))
+
+  implicit def editMessageText[A: IsResourceId](implicit E: Encoder[A @@ ChatId]): ToRawRequest[methods.EditMessageText[A], RawRequest.EditMessageText] =
+    ToRawRequest(m ⇒ RawRequest.EditMessageText(m.asJson))
+
+  implicit def editMessageCaption[A: IsResourceId](implicit E: Encoder[A @@ ChatId]): ToRawRequest[methods.EditMessageCaption[A], RawRequest.EditMessageCaption] =
+    ToRawRequest(m ⇒ RawRequest.EditMessageCaption(m.asJson))
+
+  implicit def editMessageReplyMarkup[A: IsResourceId](implicit E: Encoder[A @@ ChatId]): ToRawRequest[methods.EditMessageReplyMarkup[A], RawRequest.EditMessageReplyMarkup] =
+    ToRawRequest(m ⇒ RawRequest.EditMessageReplyMarkup(m.asJson))
 }

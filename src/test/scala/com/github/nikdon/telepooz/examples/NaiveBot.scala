@@ -12,12 +12,8 @@ object NaiveBot extends Telepooz with App {
 
     /** Initialize as lazy val */
     lazy val reactions: Map[String, Reaction] = Map(
-      "/start" → (implicit message ⇒ args ⇒ {
-        reply("You are started!")
-      }),
-      "/test" → (implicit message ⇒ args ⇒ {
-        reply("Hi there!")
-      })
+      "/start" → (implicit message ⇒ args ⇒ reply("You are started!")),
+      "/test" → (implicit message ⇒ args ⇒ reply("Hi there!"))
     )
   }
 
