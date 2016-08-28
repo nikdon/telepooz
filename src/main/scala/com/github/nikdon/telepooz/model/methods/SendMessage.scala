@@ -1,5 +1,6 @@
 package com.github.nikdon.telepooz.model.methods
 
+import com.github.nikdon.telepooz.IsResourceId
 import com.github.nikdon.telepooz.model.{ParseMode, ReplyMarkup}
 import com.github.nikdon.telepooz.tags.{ChatId, MessageId}
 import shapeless.tag.@@
@@ -21,10 +22,12 @@ import shapeless.tag.@@
   *                                   custom reply keyboard, instructions to hide reply keyboard or to force a reply
   *                                   from the user.
   */
-case class SendMessage(chat_id: Long @@ ChatId,
-                       text: String,
-                       parse_mode: Option[ParseMode] = None,
-                       disable_web_page_preview: Option[Boolean] = None,
-                       disable_notification: Option[Boolean] = None,
-                       reply_to_message_id: Option[Long @@ MessageId] = None,
-                       reply_markup: Option[ReplyMarkup] = None)
+case class SendMessage[A: IsResourceId](
+  chat_id: A @@ ChatId,
+  text: String,
+  parse_mode: Option[ParseMode] = None,
+  disable_web_page_preview: Option[Boolean] = None,
+  disable_notification: Option[Boolean] = None,
+  reply_to_message_id: Option[Long @@ MessageId] = None,
+  reply_markup: Option[ReplyMarkup] = None
+)

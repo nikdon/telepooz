@@ -170,7 +170,7 @@ object Arbitraries extends tags.Syntax {
   ))
 
   /** Methods */
-  implicit val sendMessageArb          : Arbitrary[SendMessage]                 = Arbitrary(Gen.resultOf(SendMessage))
+  implicit val sendMessageArb          : Arbitrary[SendMessage[Long]]           = Arbitrary(Gen.resultOf(SendMessage[Long] _))
   implicit val forwardMessageArb       : Arbitrary[ForwardMessage[Long, Long]]  = Arbitrary(Gen.resultOf(ForwardMessage[Long, Long] _))
   implicit val answerCallbackQueryArb  : Arbitrary[AnswerCallbackQuery]         = Arbitrary(Gen.resultOf(AnswerCallbackQuery))
   implicit val getChatAdministratorsArb: Arbitrary[GetChatAdministrators[Long]] = Arbitrary(Gen.resultOf(GetChatAdministrators[Long] _))

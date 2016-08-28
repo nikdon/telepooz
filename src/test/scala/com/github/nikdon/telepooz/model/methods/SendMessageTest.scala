@@ -13,7 +13,7 @@ class SendMessageTest extends FlatSpec
                               with CirceEncoders {
 
   "SendMessage" should "convert to json with chat id of type String" in {
-    forAll { sendMessage: SendMessage ⇒
+    forAll { sendMessage: SendMessage[Long] ⇒
       sendMessage.asJson should not be Json.Null
     }
   }
