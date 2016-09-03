@@ -19,14 +19,14 @@ import scala.concurrent.{ExecutionContextExecutor, Future}
 
 
 abstract class ApiRequestExecutor(implicit system: ActorSystem, materializer: Materializer, ec: ExecutionContextExecutor)
-  extends (RawRequest ~> Future)
-          with CirceSupport
-          with CirceEncoders
-          with CirceDecoders {
+    extends (RawRequest ~> Future)
+    with CirceSupport
+    with CirceEncoders
+    with CirceDecoders {
 
-  protected lazy val config      : Config = ConfigFactory.load()
+  protected lazy val config: Config       = ConfigFactory.load()
   protected lazy val telegramHost: String = config.getString("telegram.host")
-  protected lazy val token       : String = config.getString("telegram.token")
+  protected lazy val token: String        = config.getString("telegram.token")
 
   private[this] lazy val http = Http()
 
@@ -39,7 +39,7 @@ abstract class ApiRequestExecutor(implicit system: ActorSystem, materializer: Ma
     val uri = "https://" |+| telegramHost |+| "/bot" + token |+| "/" + methodName
     for {
       response ← http.singleRequest(RequestBuilding.Post(Uri(uri), content = dropNulls(payload)))
-      decoded ← circeUnmarshaller(responseDecoder).apply(response.entity)
+      decoded  ← circeUnmarshaller(responseDecoder).apply(response.entity)
     } yield decoded
   }
 

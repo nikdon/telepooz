@@ -1,5 +1,6 @@
 package com.github.nikdon.telepooz
 
+
 trait Produce[A, B] {
   def produce(a: A): B
 }

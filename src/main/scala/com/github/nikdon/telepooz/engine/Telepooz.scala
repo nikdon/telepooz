@@ -12,14 +12,12 @@ import scala.concurrent.{ExecutionContextExecutor, Future}
 
 trait Telepooz {
 
-  implicit val system: ActorSystem = ActorSystem("AkkaBot")
+  implicit val system: ActorSystem                = ActorSystem("AkkaBot")
   implicit val executor: ExecutionContextExecutor = system.dispatcher
-  implicit val materializer: Materializer = ActorMaterializer()
+  implicit val materializer: Materializer         = ActorMaterializer()
 
   implicit val logger = Logging(system, getClass)
 
-
-  /**  */
   def instance = ReaderT[Future, (ApiRequestExecutor, Polling, Reactor), Done] {
     case (are, poller, reactor) ⇒
       Source.fromGraph(poller.pollGraph).runWith(reactor.react)

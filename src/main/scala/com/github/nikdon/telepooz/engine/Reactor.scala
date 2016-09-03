@@ -16,13 +16,31 @@ import shapeless.tag._
 import scala.concurrent.{ExecutionContext, Future}
 
 
+case class Reactions(private val r: Map[String, Message ⇒ Reactions.Arguments ⇒ Reactions.IO] = Map.empty) {
+  def on(command: String)(reaction: Message ⇒ Reactions.Arguments ⇒ Reactions.IO) =
+    Reactions(r + (command → reaction))
+
+  def react(m: Message)(implicit ec: ExecutionContext): Future[Done.type] = {
+    val maybeReaction: Option[Reactions.IO] = for {
+      text ← m.text
+      Array(cmd, args@_*) = text.trim.split(" ")
+      reaction ← r.get(cmd)
+    } yield reaction(m)(args)
+
+    maybeReaction.fold(Future.successful(Done))(_.map(_ ⇒ Done))
+  }
+}
+
+object Reactions {
+  type Arguments = Seq[String]
+  type IO        = Future[_]
+}
+
+
 abstract class Reactor(implicit are: ApiRequestExecutor, ec: ExecutionContext, logger: LoggingAdapter) extends CirceEncoders {
 
-  type Args = Seq[String]
-  type Reaction = (Message ⇒ Args ⇒ Future[_])
-
   /** Override as lazy val */
-  def reactions: Map[String, Reaction]
+  val reactions: Reactions
 
   private[this] val config     : Config = ConfigFactory.load()
   private[this] val parallelism: Int    = config.getInt("telegram.polling.parallelism")
@@ -32,17 +50,7 @@ abstract class Reactor(implicit are: ApiRequestExecutor, ec: ExecutionContext, l
     case None    ⇒ logger.debug(s"Update ${update.update_id} with empty message")
     case Some(m) ⇒
       logger.debug(s"Reacting on update ${update.update_id}")
-
-      val maybeReaction = for {
-        text ← m.text
-        Array(cmd, args@_*) = text.trim.split(" ")
-        reaction ← reactions.get(cmd.toLowerCase)
-      } yield reaction(m)(args)
-
-      maybeReaction.fold({
-        logger.debug(s"No reaction found for the update ${update.update_id}")
-        Future.successful(Done)
-      })(_.map(_ ⇒ Done))
+      reactions.react(m)
   })
 
   /**
