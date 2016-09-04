@@ -100,7 +100,6 @@ class ReactorTest
     val probe = TestProbe()
 
     val triggeringReactor = new Reactor() {
-
       val reactions = Reactions().on("/test")(implicit message ⇒ args ⇒ Future.successful("test") pipeTo probe.ref)
     }
 
