@@ -7,6 +7,8 @@ import akka.pattern.pipe
 import akka.stream.scaladsl.Source
 import akka.stream.{ActorMaterializer, Materializer}
 import akka.testkit.TestProbe
+import cats.instances.all._
+import cats.syntax.all._
 import com.github.nikdon.telepooz.helpers.Arbitraries._
 import com.github.nikdon.telepooz.model._
 import org.scalacheck.Arbitrary.arbitrary
@@ -78,14 +80,19 @@ class ReactorTest
         .on("/test2")(implicit message ⇒ args ⇒ Future.successful("test-2") pipeTo probe.ref)
     }
 
-    val msgs = List(1, 2).map(i ⇒ arbitrary[Message].sample.get.copy(text = Some(s"/test$i")))
-    val upds = msgs.map(m ⇒ arbitrary[Update].sample.get.copy(message = Some(m)))
+    val upds: Option[List[Update]] = List(1, 2)
+      .map(i ⇒ arbitrary[Message].sample.map(_.copy(text = Some(s"/test$i"))))
+      .map(m ⇒ arbitrary[Update].sample.map(_.copy(message = m)))
+      .sequence
 
-    val f = Source(upds).runWith(triggeringReactor.react)
-
-    whenReady(f) { res ⇒
-      res shouldBe Done
-      probe.expectMsgAllOf("test-1", "test-2")
+    upds match {
+      case Some(us) ⇒
+        val f = Source(us).runWith(triggeringReactor.react)
+        whenReady(f) { res ⇒
+          res shouldBe Done
+          probe.expectMsgAllOf("test-1", "test-2")
+        }
+      case None ⇒ throw new AssertionError("Source was not initialized")
     }
   }
 
