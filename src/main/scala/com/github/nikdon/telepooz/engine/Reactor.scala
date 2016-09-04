@@ -39,7 +39,6 @@ object Reactions {
 
 abstract class Reactor(implicit are: ApiRequestExecutor, ec: ExecutionContext, logger: LoggingAdapter) extends CirceEncoders {
 
-  /** Override as lazy val */
   val reactions: Reactions
 
   private[this] val config     : Config = ConfigFactory.load()

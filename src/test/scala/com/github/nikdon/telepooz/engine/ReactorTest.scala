@@ -69,12 +69,31 @@ class ReactorTest
     }
   }
 
+  it should "react on different updates with commands" in {
+    val probe = TestProbe()
+
+    val triggeringReactor = new Reactor() {
+      val reactions = Reactions()
+        .on("/test1")(implicit message ⇒ args ⇒ Future.successful("test-1") pipeTo probe.ref)
+        .on("/test2")(implicit message ⇒ args ⇒ Future.successful("test-2") pipeTo probe.ref)
+    }
+
+    val msgs = List(1, 2).map(i ⇒ arbitrary[Message].sample.get.copy(text = Some(s"/test$i")))
+    val upds = msgs.map(m ⇒ arbitrary[Update].sample.get.copy(message = Some(m)))
+
+    val f = Source(upds).runWith(triggeringReactor.react)
+
+    whenReady(f) { res ⇒
+      res shouldBe Done
+      probe.expectMsgAllOf("test-1", "test-2")
+    }
+  }
+
   it should "not react on the update without proper command" in {
     val probe = TestProbe()
 
     val triggeringReactor = new Reactor() {
 
-      /** Override as lazy val */
       val reactions = Reactions().on("/test")(implicit message ⇒ args ⇒ Future.successful("test") pipeTo probe.ref)
     }
 

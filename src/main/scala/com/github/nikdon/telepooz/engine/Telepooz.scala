@@ -12,7 +12,7 @@ import scala.concurrent.{ExecutionContextExecutor, Future}
 
 trait Telepooz {
 
-  implicit val system: ActorSystem                = ActorSystem("AkkaBot")
+  implicit val system: ActorSystem                = ActorSystem("Telepooz")
   implicit val executor: ExecutionContextExecutor = system.dispatcher
   implicit val materializer: Materializer         = ActorMaterializer()
 
