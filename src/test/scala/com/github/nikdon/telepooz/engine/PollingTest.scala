@@ -20,7 +20,7 @@ class PollingTest
     with BeforeAndAfterAll
     with ScaledTimeSpans {
 
-  override def spanScaleFactor: Double = 10.0
+  override def spanScaleFactor: Double = 20.0
 
   implicit val system: ActorSystem                = ActorSystem("PollingTestSystem")
   implicit val executor: ExecutionContextExecutor = system.dispatcher
