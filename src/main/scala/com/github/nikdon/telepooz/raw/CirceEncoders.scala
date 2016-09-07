@@ -131,4 +131,6 @@ trait CirceEncoders {
   implicit def editMessageTextEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId], EEE: Encoder[String @@ MessageId]): Encoder[EditMessageText[A]] = deriveEncoder[EditMessageText[A]]
   implicit def editMessageCaptionEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId], EEE: Encoder[String @@ MessageId]): Encoder[EditMessageCaption[A]] = deriveEncoder[EditMessageCaption[A]]
   implicit def editMessageReplyMarkupEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId], EEE: Encoder[String @@ MessageId]): Encoder[EditMessageReplyMarkup[A]] = deriveEncoder[EditMessageReplyMarkup[A]]
+
+  implicit val setWebhookEncoder: Encoder[SetWebhook] = deriveEncoder[SetWebhook]
 }

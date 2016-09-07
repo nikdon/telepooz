@@ -44,4 +44,6 @@ object RawRequest {
   case class EditMessageText(payload: Json) extends RawRequest[Response[Either[Boolean, Message]]]
   case class EditMessageCaption(payload: Json) extends RawRequest[Response[Either[Boolean, Message]]]
   case class EditMessageReplyMarkup(payload: Json) extends RawRequest[Response[Either[Boolean, Message]]]
+
+  case class SetWebhook(payload: Json) extends RawRequest[Response[Boolean]]
 }

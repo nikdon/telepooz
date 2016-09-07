@@ -86,6 +86,9 @@ class MockApiRequestExecutor(nUpdates: Int = 1)(implicit system: ActorSystem, ma
       Future.successful(Response(ok = true, Some(Right(fakeMessage))))
     case m @ EditMessageText(payload) ⇒
       Future.successful(Response(ok = true, Some(Right(fakeMessage))))
+
+    case m @ SetWebhook(payload) ⇒
+      Future.successful(Response(ok = true, Some(true)))
   }
 
 }
