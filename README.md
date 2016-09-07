@@ -90,18 +90,11 @@ for `instance.run(...)` with all three components described above.
 object NaiveBot extends Telepooz with App {
 
   implicit val are = new ApiRequestExecutor {}
-  val poller  = new Polling
-  val reactor = new Reactor {
-
-    /** Initialize as lazy val */
-    lazy val reactions: Map[String, Reaction] = Map(
-      "/start" → (implicit message ⇒ args ⇒ {
-        reply("You are started!")
-      }),
-      "/test" → (implicit message ⇒ args ⇒ {
-        reply("Hi there!")
-      })
-    )
+  val poller       = new Polling
+  val reactor      = new Reactor {
+    val reactions = Reactions()
+      .on("/start")(implicit message ⇒ args ⇒ reply("You are started!"))
+      .on("/test")(implicit message ⇒ args ⇒ reply("Hi there!"))
   }
 
   instance.run((are, poller, reactor))
