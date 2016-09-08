@@ -21,7 +21,7 @@ class WebhookTest
     with ScalaFutures
     with ScaledTimeSpans {
 
-  override def spanScaleFactor: Double = 20.0
+  override def spanScaleFactor: Double = 50.0
 
   val encoders = new CirceEncoders {}
   import encoders._
