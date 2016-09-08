@@ -27,13 +27,13 @@ class WebhookTest
   import encoders._
 
   val are = new MockApiRequestExecutor()
-  val whs = new Webhook("http://0.0.0.0:8080", "0.0.0.0", 8080)(are, materializer).source
+  val whs = new Webhook("http://127.0.0.1:8080", "::0", 8080)(are, materializer).source
 
   behavior of "Webhooks"
 
   it should "handle incoming request with updates" in {
     val httpRequest =
-      Post("http://0.0.0.0:8080")
+      Post("http://127.0.0.1:8080")
         .withEntity(ContentTypes.`application/json`, arbitrary[Update].sample.get.asJson.noSpaces)
 
     val t = for {
