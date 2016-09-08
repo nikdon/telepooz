@@ -1,6 +1,6 @@
 package com.github.nikdon.telepooz.engine
 
-import akka.actor.{ActorLogging, ActorRef, Props}
+import akka.actor.{ActorLogging, ActorRef, Props, Stash}
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.Http.ServerBinding
 import akka.http.scaladsl.model.StatusCodes._
@@ -19,26 +19,27 @@ import com.github.nikdon.telepooz.model.methods.SetWebhook
 import com.github.nikdon.telepooz.raw.CirceDecoders
 import de.heikoseeberger.akkahttpcirce.CirceSupport._
 
-class Webhook(endpoint: String, interface: String = "::0", port: Int = 8080)(implicit are: ApiRequestExecutor) {
+class Webhook(endpoint: String, interface: String = "::0", port: Int = 8080)(implicit are: ApiRequestExecutor,
+                                                                             materializer: ActorMaterializer) {
   val source: Source[Update, ActorRef] =
     Source.actorPublisher[Update](UpdatePublisher.props(endpoint, interface, port))
 }
 
 private[this] object UpdatePublisher {
-  def props(endpoint: String, interface: String, port: Int)(implicit are: ApiRequestExecutor): Props =
+  def props(endpoint: String, interface: String, port: Int)(implicit are: ApiRequestExecutor,
+                                                            materializer: ActorMaterializer): Props =
     Props(new UpdatePublisher(endpoint, interface, port))
 }
 
-private[this] class UpdatePublisher(endpoint: String, interface: String, port: Int)(implicit are: ApiRequestExecutor)
+private[this] class UpdatePublisher(endpoint: String, interface: String, port: Int)(implicit are: ApiRequestExecutor,
+                                                                                    materializer: ActorMaterializer)
     extends ActorPublisher[Update]
+    with Stash
     with ActorLogging
     with CirceDecoders {
 
-  //TODO Add a buffer for updates?
-
-  implicit val system       = context.system
-  implicit val materializer = ActorMaterializer()
-  implicit val ec           = context.dispatcher
+  implicit val system = context.system
+  implicit val ec     = context.dispatcher
 
   var binding: ServerBinding = _
 
@@ -59,7 +60,18 @@ private[this] class UpdatePublisher(endpoint: String, interface: String, port: I
       })
       .pipeTo(self)
 
-  override def receive: Receive = {
+  def inactive: Receive = {
+    case bind: ServerBinding ⇒
+      binding = bind
+      log.debug("Ready for request handling at {}", bind)
+      context.become(active)
+      unstashAll()
+    case msg ⇒
+      log.debug("Inactive, stash message: {}", msg)
+      stash()
+  }
+
+  def active: Receive = {
     case update: Update ⇒
       log.debug("Received message with update {}", update.update_id)
       onNext(update)
@@ -68,9 +80,8 @@ private[this] class UpdatePublisher(endpoint: String, interface: String, port: I
       binding.unbind()
       context.stop(self)
     case Request(_) ⇒ log.debug("Received Request(_)")
-    case bind: ServerBinding ⇒
-      binding = bind
-      log.debug("Ready for request handling at {}", bind)
-    case unknown ⇒ log.debug("Received unknown message: {}", unknown)
+    case unknown    ⇒ log.debug("Received unknown message: {}", unknown)
   }
+
+  override def receive: Receive = inactive
 }

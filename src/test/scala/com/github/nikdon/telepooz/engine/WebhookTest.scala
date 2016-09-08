@@ -27,7 +27,7 @@ class WebhookTest
   import encoders._
 
   val are = new MockApiRequestExecutor()
-  val whs = new Webhook("http://0.0.0.0:8080", "0.0.0.0", 8080)(are).source
+  val whs = new Webhook("http://0.0.0.0:8080", "0.0.0.0", 8080)(are, materializer).source
 
   behavior of "Webhooks"
 
