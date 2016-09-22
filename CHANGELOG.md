@@ -5,8 +5,9 @@
 ### Changed
 
 - `Map[String, ...]` replaced by `Reactions` container for IO ops #7
-- bump cats up to 0.7.2, circe up to 0.5.1 #8
+- bump cats up to 0.7.2~~, circe up to 0.5.1~~ #8
 - update akka version up to 2.4.10 #10
+- update circe up to 0.5.2
     
 ## [0.1.0] 2016-08-30
 
