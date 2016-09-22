@@ -2,12 +2,17 @@
 
 ## [Unreleased]
 
+## [0.2.0] 2016-09-23
+
 ### Changed
 
 - `Map[String, ...]` replaced by `Reactions` container for IO ops #7
 - bump cats up to 0.7.2~~, circe up to 0.5.1~~ #8
-- add webhook (without certificates)
 - update akka version up to 2.4.10 #10
+
+### Added
+
+- add webhook (without certificates)
     
 ## [0.1.0] 2016-08-30
 
