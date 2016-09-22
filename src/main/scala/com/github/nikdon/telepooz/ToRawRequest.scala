@@ -105,4 +105,7 @@ object ToRawRequest extends CirceEncoders {
 
   implicit def editMessageReplyMarkup[A: IsResourceId](implicit E: Encoder[A @@ ChatId]): ToRawRequest[methods.EditMessageReplyMarkup[A], RawRequest.EditMessageReplyMarkup] =
     ToRawRequest(m ⇒ RawRequest.EditMessageReplyMarkup(m.asJson))
+
+  implicit val setWebhook: ToRawRequest[methods.SetWebhook, RawRequest.SetWebhook] =
+    ToRawRequest(m ⇒ RawRequest.SetWebhook(m.asJson))
 }

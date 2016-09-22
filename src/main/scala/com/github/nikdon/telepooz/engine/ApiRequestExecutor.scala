@@ -71,5 +71,6 @@ abstract class ApiRequestExecutor(implicit system: ActorSystem, materializer: Ma
     case m: EditMessageCaption     ⇒ go(m.name, m.payload)
     case m: EditMessageReplyMarkup ⇒ go(m.name, m.payload)
     case m: EditMessageText        ⇒ go(m.name, m.payload)
+    case m: SetWebhook             ⇒ go(m.name, m.payload)
   }
 }

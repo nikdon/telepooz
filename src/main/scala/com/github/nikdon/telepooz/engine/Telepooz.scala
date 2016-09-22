@@ -23,4 +23,7 @@ trait Telepooz {
       Source.fromGraph(poller.pollGraph).runWith(reactor.react)
   }
 
+  def webhook = ReaderT[Future, (Webhook, Reactor), Done] {
+    case (wh, reactor) ⇒ wh.source.runWith(reactor.react)
+  }
 }
