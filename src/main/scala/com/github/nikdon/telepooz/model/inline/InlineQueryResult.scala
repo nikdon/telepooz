@@ -505,3 +505,10 @@ case class InlineQueryResultCachedAudio(id: String @@ ResultId,
 object InlineQueryResultCachedAudio {
   final val `type` = Map("type" → "audio")
 }
+
+case class InlineQueryResultGame(id: String @@ ResultId,
+                                 game_short_name: String,
+                                 reply_markup: Option[InlineKeyboardMarkup] = None)
+object InlineQueryResultGame {
+  final val `type` = Map("type" → "audio")
+}
