@@ -108,4 +108,7 @@ object ToRawRequest extends CirceEncoders {
 
   implicit val setWebhook: ToRawRequest[methods.SetWebhook, RawRequest.SetWebhook] =
     ToRawRequest(m ⇒ RawRequest.SetWebhook(m.asJson))
+
+  implicit def sendGame[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId]): ToRawRequest[methods.SendGame[A], RawRequest.SendGame] =
+    ToRawRequest(m ⇒ RawRequest.SendGame(m.asJson))
 }

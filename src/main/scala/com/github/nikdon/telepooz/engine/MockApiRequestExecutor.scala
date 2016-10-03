@@ -36,6 +36,9 @@ class MockApiRequestExecutor(nUpdates: Int = 1)(implicit system: ActorSystem, ma
     case m @ ForwardMessage(payload) =>
       Future.successful(Response(ok = true, Some(fakeMessage)))
 
+    case m @ SendGame(payload) ⇒
+      Future.successful(Response(ok = true, Some(fakeMessage)))
+
     case m @ SendPhoto(payload) ⇒
       Future.successful(Response(ok = true, Some(fakeMessage)))
     case m @ SendAudio(payload) ⇒
