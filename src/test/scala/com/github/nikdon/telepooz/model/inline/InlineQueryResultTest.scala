@@ -164,4 +164,12 @@ class InlineQueryResultTest extends FlatSpec
       js.cursor.downField("type").flatMap(_.focus.asString) shouldBe Some("audio")
     }
   }
+
+  "InlineQueryResultGame" should "convert to json" in {
+    forAll { inlineQueryResultGame: InlineQueryResultGame ⇒
+      val js = inlineQueryResultGame.asJson
+      js should not be Json.Null
+      js.cursor.downField("type").flatMap(_.focus.asString) shouldBe Some("game")
+    }
+  }
 }

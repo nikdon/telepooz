@@ -30,6 +30,7 @@ object Arbitraries extends tags.Syntax {
 
   implicit val audioArb               : Arbitrary[Audio]                = Arbitrary(Gen.resultOf(Audio))
   implicit val callbackQueryArb       : Arbitrary[CallbackQuery]        = Arbitrary(Gen.resultOf(CallbackQuery))
+  implicit val callbackGameArb        : Arbitrary[CallbackGame]         = Arbitrary(Gen.const(CallbackGame()))
   implicit val fileArb                : Arbitrary[File]                 = Arbitrary(Gen.resultOf(File))
   implicit val chosenInlineQueryArb   : Arbitrary[ChosenInlineQuery]    = Arbitrary(Gen.resultOf(ChosenInlineQuery))
   implicit val locationArb            : Arbitrary[Location]             = Arbitrary(Gen.resultOf(Location))
@@ -38,48 +39,6 @@ object Arbitraries extends tags.Syntax {
   implicit val inlineKeyboardButtonArb: Arbitrary[InlineKeyboardButton] = Arbitrary(Gen.resultOf(InlineKeyboardButton))
   implicit val inlineQueryArb         : Arbitrary[InlineQuery]          = Arbitrary(Gen.resultOf(InlineQuery))
   implicit val keyboardButtonArb      : Arbitrary[KeyboardButton]       = Arbitrary(Gen.resultOf(KeyboardButton))
-  implicit val messageArb             : Arbitrary[Message]              = {
-    val g: Gen[Message] = for {
-      messageId ← arbitrary[Long @@ MessageId]
-      date ← arbitrary[Date]
-      chat ← arbitrary[Chat]
-      from ← arbitrary[Option[User]]
-      forwardFrom ← arbitrary[Option[User]]
-      forwardFromChat ← arbitrary[Option[Chat]]
-      forwardDate ← arbitrary[Option[Date]]
-      replyToMessage ← arbitrary[Option[Message]]
-      text ← arbitrary[Option[String]]
-      entities ← arbitrary[Option[Vector[MessageEntity]]]
-      audio ← arbitrary[Option[Audio]]
-      document ← arbitrary[Option[Document]]
-      photo ← arbitrary[Option[Vector[PhotoSize]]]
-      sticker ← arbitrary[Option[Sticker]]
-      video ← arbitrary[Option[Video]]
-      voice ← arbitrary[Option[Voice]]
-      caption ← arbitrary[Option[String]]
-      contact ← arbitrary[Option[Contact]]
-      location ← arbitrary[Option[Location]]
-      venue ← arbitrary[Option[Venue]]
-      newChatMember ← arbitrary[Option[User]]
-      leftChatMember ← arbitrary[Option[User]]
-      newChatTitle ← arbitrary[Option[String]]
-      newChatPhoto ← arbitrary[Option[Vector[PhotoSize]]]
-      deleteChatPhoto ← arbitrary[Option[Boolean]]
-      groupChatCreated ← arbitrary[Option[Boolean]]
-      superGroupChatCreated ← arbitrary[Option[Boolean]]
-      channelChatCreated ← arbitrary[Option[Boolean]]
-      migrateToChatId ← arbitrary[Option[Long @@ ChatId]]
-      migrateFromChatId ← arbitrary[Option[Long @@ ChatId]]
-      pinnedMessage ← arbitrary[Option[Message]]
-    } yield Message(
-      messageId, date, chat, from, forwardFrom, forwardFromChat, forwardDate, replyToMessage, text, entities, audio,
-      document, photo, sticker, video, voice, caption, contact, location, venue, newChatMember, leftChatMember,
-      newChatTitle, newChatPhoto, deleteChatPhoto, groupChatCreated, superGroupChatCreated, channelChatCreated,
-      migrateToChatId, migrateFromChatId, pinnedMessage
-    )
-
-    Arbitrary(g)
-  }
   implicit val updateArb              : Arbitrary[Update]               = Arbitrary(Gen.resultOf(Update))
   implicit val memberStatusArb        : Arbitrary[MemberStatus]         = Arbitrary(
     Gen.oneOf(MemberStatus.Creator, MemberStatus.Administrator, MemberStatus.Member, MemberStatus.Left, MemberStatus.Kicked)
@@ -101,6 +60,55 @@ object Arbitraries extends tags.Syntax {
   implicit val videoArb               : Arbitrary[Video]                = Arbitrary(Gen.resultOf(Video))
   implicit val voiceArb               : Arbitrary[Voice]                = Arbitrary(Gen.resultOf(Voice))
   implicit val userProfilePhotosArb   : Arbitrary[UserProfilePhotos]    = Arbitrary(Gen.resultOf(UserProfilePhotos))
+
+  // Game
+  implicit val gameHighScoreArv: Arbitrary[GameHighScore] = Arbitrary(Gen.resultOf(GameHighScore.apply _))
+  implicit val animationArb    : Arbitrary[Animation]     = Arbitrary(Gen.resultOf(Animation.apply _))
+  implicit val gameArb         : Arbitrary[Game]          = Arbitrary(Gen.resultOf(Game.apply _))
+
+  implicit val messageArb             : Arbitrary[Message]              = {
+    val g: Gen[Message] = for {
+      messageId ← arbitrary[Long @@ MessageId]
+      date ← arbitrary[Date]
+      chat ← arbitrary[Chat]
+      from ← arbitrary[Option[User]]
+      forwardFrom ← arbitrary[Option[User]]
+      forwardFromChat ← arbitrary[Option[Chat]]
+      forwardDate ← arbitrary[Option[Date]]
+      replyToMessage ← arbitrary[Option[Message]]
+      text ← arbitrary[Option[String]]
+      entities ← arbitrary[Option[Vector[MessageEntity]]]
+      audio ← arbitrary[Option[Audio]]
+      document ← arbitrary[Option[Document]]
+      game ← arbitrary[Option[Game]]
+      photo ← arbitrary[Option[Vector[PhotoSize]]]
+      sticker ← arbitrary[Option[Sticker]]
+      video ← arbitrary[Option[Video]]
+      voice ← arbitrary[Option[Voice]]
+      caption ← arbitrary[Option[String]]
+      contact ← arbitrary[Option[Contact]]
+      location ← arbitrary[Option[Location]]
+      venue ← arbitrary[Option[Venue]]
+      newChatMember ← arbitrary[Option[User]]
+      leftChatMember ← arbitrary[Option[User]]
+      newChatTitle ← arbitrary[Option[String]]
+      newChatPhoto ← arbitrary[Option[Vector[PhotoSize]]]
+      deleteChatPhoto ← arbitrary[Option[Boolean]]
+      groupChatCreated ← arbitrary[Option[Boolean]]
+      superGroupChatCreated ← arbitrary[Option[Boolean]]
+      channelChatCreated ← arbitrary[Option[Boolean]]
+      migrateToChatId ← arbitrary[Option[Long @@ ChatId]]
+      migrateFromChatId ← arbitrary[Option[Long @@ ChatId]]
+      pinnedMessage ← arbitrary[Option[Message]]
+    } yield Message(
+      messageId, date, chat, from, forwardFrom, forwardFromChat, forwardDate, replyToMessage, text, entities, audio,
+      document, game, photo, sticker, video, voice, caption, contact, location, venue, newChatMember, leftChatMember,
+      newChatTitle, newChatPhoto, deleteChatPhoto, groupChatCreated, superGroupChatCreated, channelChatCreated,
+      migrateToChatId, migrateFromChatId, pinnedMessage
+    )
+
+    Arbitrary(g)
+  }
 
   /** [[ReplyMarkup]] */
   implicit val replyKeyboardMarkupArb : Arbitrary[ReplyKeyboardMarkup]  = Arbitrary(Gen.resultOf(ReplyKeyboardMarkup))
@@ -147,6 +155,7 @@ object Arbitraries extends tags.Syntax {
   implicit val inlineQueryResultCachedVideoArb   : Arbitrary[InlineQueryResultCachedVideo]    = Arbitrary(Gen.resultOf(InlineQueryResultCachedVideo.apply _))
   implicit val inlineQueryResultCachedVoiceArb   : Arbitrary[InlineQueryResultCachedVoice]    = Arbitrary(Gen.resultOf(InlineQueryResultCachedVoice.apply _))
   implicit val inlineQueryResultCachedAudioArb   : Arbitrary[InlineQueryResultCachedAudio]    = Arbitrary(Gen.resultOf(InlineQueryResultCachedAudio.apply _))
+  implicit val inlineQueryResultGameArb          : Arbitrary[InlineQueryResultGame]           = Arbitrary(Gen.resultOf(InlineQueryResultGame.apply _))
   implicit val inlineQueryResultArb              : Arbitrary[InlineQueryResult]               = Arbitrary(Gen.oneOf(
     inlineQueryResultArticleArb.arbitrary,
     inlineQueryResultPhotoArb.arbitrary,
@@ -166,7 +175,8 @@ object Arbitraries extends tags.Syntax {
     inlineQueryResultCachedDocumentArb.arbitrary,
     inlineQueryResultCachedVideoArb.arbitrary,
     inlineQueryResultCachedVoiceArb.arbitrary,
-    inlineQueryResultCachedAudioArb.arbitrary
+    inlineQueryResultCachedAudioArb.arbitrary,
+    inlineQueryResultGameArb.arbitrary
   ))
 
   /** Methods */

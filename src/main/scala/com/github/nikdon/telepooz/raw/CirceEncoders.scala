@@ -35,6 +35,8 @@ trait CirceEncoders {
   implicit def audioEncoder(implicit E: Encoder[String @@ FileId]): Encoder[Audio] = deriveEncoder[Audio]
   implicit def callbackQueryEncoder(implicit E: Encoder[String @@ QueryId]): Encoder[CallbackQuery] = deriveEncoder[CallbackQuery]
 
+  implicit val callbackGameEncoder: Encoder[CallbackGame] = deriveEncoder[CallbackGame]
+
   implicit val chatTypeEncoder: Encoder[ChatType] = Encoder[String].contramap[ChatType](_.productPrefix)
   implicit def chatEncoder(implicit E: Encoder[Long @@ ChatId]): Encoder[Chat] = deriveEncoder[Chat]
   implicit val memberStatusEncoder: Encoder[MemberStatus] = Encoder[String].contramap[MemberStatus](_.productPrefix)
@@ -48,7 +50,11 @@ trait CirceEncoders {
   implicit val keyboardButtonEncoder      : Encoder[KeyboardButton]       = deriveEncoder[KeyboardButton]
   implicit val locationEncoder            : Encoder[Location]             = deriveEncoder[Location]
 
-  implicit def messageEncoder(implicit E: Encoder[Long @@ MessageId], EE: Encoder[Long @@ ChatId]): Encoder[Message] = deriveEncoder[Message]
+  implicit val gameHighScoreEncoder: Encoder[GameHighScore] = deriveEncoder[GameHighScore]
+  implicit def animationEncoder(implicit E: Encoder[String @@ FileId]): Encoder[Animation] = deriveEncoder[Animation]
+  implicit def gameEncoder: Encoder[Game] = deriveEncoder[Game]
+
+  implicit def messageEncoder(implicit E: Encoder[Long @@ MessageId], EE: Encoder[Long @@ ChatId], EEE: Encoder[String @@ FileId]): Encoder[Message] = deriveEncoder[Message]
 
   implicit val messageEntityTypeEncoder: Encoder[MessageEntityType] = Encoder[String].contramap[MessageEntityType](e ⇒ snakenize {e.productPrefix})
   implicit val messageEntityEncoder    : Encoder[MessageEntity]     = deriveEncoder[MessageEntity]
@@ -98,11 +104,13 @@ trait CirceEncoders {
   implicit def inlineQueryResultCachedVideoEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultCachedVideo] = deriveEncoder[inline.InlineQueryResultCachedVideo].mapJson(_.deepMerge(inline.InlineQueryResultCachedVideo.`type`.asJson))
   implicit def inlineQueryResultCachedVoiceEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultCachedVoice] = deriveEncoder[inline.InlineQueryResultCachedVoice].mapJson(_.deepMerge(inline.InlineQueryResultCachedVoice.`type`.asJson))
   implicit def inlineQueryResultCachedAudioEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultCachedAudio] = deriveEncoder[inline.InlineQueryResultCachedAudio].mapJson(_.deepMerge(inline.InlineQueryResultCachedAudio.`type`.asJson))
+  implicit def inlineQueryResultGameEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultGame] = deriveEncoder[inline.InlineQueryResultGame].mapJson(_.deepMerge(inline.InlineQueryResultGame.`type`.asJson))
 
   implicit def answerInlineQueryEncoder(implicit E: Encoder[String @@ QueryId]): Encoder[inline.AnswerInlineQuery] = deriveEncoder[inline.AnswerInlineQuery]
 
   // Methods
   implicit val getMeJsonEncoder: Encoder[GetMe.type] = Encoder.instance(_ ⇒ io.circe.Json.Null)
+  implicit val getWebhookInfoEncoder: Encoder[GetWebhookInfo.type] = Encoder.instance(_ ⇒ io.circe.Json.Null)
   implicit def sendMessageJsonEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId]): Encoder[SendMessage[A]] = deriveEncoder[SendMessage[A]]
   implicit def forwardMessageJsonEncoder[A: IsResourceId, B: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[B @@ ChatId], EEE: Encoder[Long @@ MessageId]): Encoder[ForwardMessage[A, B]] = deriveEncoder[ForwardMessage[A, B]]
   implicit def getUpdatesJsonEncoder(implicit E: Encoder[Long @@ UpdateId]): Encoder[GetUpdates] = deriveEncoder[GetUpdates]
@@ -115,6 +123,9 @@ trait CirceEncoders {
   implicit def sendLocationEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId]): Encoder[SendLocation[A]] = deriveEncoder[SendLocation[A]]
   implicit def sendVenueEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId]): Encoder[SendVenue[A]] = deriveEncoder[SendVenue[A]]
   implicit def sendContactEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId]): Encoder[SendContact[A]] = deriveEncoder[SendContact[A]]
+  implicit def sendGameEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId]): Encoder[SendGame[A]] = deriveEncoder[SendGame[A]]
+  implicit def setGameScoreEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId], EEE: Encoder[String @@ MessageId], EEEE: Encoder[Long @@ UserId]): Encoder[SetGameScore[A]] = deriveEncoder[SetGameScore[A]]
+  implicit def getGameHighScoresEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId], EEE: Encoder[String @@ MessageId], EEEE: Encoder[Long @@ UserId]): Encoder[GetGameHighScores[A]] = deriveEncoder[GetGameHighScores[A]]
   implicit val chatActionEncoder: Encoder[ChatAction] = Encoder[String].contramap[ChatAction](e ⇒ snakenize {e.productPrefix})
   implicit def sendChatActionEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId]): Encoder[SendChatAction[A]] = deriveEncoder[SendChatAction[A]]
   implicit def getUserProfilePhotosEncoder(implicit E: Encoder[Int @@ UserId]): Encoder[GetUserProfilePhotos] = deriveEncoder[GetUserProfilePhotos]

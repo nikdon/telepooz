@@ -1,6 +1,28 @@
 # Change Log
 
-## [Unreleased]
+## Unreleased
+
+## [0.3.0] 2016-10-04
+
+### Changed
+
+- update akka version up to 2.4.11
+- update akka-http-json up to 1.10.1
+
+### Added
+
+- New tools for building HTML5 games.
+- New method sendGame, new object InlineQueryResultGame, new field game in Message.
+- New parameter url in answerCallbackQuery. Create a game and accept the 
+  conditions using Botfather to send custom urls that open your games for the user.
+- New field callback_game in InlineKeyboardButton, new fields 
+  game_short_name and chat_instance in CallbackQuery, new object CallbackGame.
+- New methods setGameScore and getGameHighScores.
+- Added new field switch_inline_query_current_chat in InlineKeyboardButton.
+- Added caption fields to sendAudio, sendVoice, InlineQueryResultAudio, 
+  InlineQueryResultVoice, InlineQueryResultCachedAudio, and 
+  InlineQueryResultCachedVoice.
+- New field all_members_are_admins in the Chat object.
 
 ## [0.2.0] 2016-09-23
 

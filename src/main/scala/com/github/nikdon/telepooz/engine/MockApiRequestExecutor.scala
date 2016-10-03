@@ -31,10 +31,21 @@ class MockApiRequestExecutor(nUpdates: Int = 1)(implicit system: ActorSystem, ma
   override def apply[A](fa: RawRequest[A]): Future[A] = fa match {
     case m @ GetMe =>
       Future.successful(Response(ok = true, Some(User(r.nextInt.userId, r.nextString(5)))))
+
+    case m @ GetWebhookInfo =>
+      Future.successful(Response(ok = true, Some(WebhookInfo(r.nextString(5), r.nextBoolean, r.nextLong, r.nextLong, r.nextString(5)))))
+
     case m @ SendMessage(payload) =>
       Future.successful(Response(ok = true, Some(fakeMessage)))
     case m @ ForwardMessage(payload) =>
       Future.successful(Response(ok = true, Some(fakeMessage)))
+
+    case m @ SendGame(payload) ⇒
+      Future.successful(Response(ok = true, Some(fakeMessage)))
+    case m @ SetGameScore(payload) ⇒
+      Future.successful(Response(ok = true, Some(fakeMessage)))
+    case m @ GetGameHighScores(payload) ⇒
+      Future.successful(Response(ok = true, Some(Vector(GameHighScore(r.nextInt, fakeUser, r.nextInt)))))
 
     case m @ SendPhoto(payload) ⇒
       Future.successful(Response(ok = true, Some(fakeMessage)))

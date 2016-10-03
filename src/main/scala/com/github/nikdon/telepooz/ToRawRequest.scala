@@ -28,6 +28,9 @@ object ToRawRequest extends CirceEncoders {
   implicit val getMe: ToRawRequest[methods.GetMe.type, RawRequest.GetMe.type] =
     ToRawRequest(m ⇒ RawRequest.GetMe)
 
+  implicit val getWebhookInfo: ToRawRequest[methods.GetWebhookInfo.type, RawRequest.GetWebhookInfo.type] =
+    ToRawRequest(m ⇒ RawRequest.GetWebhookInfo)
+
   implicit def sendMessage[A: IsResourceId](implicit E: Encoder[A @@ ChatId]): ToRawRequest[methods.SendMessage[A], RawRequest.SendMessage] =
     ToRawRequest(m ⇒ RawRequest.SendMessage(m.asJson))
 
@@ -108,4 +111,13 @@ object ToRawRequest extends CirceEncoders {
 
   implicit val setWebhook: ToRawRequest[methods.SetWebhook, RawRequest.SetWebhook] =
     ToRawRequest(m ⇒ RawRequest.SetWebhook(m.asJson))
+
+  implicit def sendGame[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId]): ToRawRequest[methods.SendGame[A], RawRequest.SendGame] =
+    ToRawRequest(m ⇒ RawRequest.SendGame(m.asJson))
+
+  implicit def setGameScore[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId], EEE: Encoder[String @@ MessageId], EEEE: Encoder[Long @@ UserId]): ToRawRequest[methods.SetGameScore[A], RawRequest.SetGameScore] =
+    ToRawRequest(m ⇒ RawRequest.SetGameScore(m.asJson))
+
+  implicit def getGameHighScores[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId], EEE: Encoder[String @@ MessageId], EEEE: Encoder[Long @@ UserId]): ToRawRequest[methods.GetGameHighScores[A], RawRequest.GetGameHighScores] =
+    ToRawRequest(m ⇒ RawRequest.GetGameHighScores(m.asJson))
 }

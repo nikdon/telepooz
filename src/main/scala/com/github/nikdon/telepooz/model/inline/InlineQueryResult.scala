@@ -176,8 +176,9 @@ object InlineQueryResultVideo {
 case class InlineQueryResultAudio(id: String @@ ResultId,
                                   audio_url: String,
                                   title: String,
-                                  performer: Option[String],
-                                  audio_duration: Option[Int],
+                                  caption: Option[String] = None,
+                                  performer: Option[String] = None,
+                                  audio_duration: Option[Int] = None,
                                   reply_markup: Option[InlineKeyboardMarkup] = None,
                                   input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
 object InlineQueryResultAudio {
@@ -200,7 +201,8 @@ object InlineQueryResultAudio {
 case class InlineQueryResultVoice(id: String @@ ResultId,
                                   voice_url: String,
                                   title: String,
-                                  voice_duration: Option[Int],
+                                  caption: Option[String] = None,
+                                  voice_duration: Option[Int] = None,
                                   reply_markup: Option[InlineKeyboardMarkup] = None,
                                   input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
 object InlineQueryResultVoice {
@@ -475,12 +477,14 @@ object InlineQueryResultCachedVideo {
   * @param id                     Unique identifier for this result, 1-64 bytes
   * @param voice_file_id          A valid file identifier for the voice message
   * @param title                  Voice message title
+  * @param caption                Audio caption, 0-200 characters
   * @param reply_markup           An Inline keyboard attached to the message
   * @param input_message_content  Content of the message to be sent instead of the voice message
   */
 case class InlineQueryResultCachedVoice(id: String @@ ResultId,
                                         voice_file_id: String,
                                         title: String,
+                                        caption: Option[String] = None,
                                         reply_markup: Option[InlineKeyboardMarkup] = None,
                                         input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
 object InlineQueryResultCachedVoice {
@@ -500,8 +504,16 @@ object InlineQueryResultCachedVoice {
   */
 case class InlineQueryResultCachedAudio(id: String @@ ResultId,
                                         audio_file_id: String,
+                                        caption: Option[String] = None,
                                         reply_markup: Option[InlineKeyboardMarkup] = None,
                                         input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
 object InlineQueryResultCachedAudio {
   final val `type` = Map("type" → "audio")
+}
+
+case class InlineQueryResultGame(id: String @@ ResultId,
+                                 game_short_name: String,
+                                 reply_markup: Option[InlineKeyboardMarkup] = None) extends InlineQueryResult
+object InlineQueryResultGame {
+  final val `type` = Map("type" → "game")
 }
