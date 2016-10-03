@@ -47,6 +47,7 @@ abstract class ApiRequestExecutor(implicit system: ActorSystem, materializer: Ma
     case m: GetMe.type             ⇒ go(m.name, m.payload)
     case m: SendMessage            ⇒ go(m.name, m.payload)
     case m: SendGame               ⇒ go(m.name, m.payload)
+    case m: SetGameScore           ⇒ go(m.name, m.payload)
     case m: ForwardMessage         ⇒ go(m.name, m.payload)
     case m: GetUpdates             ⇒ go(m.name, m.payload)
     case m: SendPhoto              ⇒ go(m.name, m.payload)
