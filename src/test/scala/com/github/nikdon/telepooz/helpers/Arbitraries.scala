@@ -30,6 +30,7 @@ object Arbitraries extends tags.Syntax {
 
   implicit val audioArb               : Arbitrary[Audio]                = Arbitrary(Gen.resultOf(Audio))
   implicit val callbackQueryArb       : Arbitrary[CallbackQuery]        = Arbitrary(Gen.resultOf(CallbackQuery))
+  implicit val callbackGameArb        : Arbitrary[CallbackGame]         = Arbitrary(Gen.const(CallbackGame()))
   implicit val fileArb                : Arbitrary[File]                 = Arbitrary(Gen.resultOf(File))
   implicit val chosenInlineQueryArb   : Arbitrary[ChosenInlineQuery]    = Arbitrary(Gen.resultOf(ChosenInlineQuery))
   implicit val locationArb            : Arbitrary[Location]             = Arbitrary(Gen.resultOf(Location))

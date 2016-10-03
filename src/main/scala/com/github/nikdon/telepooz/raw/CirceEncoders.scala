@@ -35,6 +35,8 @@ trait CirceEncoders {
   implicit def audioEncoder(implicit E: Encoder[String @@ FileId]): Encoder[Audio] = deriveEncoder[Audio]
   implicit def callbackQueryEncoder(implicit E: Encoder[String @@ QueryId]): Encoder[CallbackQuery] = deriveEncoder[CallbackQuery]
 
+  implicit val callbackGameEncoder: Encoder[CallbackGame] = deriveEncoder[CallbackGame]
+
   implicit val chatTypeEncoder: Encoder[ChatType] = Encoder[String].contramap[ChatType](_.productPrefix)
   implicit def chatEncoder(implicit E: Encoder[Long @@ ChatId]): Encoder[Chat] = deriveEncoder[Chat]
   implicit val memberStatusEncoder: Encoder[MemberStatus] = Encoder[String].contramap[MemberStatus](_.productPrefix)
