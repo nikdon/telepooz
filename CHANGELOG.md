@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+### Changed
+
+- update akka version up to 2.4.11
+- update akka-http-json up to 1.10.1
+
 ### Added
 
 - New tools for building HTML5 games.
