@@ -112,6 +112,9 @@ object ToRawRequest extends CirceEncoders {
   implicit def sendGame[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId]): ToRawRequest[methods.SendGame[A], RawRequest.SendGame] =
     ToRawRequest(m ⇒ RawRequest.SendGame(m.asJson))
 
-  implicit def setGameScore[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId], EEE: Encoder[String @@ MessageId]): ToRawRequest[methods.SetGameScore[A], RawRequest.SetGameScore] =
+  implicit def setGameScore[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId], EEE: Encoder[String @@ MessageId], EEEE: Encoder[Long @@ UserId]): ToRawRequest[methods.SetGameScore[A], RawRequest.SetGameScore] =
     ToRawRequest(m ⇒ RawRequest.SetGameScore(m.asJson))
+
+  implicit def getGameHighScores[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId], EEE: Encoder[String @@ MessageId], EEEE: Encoder[Long @@ UserId]): ToRawRequest[methods.GetGameHighScores[A], RawRequest.GetGameHighScores] =
+    ToRawRequest(m ⇒ RawRequest.GetGameHighScores(m.asJson))
 }

@@ -19,6 +19,7 @@ object RawRequest {
   final case class GetUpdates(payload: Json) extends RawRequest[Response[Vector[Update]]]
   final case class SendGame(payload: Json) extends RawRequest[Response[Message]]
   final case class SetGameScore(payload: Json) extends RawRequest[Response[Message]]
+  final case class GetGameHighScores(payload: Json) extends RawRequest[Response[Vector[GameHighScore]]]
 
   // TODO Add an ability to upload files as multipart form
   final case class SendPhoto(payload: Json) extends RawRequest[Response[Message]]
