@@ -1,6 +1,8 @@
 # Change Log
 
-## [Unreleased]
+## Unreleased
+
+## [0.3.0] 2016-10-04
 
 ### Changed
 
