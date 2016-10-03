@@ -45,6 +45,8 @@ trait CirceDecoders {
   implicit val messageEntityTypeDecoder: Decoder[MessageEntityType] = Decoder[String].map(a ⇒ MessageEntityType.unsafe( pascalize(a) ))
   implicit val messageEntityDecoder = Decoder[MessageEntity]
 
+  implicit val webhookInfoDecoder = Decoder[WebhookInfo]
+
   implicit val parseModeDecoder: Decoder[ParseMode] = Decoder[String].map(ParseMode.unsafe)
 
   implicit def photoSizeDecoder(implicit D: Decoder[String @@ FileId]) = Decoder[PhotoSize]

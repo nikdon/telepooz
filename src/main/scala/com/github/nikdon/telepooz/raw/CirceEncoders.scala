@@ -110,6 +110,7 @@ trait CirceEncoders {
 
   // Methods
   implicit val getMeJsonEncoder: Encoder[GetMe.type] = Encoder.instance(_ ⇒ io.circe.Json.Null)
+  implicit val getWebhookInfoEncoder: Encoder[GetWebhookInfo.type] = Encoder.instance(_ ⇒ io.circe.Json.Null)
   implicit def sendMessageJsonEncoder[A: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[Long @@ MessageId]): Encoder[SendMessage[A]] = deriveEncoder[SendMessage[A]]
   implicit def forwardMessageJsonEncoder[A: IsResourceId, B: IsResourceId](implicit E: Encoder[A @@ ChatId], EE: Encoder[B @@ ChatId], EEE: Encoder[Long @@ MessageId]): Encoder[ForwardMessage[A, B]] = deriveEncoder[ForwardMessage[A, B]]
   implicit def getUpdatesJsonEncoder(implicit E: Encoder[Long @@ UpdateId]): Encoder[GetUpdates] = deriveEncoder[GetUpdates]

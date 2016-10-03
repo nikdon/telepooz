@@ -14,6 +14,7 @@ object RawRequest {
   def apply[A](implicit ev: RawRequest[A]): RawRequest[A] = ev
 
   case object GetMe extends RawRequest[Response[User]] {override val payload = Json.Null}
+  case object GetWebhookInfo extends RawRequest[Response[WebhookInfo]] {override val payload = Json.Null}
   final case class SendMessage(payload: Json) extends RawRequest[Response[Message]]
   final case class ForwardMessage(payload: Json) extends RawRequest[Response[Message]]
   final case class GetUpdates(payload: Json) extends RawRequest[Response[Vector[Update]]]

@@ -45,6 +45,7 @@ abstract class ApiRequestExecutor(implicit system: ActorSystem, materializer: Ma
 
   override def apply[A](fa: RawRequest[A]): Future[A] = fa match {
     case m: GetMe.type             ⇒ go(m.name, m.payload)
+    case m: GetWebhookInfo.type    ⇒ go(m.name, m.payload)
     case m: SendMessage            ⇒ go(m.name, m.payload)
     case m: SendGame               ⇒ go(m.name, m.payload)
     case m: SetGameScore           ⇒ go(m.name, m.payload)
