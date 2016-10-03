@@ -12,7 +12,11 @@ import shapeless.tag.@@
   * @param text               Text of the notification. If not specified, nothing will be shown to the user
   * @param show_alert         If true, an alert will be shown by the client instead of a notification at the top of the
   *                           chat screen. Defaults to false.
+  * @param url                URL that will be opened by the user's client. If you have created a Game and accepted the
+  *                           conditions via @Botfather, specify the URL that opens your game – note that this will only
+  *                           work if the query comes from a callback_game button.
   */
 case class AnswerCallbackQuery(callback_query_id: String @@ QueryId,
                                text: Option[String] = None,
-                               show_alert: Option[Boolean] = None)
+                               show_alert: Option[Boolean] = None,
+                               url: Option[String] = None)
