@@ -508,7 +508,7 @@ object InlineQueryResultCachedAudio {
 
 case class InlineQueryResultGame(id: String @@ ResultId,
                                  game_short_name: String,
-                                 reply_markup: Option[InlineKeyboardMarkup] = None)
+                                 reply_markup: Option[InlineKeyboardMarkup] = None) extends InlineQueryResult
 object InlineQueryResultGame {
-  final val `type` = Map("type" → "audio")
+  final val `type` = Map("type" → "game")
 }

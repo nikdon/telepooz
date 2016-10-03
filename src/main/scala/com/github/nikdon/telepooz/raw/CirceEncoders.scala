@@ -102,6 +102,7 @@ trait CirceEncoders {
   implicit def inlineQueryResultCachedVideoEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultCachedVideo] = deriveEncoder[inline.InlineQueryResultCachedVideo].mapJson(_.deepMerge(inline.InlineQueryResultCachedVideo.`type`.asJson))
   implicit def inlineQueryResultCachedVoiceEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultCachedVoice] = deriveEncoder[inline.InlineQueryResultCachedVoice].mapJson(_.deepMerge(inline.InlineQueryResultCachedVoice.`type`.asJson))
   implicit def inlineQueryResultCachedAudioEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultCachedAudio] = deriveEncoder[inline.InlineQueryResultCachedAudio].mapJson(_.deepMerge(inline.InlineQueryResultCachedAudio.`type`.asJson))
+  implicit def inlineQueryResultGameEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultGame] = deriveEncoder[inline.InlineQueryResultGame].mapJson(_.deepMerge(inline.InlineQueryResultGame.`type`.asJson))
 
   implicit def answerInlineQueryEncoder(implicit E: Encoder[String @@ QueryId]): Encoder[inline.AnswerInlineQuery] = deriveEncoder[inline.AnswerInlineQuery]
 
