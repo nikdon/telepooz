@@ -38,48 +38,6 @@ object Arbitraries extends tags.Syntax {
   implicit val inlineKeyboardButtonArb: Arbitrary[InlineKeyboardButton] = Arbitrary(Gen.resultOf(InlineKeyboardButton))
   implicit val inlineQueryArb         : Arbitrary[InlineQuery]          = Arbitrary(Gen.resultOf(InlineQuery))
   implicit val keyboardButtonArb      : Arbitrary[KeyboardButton]       = Arbitrary(Gen.resultOf(KeyboardButton))
-  implicit val messageArb             : Arbitrary[Message]              = {
-    val g: Gen[Message] = for {
-      messageId ← arbitrary[Long @@ MessageId]
-      date ← arbitrary[Date]
-      chat ← arbitrary[Chat]
-      from ← arbitrary[Option[User]]
-      forwardFrom ← arbitrary[Option[User]]
-      forwardFromChat ← arbitrary[Option[Chat]]
-      forwardDate ← arbitrary[Option[Date]]
-      replyToMessage ← arbitrary[Option[Message]]
-      text ← arbitrary[Option[String]]
-      entities ← arbitrary[Option[Vector[MessageEntity]]]
-      audio ← arbitrary[Option[Audio]]
-      document ← arbitrary[Option[Document]]
-      photo ← arbitrary[Option[Vector[PhotoSize]]]
-      sticker ← arbitrary[Option[Sticker]]
-      video ← arbitrary[Option[Video]]
-      voice ← arbitrary[Option[Voice]]
-      caption ← arbitrary[Option[String]]
-      contact ← arbitrary[Option[Contact]]
-      location ← arbitrary[Option[Location]]
-      venue ← arbitrary[Option[Venue]]
-      newChatMember ← arbitrary[Option[User]]
-      leftChatMember ← arbitrary[Option[User]]
-      newChatTitle ← arbitrary[Option[String]]
-      newChatPhoto ← arbitrary[Option[Vector[PhotoSize]]]
-      deleteChatPhoto ← arbitrary[Option[Boolean]]
-      groupChatCreated ← arbitrary[Option[Boolean]]
-      superGroupChatCreated ← arbitrary[Option[Boolean]]
-      channelChatCreated ← arbitrary[Option[Boolean]]
-      migrateToChatId ← arbitrary[Option[Long @@ ChatId]]
-      migrateFromChatId ← arbitrary[Option[Long @@ ChatId]]
-      pinnedMessage ← arbitrary[Option[Message]]
-    } yield Message(
-      messageId, date, chat, from, forwardFrom, forwardFromChat, forwardDate, replyToMessage, text, entities, audio,
-      document, photo, sticker, video, voice, caption, contact, location, venue, newChatMember, leftChatMember,
-      newChatTitle, newChatPhoto, deleteChatPhoto, groupChatCreated, superGroupChatCreated, channelChatCreated,
-      migrateToChatId, migrateFromChatId, pinnedMessage
-    )
-
-    Arbitrary(g)
-  }
   implicit val updateArb              : Arbitrary[Update]               = Arbitrary(Gen.resultOf(Update))
   implicit val memberStatusArb        : Arbitrary[MemberStatus]         = Arbitrary(
     Gen.oneOf(MemberStatus.Creator, MemberStatus.Administrator, MemberStatus.Member, MemberStatus.Left, MemberStatus.Kicked)
@@ -101,6 +59,55 @@ object Arbitraries extends tags.Syntax {
   implicit val videoArb               : Arbitrary[Video]                = Arbitrary(Gen.resultOf(Video))
   implicit val voiceArb               : Arbitrary[Voice]                = Arbitrary(Gen.resultOf(Voice))
   implicit val userProfilePhotosArb   : Arbitrary[UserProfilePhotos]    = Arbitrary(Gen.resultOf(UserProfilePhotos))
+
+  // Game
+  implicit val gameHighScoreArv: Arbitrary[GameHighScore] = Arbitrary(Gen.resultOf(GameHighScore.apply _))
+  implicit val animationArb    : Arbitrary[Animation]     = Arbitrary(Gen.resultOf(Animation.apply _))
+  implicit val gameArb         : Arbitrary[Game]          = Arbitrary(Gen.resultOf(Game.apply _))
+
+  implicit val messageArb             : Arbitrary[Message]              = {
+    val g: Gen[Message] = for {
+      messageId ← arbitrary[Long @@ MessageId]
+      date ← arbitrary[Date]
+      chat ← arbitrary[Chat]
+      from ← arbitrary[Option[User]]
+      forwardFrom ← arbitrary[Option[User]]
+      forwardFromChat ← arbitrary[Option[Chat]]
+      forwardDate ← arbitrary[Option[Date]]
+      replyToMessage ← arbitrary[Option[Message]]
+      text ← arbitrary[Option[String]]
+      entities ← arbitrary[Option[Vector[MessageEntity]]]
+      audio ← arbitrary[Option[Audio]]
+      document ← arbitrary[Option[Document]]
+      game ← arbitrary[Option[Game]]
+      photo ← arbitrary[Option[Vector[PhotoSize]]]
+      sticker ← arbitrary[Option[Sticker]]
+      video ← arbitrary[Option[Video]]
+      voice ← arbitrary[Option[Voice]]
+      caption ← arbitrary[Option[String]]
+      contact ← arbitrary[Option[Contact]]
+      location ← arbitrary[Option[Location]]
+      venue ← arbitrary[Option[Venue]]
+      newChatMember ← arbitrary[Option[User]]
+      leftChatMember ← arbitrary[Option[User]]
+      newChatTitle ← arbitrary[Option[String]]
+      newChatPhoto ← arbitrary[Option[Vector[PhotoSize]]]
+      deleteChatPhoto ← arbitrary[Option[Boolean]]
+      groupChatCreated ← arbitrary[Option[Boolean]]
+      superGroupChatCreated ← arbitrary[Option[Boolean]]
+      channelChatCreated ← arbitrary[Option[Boolean]]
+      migrateToChatId ← arbitrary[Option[Long @@ ChatId]]
+      migrateFromChatId ← arbitrary[Option[Long @@ ChatId]]
+      pinnedMessage ← arbitrary[Option[Message]]
+    } yield Message(
+      messageId, date, chat, from, forwardFrom, forwardFromChat, forwardDate, replyToMessage, text, entities, audio,
+      document, game, photo, sticker, video, voice, caption, contact, location, venue, newChatMember, leftChatMember,
+      newChatTitle, newChatPhoto, deleteChatPhoto, groupChatCreated, superGroupChatCreated, channelChatCreated,
+      migrateToChatId, migrateFromChatId, pinnedMessage
+    )
+
+    Arbitrary(g)
+  }
 
   /** [[ReplyMarkup]] */
   implicit val replyKeyboardMarkupArb : Arbitrary[ReplyKeyboardMarkup]  = Arbitrary(Gen.resultOf(ReplyKeyboardMarkup))

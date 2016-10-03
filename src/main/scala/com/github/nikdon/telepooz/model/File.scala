@@ -14,5 +14,5 @@ import shapeless.tag.@@
   * @param file_path File path. Use [[https://api.telegram.org/file/bot<token>/<file_path>]] to get the file.
   */
 case class File(file_id: String @@ FileId,
-                file_size: Option[Int],
-                file_path: Option[String])
+                file_size: Option[Int] = None,
+                file_path: Option[String] = None)

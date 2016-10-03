@@ -61,7 +61,12 @@ trait CirceDecoders {
   implicit def videoDecoder(implicit D: Decoder[String @@ FileId]) = Decoder[Video]
   implicit def voiceDecoder(implicit D: Decoder[String @@ FileId]) = Decoder[Voice]
 
-  implicit def messageDecoder(implicit D: Decoder[Long @@ MessageId], DD: Decoder[Long @@ ChatId]) = Decoder[Message]
+  // Game
+  implicit val gameHighScoreDecoder = Decoder[GameHighScore]
+  implicit def animationDecoder(implicit D: Decoder[String @@ FileId]) = Decoder[Animation]
+  implicit val gameDecoder = Decoder[Game]
+
+  implicit def messageDecoder(implicit D: Decoder[Long @@ MessageId], DD: Decoder[Long @@ ChatId], DDD: Decoder[String @@ FileId]) = Decoder[Message]
   implicit def callbackQueryDecoder(implicit D: Decoder[String @@ QueryId]) = Decoder[CallbackQuery]
 
   implicit val memberStatusDecoder: Decoder[MemberStatus] = Decoder[String].map(a ⇒ MemberStatus.unsafe( pascalize(a) ))

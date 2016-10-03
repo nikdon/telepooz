@@ -48,7 +48,11 @@ trait CirceEncoders {
   implicit val keyboardButtonEncoder      : Encoder[KeyboardButton]       = deriveEncoder[KeyboardButton]
   implicit val locationEncoder            : Encoder[Location]             = deriveEncoder[Location]
 
-  implicit def messageEncoder(implicit E: Encoder[Long @@ MessageId], EE: Encoder[Long @@ ChatId]): Encoder[Message] = deriveEncoder[Message]
+  implicit val gameHighScoreEncoder: Encoder[GameHighScore] = deriveEncoder[GameHighScore]
+  implicit def animationEncoder(implicit E: Encoder[String @@ FileId]): Encoder[Animation] = deriveEncoder[Animation]
+  implicit def gameEncoder: Encoder[Game] = deriveEncoder[Game]
+
+  implicit def messageEncoder(implicit E: Encoder[Long @@ MessageId], EE: Encoder[Long @@ ChatId], EEE: Encoder[String @@ FileId]): Encoder[Message] = deriveEncoder[Message]
 
   implicit val messageEntityTypeEncoder: Encoder[MessageEntityType] = Encoder[String].contramap[MessageEntityType](e ⇒ snakenize {e.productPrefix})
   implicit val messageEntityEncoder    : Encoder[MessageEntity]     = deriveEncoder[MessageEntity]
