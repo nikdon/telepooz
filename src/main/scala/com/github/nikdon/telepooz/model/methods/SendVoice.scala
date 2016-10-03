@@ -19,6 +19,7 @@ import shapeless.tag.@@
   *                             (in the format @channelusername)
   * @param voice                Audio file to send. You can either pass a file_id as String to resend an audio that is
   *                             already on the Telegram servers, or upload a new audio file using multipart/form-data.
+  * @param caption              Audio caption, 0-200 characters
   * @param duration             Duration of the audio in seconds
   * @param disable_notification Sends the message silently. iOS users will not receive a notification, Android users
   *                             will receive a notification with no sound.
@@ -28,6 +29,7 @@ import shapeless.tag.@@
   */
 case class SendVoice[A: IsResourceId](chat_id: A @@ ChatId,
                                       voice: String @@ FileId, // TODO Add file upload
+                                      caption: Option[String] = None,
                                       duration: Option[Duration] = None,
                                       disable_notification: Option[Boolean] = None,
                                       reply_to_message_id: Option[Long @@ MessageId] = None,

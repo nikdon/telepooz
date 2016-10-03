@@ -14,6 +14,7 @@ import shapeless.tag._
   * @param username   Username, for private chats and channels if available
   * @param first_name First name of the other party in a private chat
   * @param last_name  Last name of the other party in a private chat
+  * @param all_members_are_admins True if a group has ‘All Members Are Admins’ enabled.
   */
 case class Chat(
   id: Long @@ ChatId,
@@ -21,7 +22,8 @@ case class Chat(
   title: Option[String] = None,
   username: Option[String] = None,
   first_name: Option[String] = None,
-  last_name: Option[String] = None
+  last_name: Option[String] = None,
+  all_members_are_admins: Option[Boolean] = None
 )
 
 
