@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## [0.3.1] 2016-10-09
+
+### Changed
+
+- update circe up to 0.5.3
+
 ## [0.3.0] 2016-10-04
 
 ### Changed
