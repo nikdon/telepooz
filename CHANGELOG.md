@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+## [0.3.2] 2016-10-22
+
+### Changed
+
+- update circe up to 0.5.4
+- update scalacheck up to 1.13.3
+- update .scalafmt
+
 ## [0.3.1] 2016-10-09
 
 ### Changed
