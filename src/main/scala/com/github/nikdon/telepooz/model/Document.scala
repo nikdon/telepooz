@@ -5,7 +5,7 @@ import shapeless.tag.@@
 
 
 /**
-  * This object represents a general file (as opposed to [[Photo]], [[VoiceMessage]] and [[AudioFile]]).
+  * This object represents a general file (as opposed to Photo, VoiceMessage and AudioFile).
   *
   * @param file_id    Unique file identifier
   * @param thumb      Document thumbnail as defined by sender

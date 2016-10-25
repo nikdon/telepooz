@@ -44,7 +44,7 @@ abstract class Reactor(implicit are: ApiRequestExecutor, ec: ExecutionContext, l
   private[this] val config     : Config = ConfigFactory.load()
   private[this] val parallelism: Int    = config.getInt("telegram.polling.parallelism")
 
-  /** Sink that for each incoming [[Update]] reacts according to an actions in [[reactions]] */
+  /** Sink that for each incoming `Update` reacts according to an actions in `reactions` */
   val react: Sink[Update, Future[Done]] = Sink.foreachParallel(parallelism)(update ⇒ update.message match {
     case None    ⇒ logger.debug(s"Update ${update.update_id} with empty message")
     case Some(m) ⇒
@@ -66,7 +66,7 @@ abstract class Reactor(implicit are: ApiRequestExecutor, ec: ExecutionContext, l
     *                               custom reply keyboard, instructions to hide reply keyboard or to force a reply
     *                               from the user.
     * @param message                The message the reply is for.
-    * @return                       A future with [[Response]]
+    * @return                       A future with `Response`
     */
   def reply(text: String,
             parseMode: Option[ParseMode] = None,
