@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Changed
+
+- fix scaladoc errors in `CirceEncoders.scala`, `Document.scala`, `File.scala`, `Reactor.scala`
+
 ## [0.3.2] 2016-10-22
 
 ### Changed
