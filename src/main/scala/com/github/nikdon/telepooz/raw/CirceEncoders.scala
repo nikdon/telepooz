@@ -84,7 +84,7 @@ trait CirceEncoders {
   implicit val inputLocationMessageContentEncoder: Encoder[inline.InputLocationMessageContent] = deriveEncoder[inline.InputLocationMessageContent]
   implicit val inputTextMessageContentEncoder: Encoder[inline.InputTextMessageContent] = deriveEncoder[inline.InputTextMessageContent]
 
-  /** [[inline.InlineQueryResult]] */
+  /** inline.InlineQueryResult */
   implicit def inlineQueryResultArticleEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultArticle] = deriveEncoder[inline.InlineQueryResultArticle].mapJson(_.deepMerge(inline.InlineQueryResultArticle.`type`.asJson))
   implicit def inlineQueryResultPhotoEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultPhoto] = deriveEncoder[inline.InlineQueryResultPhoto].mapJson(_.deepMerge(inline.InlineQueryResultPhoto.`type`.asJson))
   implicit def inlineQueryResultGifEncoder(implicit E: Encoder[String @@ ResultId]): Encoder[inline.InlineQueryResultGif] = deriveEncoder[inline.InlineQueryResultGif].mapJson(_.deepMerge(inline.InlineQueryResultGif.`type`.asJson))
