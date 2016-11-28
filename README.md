@@ -74,7 +74,6 @@ whenReady(res){ m ⇒
 telepooz is far from completion, here is a list of some desired features to implemented in future:
 
 - File uploading via multipart/form-data
-- [Webhooks][webhooks]
 
 ## Usage
 
