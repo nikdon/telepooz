@@ -4,7 +4,8 @@ headers := Map("scala" -> Apache2_0("2016", "Nikolay Donets"))
 
 lazy val buildSettings = Seq(
   organization := "com.github.nikdon",
-  scalaVersion := "2.12.0",
+  scalaVersion := "2.12.1",
+  crossScalaVersions := Seq("2.11.8", "2.12.1"),
   licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
 )
 
@@ -40,11 +41,11 @@ lazy val baseSettings = Seq(
 
 buildSettings ++ baseSettings
 
-lazy val akkaHttpJsonV    = "1.11.0"
-lazy val circeVersion     = "0.6.1"
 lazy val akkaVersion      = "2.4.14"
 lazy val akkaHttpV        = "10.0.0"
+lazy val akkaHttpJsonV    = "1.11.0"
 lazy val catsV            = "0.8.1"
+lazy val circeVersion     = "0.7.0-M1"
 lazy val shapelessVersion = "2.3.2"
 
 lazy val scalaTestV  = "3.0.1"
