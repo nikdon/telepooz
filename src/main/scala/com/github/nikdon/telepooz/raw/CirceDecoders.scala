@@ -26,6 +26,7 @@ import com.github.nikdon.telepooz.tags._
 import com.github.nikdon.telepooz.tags.syntax._
 import com.github.nikdon.telepooz.utils._
 import io.circe.Decoder
+import io.circe.generic.auto._
 import io.circe.generic.semiauto._
 import shapeless.tag._
 
@@ -41,19 +42,17 @@ trait CirceDecoders {
   implicit def queryIdTagDecoder[A : IsResourceId : Decoder]: Decoder[A @@ QueryId] = Decoder[A].map(a ⇒ a.queryId)
 
   // Models
-  private implicit val dateDecoder: Decoder[Date] = Decoder[Long].map(d ⇒ new Date(d))                          // TODO Check
-  private implicit val durationDecoder: Decoder[Duration] = Decoder[Int].map(d ⇒ Duration.ofSeconds(d.toLong))  // TODO Check
+  implicit val dateDecoder: Decoder[Date] = Decoder[Long].map(d ⇒ new Date(d))                          // TODO Check
+  implicit val durationDecoder: Decoder[Duration] = Decoder[Int].map(d ⇒ Duration.ofSeconds(d.toLong))  // TODO Check
 
-  implicit val asdf:Decoder[String @@ FileId] = Decoder[String].map(_.fileId)
-
-  implicit def audioDecoder(implicit D: Decoder[String @@ FileId]): Decoder[Audio] = deriveDecoder[Audio]
+  implicit def audioDecoder(implicit D: Decoder[String @@ FileId]): Decoder[Audio] = Decoder[Audio]
 
   implicit def chatTypeDecoder: Decoder[ChatType] = Decoder[String].map(a ⇒ ChatType.unsafe( pascalize(a) ))
-  implicit def chatDecoder(implicit D: Decoder[Long @@ ChatId]): Decoder[Chat] = deriveDecoder[Chat]
+  implicit def chatDecoder(implicit D: Decoder[Long @@ ChatId]): Decoder[Chat] = Decoder[Chat]
 
   implicit def contactDecoder(implicit D: Decoder[Int @@ UserId]): Decoder[Contact] = deriveDecoder[Contact]
-  implicit def documentDecoder(implicit D: Decoder[String @@ FileId]): Decoder[Document] = deriveDecoder[Document]
-  implicit def fileDecoder(implicit D: Decoder[String @@ FileId]): Decoder[File] = deriveDecoder[File]
+  implicit def documentDecoder(implicit D: Decoder[String @@ FileId]): Decoder[Document] = Decoder[Document]
+  implicit def fileDecoder(implicit D: Decoder[String @@ FileId]): Decoder[File] = Decoder[File]
   implicit val inlineKeyboardButtonDecoder: Decoder[InlineKeyboardButton] = deriveDecoder[InlineKeyboardButton]
   implicit val keyboardButtonDecoder: Decoder[KeyboardButton] = deriveDecoder[KeyboardButton]
   implicit val locationDecoder: Decoder[Location] = deriveDecoder[Location]
@@ -63,36 +62,36 @@ trait CirceDecoders {
 
   implicit val webhookInfoDecoder: Decoder[WebhookInfo] = deriveDecoder[WebhookInfo]
 
-  implicit val parseModeDecoder: Decoder[ParseMode] = deriveDecoder[String].map(ParseMode.unsafe)
+  implicit val parseModeDecoder: Decoder[ParseMode] = Decoder[String].map(ParseMode.unsafe)
 
-  implicit def photoSizeDecoder(implicit D: Decoder[String @@ FileId]): Decoder[PhotoSize] = deriveDecoder[PhotoSize]
+  implicit def photoSizeDecoder(implicit D: Decoder[String @@ FileId]): Decoder[PhotoSize] = Decoder[PhotoSize]
 
   implicit val forceReplyDecoder: Decoder[ForceReply] = deriveDecoder[ForceReply]
   implicit val inlineKeyboardMarkupDecoder: Decoder[InlineKeyboardMarkup] = deriveDecoder[InlineKeyboardMarkup]
   implicit val replyKeyboardHideDecoder: Decoder[ReplyKeyboardHide] = deriveDecoder[ReplyKeyboardHide]
   implicit val replyKeyboardMarkupDecoder: Decoder[ReplyKeyboardMarkup] = deriveDecoder[ReplyKeyboardMarkup]
 
-  implicit def stickerDecoder(implicit D: Decoder[String @@ FileId]): Decoder[Sticker] = deriveDecoder[Sticker]
-  implicit def userDecoder(implicit D: Decoder[Int @@ UserId]): Decoder[User] = deriveDecoder[User]
+  implicit def stickerDecoder(implicit D: Decoder[String @@ FileId]): Decoder[Sticker] = Decoder[Sticker]
+  implicit def userDecoder(implicit D: Decoder[Int @@ UserId]): Decoder[User] = Decoder[User]
   implicit val userProfilePhotosDecoder: Decoder[UserProfilePhotos] = deriveDecoder[UserProfilePhotos]
   implicit def venueDecoder(implicit D: Decoder[String @@ FoursquareId]): Decoder[Venue] = deriveDecoder[Venue]
-  implicit def videoDecoder(implicit D: Decoder[String @@ FileId]): Decoder[Video] = deriveDecoder[Video]
-  implicit def voiceDecoder(implicit D: Decoder[String @@ FileId]): Decoder[Voice] = deriveDecoder[Voice]
+  implicit def videoDecoder(implicit D: Decoder[String @@ FileId]): Decoder[Video] = Decoder[Video]
+  implicit def voiceDecoder(implicit D: Decoder[String @@ FileId]): Decoder[Voice] = Decoder[Voice]
 
   // Game
   implicit val gameHighScoreDecoder: Decoder[GameHighScore] = deriveDecoder[GameHighScore]
-  implicit def animationDecoder(implicit D: Decoder[String @@ FileId]): Decoder[Animation] = deriveDecoder[Animation]
+  implicit def animationDecoder(implicit D: Decoder[String @@ FileId]): Decoder[Animation] = Decoder[Animation]
   implicit val gameDecoder: Decoder[Game] = deriveDecoder[Game]
 
-  implicit def messageDecoder(implicit D: Decoder[Long @@ MessageId], DD: Decoder[Long @@ ChatId], DDD: Decoder[String @@ FileId]): Decoder[Message] = deriveDecoder[Message]
-  implicit def callbackQueryDecoder(implicit D: Decoder[String @@ QueryId]): Decoder[CallbackQuery] = deriveDecoder[CallbackQuery]
+  implicit def messageDecoder(implicit D: Decoder[Long @@ MessageId], DD: Decoder[Long @@ ChatId], DDD: Decoder[String @@ FileId]): Decoder[Message] = Decoder[Message]
+  implicit def callbackQueryDecoder(implicit D: Decoder[String @@ QueryId]): Decoder[CallbackQuery] = Decoder[CallbackQuery]
 
   implicit val memberStatusDecoder: Decoder[MemberStatus] = Decoder[String].map(a ⇒ MemberStatus.unsafe( pascalize(a) ))
   implicit val chatMemberDecoder: Decoder[ChatMember] = deriveDecoder[ChatMember]
 
   // Inline
-  implicit def inlineQueryDecoder(implicit D: Decoder[String @@ QueryId]): Decoder[InlineQuery] = deriveDecoder[InlineQuery]
-  implicit def chosenInlineQueryDecoder(implicit D: Decoder[String @@ ResultId], DD: Decoder[String @@ MessageId]): Decoder[ChosenInlineQuery] = deriveDecoder[ChosenInlineQuery]
+  implicit def inlineQueryDecoder(implicit D: Decoder[String @@ QueryId]): Decoder[InlineQuery] = Decoder[InlineQuery]
+  implicit def chosenInlineQueryDecoder(implicit D: Decoder[String @@ ResultId], DD: Decoder[String @@ MessageId]): Decoder[ChosenInlineQuery] = Decoder[ChosenInlineQuery]
   implicit val inputContactMessageContent: Decoder[InputContactMessageContent] = deriveDecoder[InputContactMessageContent]
   implicit def inputVenueMessageContentDecoder(implicit D: Decoder[String @@ FoursquareId]): Decoder[InputVenueMessageContent] = deriveDecoder[InputVenueMessageContent]
   implicit val inputLocationMessageContentDecoder: Decoder[InputLocationMessageContent] = deriveDecoder[InputLocationMessageContent]
@@ -100,6 +99,6 @@ trait CirceDecoders {
 
   implicit def eitherResponseDecoder[A, B](implicit D: Decoder[A], DD: Decoder[B]): Decoder[Either[A, B]] = deriveDecoder[Either[A, B]]
 
-  implicit def updateDecoder(implicit D: Decoder[Long @@ UpdateId]): Decoder[Update] = deriveDecoder[Update]
+  implicit def updateDecoder(implicit D: Decoder[Long @@ UpdateId]): Decoder[Update] = Decoder[Update]
   implicit def responseDecoder[T](implicit D: Decoder[T]): Decoder[Response[T]] = deriveDecoder[Response[T]]
 }

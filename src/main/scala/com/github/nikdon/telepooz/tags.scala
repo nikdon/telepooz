@@ -19,17 +19,14 @@ package com.github.nikdon.telepooz
 import shapeless.tag
 import shapeless.tag.@@
 
-
 @scala.annotation.implicitNotFound("No member of type class IsResourceId in scope for ${A}")
 trait IsResourceId[A]
-
 
 object IsResourceId {
   implicit val intIsResourceId    = new IsResourceId[Int]    {}
   implicit val longIsResourceId   = new IsResourceId[Long]   {}
   implicit val stringIsResourceId = new IsResourceId[String] {}
 }
-
 
 object tags {
 
@@ -44,7 +41,7 @@ object tags {
 
   trait Syntax {
 
-    implicit class ResiurseIdOps[A: IsResourceId](a: A) {
+    implicit class ResourceIdOps[A: IsResourceId](a: A) {
       def chatId: A @@ ChatId             = tag[ChatId](a)
       def fileId: A @@ FileId             = tag[FileId](a)
       def foursquareId: A @@ FoursquareId = tag[FoursquareId](a)

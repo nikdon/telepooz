@@ -45,7 +45,7 @@ lazy val akkaVersion      = "2.4.14"
 lazy val akkaHttpV        = "10.0.0"
 lazy val akkaHttpJsonV    = "1.11.0"
 lazy val catsV            = "0.8.1"
-lazy val circeVersion     = "0.7.0-M1"
+lazy val circeVersion     = "0.6.1"
 lazy val shapelessVersion = "2.3.2"
 
 lazy val scalaTestV  = "3.0.1"

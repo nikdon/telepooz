@@ -21,7 +21,6 @@ import java.time.Duration
 import com.github.nikdon.telepooz.tags.FileId
 import shapeless.tag.@@
 
-
 /**
   * This object represents an audio file to be treated as music by the Telegram clients.
   *
