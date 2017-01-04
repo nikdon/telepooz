@@ -13,7 +13,7 @@ class InlineQueryResultTest extends FlatSpec with Matchers with GeneratorDrivenP
     forAll { inlineQueryResultArticle: InlineQueryResultArticle ⇒
       val js = inlineQueryResultArticle.asJson
       js should not be Json.Null
-      (js \\ "type").head.as[String] shouldBe Some("article")
+      (js \\ "type").head.as[String] shouldBe Right("article")
     }
   }
 
@@ -21,7 +21,7 @@ class InlineQueryResultTest extends FlatSpec with Matchers with GeneratorDrivenP
     forAll { inlineQueryResultPhoto: InlineQueryResultPhoto ⇒
       val js = inlineQueryResultPhoto.asJson
       js should not be Json.Null
-      (js \\ "type").head.as[String] shouldBe Some("photo")
+      (js \\ "type").head.as[String] shouldBe Right("photo")
     }
   }
 
@@ -29,7 +29,7 @@ class InlineQueryResultTest extends FlatSpec with Matchers with GeneratorDrivenP
     forAll { inlineQueryResultGif: InlineQueryResultGif ⇒
       val js = inlineQueryResultGif.asJson
       js should not be Json.Null
-      (js \\ "type").head.as[String] shouldBe Some("gif")
+      (js \\ "type").head.as[String] shouldBe Right("gif")
     }
   }
 
@@ -37,7 +37,7 @@ class InlineQueryResultTest extends FlatSpec with Matchers with GeneratorDrivenP
     forAll { inlineQueryResultMpeg4Gif: InlineQueryResultMpeg4Gif ⇒
       val js = inlineQueryResultMpeg4Gif.asJson
       js should not be Json.Null
-      (js \\ "type").head.as[String] shouldBe Some("mpeg4_gif")
+      (js \\ "type").head.as[String] shouldBe Right("mpeg4_gif")
     }
   }
 
@@ -45,7 +45,7 @@ class InlineQueryResultTest extends FlatSpec with Matchers with GeneratorDrivenP
     forAll { inlineQueryResultVideo: InlineQueryResultVideo ⇒
       val js = inlineQueryResultVideo.asJson
       js should not be Json.Null
-      (js \\ "type").head.as[String] shouldBe Some("video")
+      (js \\ "type").head.as[String] shouldBe Right("video")
     }
   }
 
@@ -53,7 +53,7 @@ class InlineQueryResultTest extends FlatSpec with Matchers with GeneratorDrivenP
     forAll { inlineQueryResultAudio: InlineQueryResultAudio ⇒
       val js = inlineQueryResultAudio.asJson
       js should not be Json.Null
-      (js \\ "type").head.as[String] shouldBe Some("audio")
+      (js \\ "type").head.as[String] shouldBe Right("audio")
     }
   }
 
@@ -61,7 +61,7 @@ class InlineQueryResultTest extends FlatSpec with Matchers with GeneratorDrivenP
     forAll { inlineQueryResultVoice: InlineQueryResultVoice ⇒
       val js = inlineQueryResultVoice.asJson
       js should not be Json.Null
-      (js \\ "type").head.as[String] shouldBe Some("voice")
+      (js \\ "type").head.as[String] shouldBe Right("voice")
     }
   }
 
@@ -69,7 +69,7 @@ class InlineQueryResultTest extends FlatSpec with Matchers with GeneratorDrivenP
     forAll { inlineQueryResultDocument: InlineQueryResultDocument ⇒
       val js = inlineQueryResultDocument.asJson
       js should not be Json.Null
-      (js \\ "type").head.as[String] shouldBe Some("document")
+      (js \\ "type").head.as[String] shouldBe Right("document")
     }
   }
 
@@ -77,7 +77,7 @@ class InlineQueryResultTest extends FlatSpec with Matchers with GeneratorDrivenP
     forAll { inlineQueryResultLocation: InlineQueryResultLocation ⇒
       val js = inlineQueryResultLocation.asJson
       js should not be Json.Null
-      (js \\ "type").head.as[String] shouldBe Some("location")
+      (js \\ "type").head.as[String] shouldBe Right("location")
     }
   }
 
@@ -85,7 +85,7 @@ class InlineQueryResultTest extends FlatSpec with Matchers with GeneratorDrivenP
     forAll { inlineQueryResultVenue: InlineQueryResultVenue ⇒
       val js = inlineQueryResultVenue.asJson
       js should not be Json.Null
-      (js \\ "type").head.as[String] shouldBe Some("venue")
+      (js \\ "type").head.as[String] shouldBe Right("venue")
     }
   }
 
@@ -93,7 +93,7 @@ class InlineQueryResultTest extends FlatSpec with Matchers with GeneratorDrivenP
     forAll { inlineQueryResultContact: InlineQueryResultContact ⇒
       val js = inlineQueryResultContact.asJson
       js should not be Json.Null
-      (js \\ "type").head.as[String] shouldBe Some("contact")
+      (js \\ "type").head.as[String] shouldBe Right("contact")
     }
   }
 
@@ -101,7 +101,7 @@ class InlineQueryResultTest extends FlatSpec with Matchers with GeneratorDrivenP
     forAll { inlineQueryResultCachedPhoto: InlineQueryResultCachedPhoto ⇒
       val js = inlineQueryResultCachedPhoto.asJson
       js should not be Json.Null
-      (js \\ "type").head.as[String] shouldBe Some("photo")
+      (js \\ "type").head.as[String] shouldBe Right("photo")
     }
   }
 
@@ -109,7 +109,7 @@ class InlineQueryResultTest extends FlatSpec with Matchers with GeneratorDrivenP
     forAll { inlineQueryResultCachedGif: InlineQueryResultCachedGif ⇒
       val js = inlineQueryResultCachedGif.asJson
       js should not be Json.Null
-      (js \\ "type").head.as[String] shouldBe Some("gif")
+      (js \\ "type").head.as[String] shouldBe Right("gif")
     }
   }
 
@@ -117,7 +117,7 @@ class InlineQueryResultTest extends FlatSpec with Matchers with GeneratorDrivenP
     forAll { inlineQueryResultCachedMpeg4Gif: InlineQueryResultCachedMpeg4Gif ⇒
       val js = inlineQueryResultCachedMpeg4Gif.asJson
       js should not be Json.Null
-      (js \\ "type").head.as[String] shouldBe Some("mpeg4_gif")
+      (js \\ "type").head.as[String] shouldBe Right("mpeg4_gif")
     }
   }
 
@@ -125,7 +125,7 @@ class InlineQueryResultTest extends FlatSpec with Matchers with GeneratorDrivenP
     forAll { inlineQueryResultCachedSticker: InlineQueryResultCachedSticker ⇒
       val js = inlineQueryResultCachedSticker.asJson
       js should not be Json.Null
-      (js \\ "type").head.as[String] shouldBe Some("sticker")
+      (js \\ "type").head.as[String] shouldBe Right("sticker")
     }
   }
 
@@ -133,7 +133,7 @@ class InlineQueryResultTest extends FlatSpec with Matchers with GeneratorDrivenP
     forAll { inlineQueryResultCachedDocument: InlineQueryResultCachedDocument ⇒
       val js = inlineQueryResultCachedDocument.asJson
       js should not be Json.Null
-      (js \\ "type").head.as[String] shouldBe Some("document")
+      (js \\ "type").head.as[String] shouldBe Right("document")
     }
   }
 
@@ -141,7 +141,7 @@ class InlineQueryResultTest extends FlatSpec with Matchers with GeneratorDrivenP
     forAll { inlineQueryResultCachedVideo: InlineQueryResultCachedVideo ⇒
       val js = inlineQueryResultCachedVideo.asJson
       js should not be Json.Null
-      (js \\ "type").head.as[String] shouldBe Some("video")
+      (js \\ "type").head.as[String] shouldBe Right("video")
     }
   }
 
@@ -149,7 +149,7 @@ class InlineQueryResultTest extends FlatSpec with Matchers with GeneratorDrivenP
     forAll { inlineQueryResultCachedVoice: InlineQueryResultCachedVoice ⇒
       val js = inlineQueryResultCachedVoice.asJson
       js should not be Json.Null
-      (js \\ "type").head.as[String] shouldBe Some("voice")
+      (js \\ "type").head.as[String] shouldBe Right("voice")
     }
   }
 
@@ -157,7 +157,7 @@ class InlineQueryResultTest extends FlatSpec with Matchers with GeneratorDrivenP
     forAll { inlineQueryResultCachedAudio: InlineQueryResultCachedAudio ⇒
       val js = inlineQueryResultCachedAudio.asJson
       js should not be Json.Null
-      (js \\ "type").head.as[String] shouldBe Some("audio")
+      (js \\ "type").head.as[String] shouldBe Right("audio")
     }
   }
 
@@ -165,7 +165,7 @@ class InlineQueryResultTest extends FlatSpec with Matchers with GeneratorDrivenP
     forAll { inlineQueryResultGame: InlineQueryResultGame ⇒
       val js = inlineQueryResultGame.asJson
       js should not be Json.Null
-      (js \\ "type").head.as[String] shouldBe Some("game")
+      (js \\ "type").head.as[String] shouldBe Right("game")
     }
   }
 }
