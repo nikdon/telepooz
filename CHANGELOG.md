@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- update dependencies to the present state
+- refactor tests
+
 ## [0.3.3] 2016-10-25
 
 ### Changed

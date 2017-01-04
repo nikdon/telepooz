@@ -20,7 +20,7 @@ telepooz built for scala-2.11. To use it add following to build file:
 
 ```scala
 resolvers += "jitpack" at "https://jitpack.io"
-libraryDependencies += "com.github.nikdon" % "telepooz" % "0.3.3"
+libraryDependencies += "com.github.nikdon" % "telepooz" % "0.3.4"
 ```
 
 And configure telepooz via the `reference.conf` or `aplication.conf` or by, for ex., env variables:
@@ -74,7 +74,6 @@ whenReady(res){ m ⇒
 telepooz is far from completion, here is a list of some desired features to implemented in future:
 
 - File uploading via multipart/form-data
-- [Webhooks][webhooks]
 
 ## Usage
 

@@ -1,11 +1,20 @@
+import de.heikoseeberger.sbtheader.license.Apache2_0
+
+headers := Map("scala" -> Apache2_0("2016", "Nikolay Donets"))
+
 lazy val buildSettings = Seq(
   organization := "com.github.nikdon",
-  scalaVersion := "2.11.8"
+  name := "telepooz",
+  version := "0.3.4",
+
+  scalaVersion := "2.11.8",
+  licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
 )
 
 lazy val compilerOptions = Seq(
   "-deprecation",
-  "-encoding", "UTF-8",
+  "-encoding",
+  "UTF-8",
   "-feature",
   "-language:existentials",
   "-language:higherKinds",
@@ -22,42 +31,41 @@ lazy val baseSettings = Seq(
     "-Ywarn-unused-import"
   ),
   testOptions in Test += Tests.Argument("-oF"),
-  scalacOptions in(Compile, console) := compilerOptions,
-  scalacOptions in(Compile, test) := compilerOptions,
+  scalacOptions in (Compile, console) := compilerOptions,
+  scalacOptions in (Compile, test) := compilerOptions,
   resolvers ++= Seq(
     Resolver.sonatypeRepo("releases"),
     Resolver.sonatypeRepo("snapshots")
-  )
+  ),
+
+  mappings.in(Compile, packageBin) += baseDirectory.in(ThisBuild).value / "LICENSE" -> "LICENSE"
 )
 
 buildSettings ++ baseSettings
 
+lazy val akkaVersion      = "2.4.16"
+lazy val akkaHttpV        = "10.0.1"
+lazy val akkaHttpJsonV    = "1.11.0"
+lazy val catsV            = "0.8.1"
+lazy val circeVersion     = "0.6.1"
+lazy val shapelessVersion = "2.3.2"
 
-lazy val akkaHttpJsonV = "1.10.1"
-lazy val circeVersion = "0.5.4"
-lazy val akkaVersion = "2.4.11"
-lazy val catsV = "0.7.2"
-lazy val shapelessVersion = "2.3.1"
-
-lazy val scalaTestV = "3.0.0"
-lazy val scalaCheckV = "1.13.3"
+lazy val scalaTestV  = "3.0.1"
+lazy val scalaCheckV = "1.13.4"
 
 libraryDependencies ++= Seq(
-  "org.typelevel" %% "cats" % catsV,
-
-  "com.typesafe.akka" %% "akka-actor"             % akkaVersion,
-  "com.typesafe.akka" %% "akka-http-core"         % akkaVersion,
-  "com.typesafe.akka" %% "akka-http-experimental" % akkaVersion,
-  "com.typesafe.akka" %% "akka-testkit"           % akkaVersion,
-  "com.typesafe.akka" %% "akka-http-testkit"      % akkaVersion,
-
-  "io.circe" %% "circe-core"    % circeVersion,
-  "io.circe" %% "circe-generic" % circeVersion,
-  "io.circe" %% "circe-parser"  % circeVersion,
-  "de.heikoseeberger" %% "akka-http-circe" % akkaHttpJsonV,
-
-  "com.chuusai" %% "shapeless" % shapelessVersion,
-
-  "org.scalatest"  %% "scalatest"  % scalaTestV  % "test",
-  "org.scalacheck" %% "scalacheck" % scalaCheckV % "test"
+  "org.typelevel"     %% "cats"              % catsV,
+  "com.typesafe.akka" %% "akka-actor"        % akkaVersion,
+  "com.typesafe.akka" %% "akka-testkit"      % akkaVersion,
+  "com.typesafe.akka" %% "akka-http-core"    % akkaHttpV,
+  "com.typesafe.akka" %% "akka-http"         % akkaHttpV,
+  "com.typesafe.akka" %% "akka-http-testkit" % akkaHttpV,
+  "io.circe"          %% "circe-core"        % circeVersion,
+  "io.circe"          %% "circe-generic"     % circeVersion,
+  "io.circe"          %% "circe-parser"      % circeVersion,
+  "io.circe"          %% "circe-testing"     % circeVersion,
+  "de.heikoseeberger" %% "akka-http-circe"   % akkaHttpJsonV,
+  "com.chuusai"       %% "shapeless"         % shapelessVersion,
+  "org.scalatest"     %% "scalatest"         % scalaTestV % "test",
+  "org.scalacheck"    %% "scalacheck"        % scalaCheckV % "test"
 )

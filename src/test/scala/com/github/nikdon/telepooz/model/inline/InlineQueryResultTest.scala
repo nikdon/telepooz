@@ -7,17 +7,13 @@ import io.circe.syntax._
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
 import org.scalatest.{FlatSpec, Matchers}
 
-
-class InlineQueryResultTest extends FlatSpec
-                                    with Matchers
-                                    with GeneratorDrivenPropertyChecks
-                                    with CirceEncoders {
+class InlineQueryResultTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChecks with CirceEncoders {
 
   "InlineQueryResultArticle" should "convert to json" in {
     forAll { inlineQueryResultArticle: InlineQueryResultArticle ⇒
       val js = inlineQueryResultArticle.asJson
       js should not be Json.Null
-      js.cursor.downField("type").flatMap(_.focus.asString) shouldBe Some("article")
+      (js \\ "type").head.as[String] shouldBe Right("article")
     }
   }
 
@@ -25,7 +21,7 @@ class InlineQueryResultTest extends FlatSpec
     forAll { inlineQueryResultPhoto: InlineQueryResultPhoto ⇒
       val js = inlineQueryResultPhoto.asJson
       js should not be Json.Null
-      js.cursor.downField("type").flatMap(_.focus.asString) shouldBe Some("photo")
+      (js \\ "type").head.as[String] shouldBe Right("photo")
     }
   }
 
@@ -33,7 +29,7 @@ class InlineQueryResultTest extends FlatSpec
     forAll { inlineQueryResultGif: InlineQueryResultGif ⇒
       val js = inlineQueryResultGif.asJson
       js should not be Json.Null
-      js.cursor.downField("type").flatMap(_.focus.asString) shouldBe Some("gif")
+      (js \\ "type").head.as[String] shouldBe Right("gif")
     }
   }
 
@@ -41,7 +37,7 @@ class InlineQueryResultTest extends FlatSpec
     forAll { inlineQueryResultMpeg4Gif: InlineQueryResultMpeg4Gif ⇒
       val js = inlineQueryResultMpeg4Gif.asJson
       js should not be Json.Null
-      js.cursor.downField("type").flatMap(_.focus.asString) shouldBe Some("mpeg4_gif")
+      (js \\ "type").head.as[String] shouldBe Right("mpeg4_gif")
     }
   }
 
@@ -49,7 +45,7 @@ class InlineQueryResultTest extends FlatSpec
     forAll { inlineQueryResultVideo: InlineQueryResultVideo ⇒
       val js = inlineQueryResultVideo.asJson
       js should not be Json.Null
-      js.cursor.downField("type").flatMap(_.focus.asString) shouldBe Some("video")
+      (js \\ "type").head.as[String] shouldBe Right("video")
     }
   }
 
@@ -57,7 +53,7 @@ class InlineQueryResultTest extends FlatSpec
     forAll { inlineQueryResultAudio: InlineQueryResultAudio ⇒
       val js = inlineQueryResultAudio.asJson
       js should not be Json.Null
-      js.cursor.downField("type").flatMap(_.focus.asString) shouldBe Some("audio")
+      (js \\ "type").head.as[String] shouldBe Right("audio")
     }
   }
 
@@ -65,7 +61,7 @@ class InlineQueryResultTest extends FlatSpec
     forAll { inlineQueryResultVoice: InlineQueryResultVoice ⇒
       val js = inlineQueryResultVoice.asJson
       js should not be Json.Null
-      js.cursor.downField("type").flatMap(_.focus.asString) shouldBe Some("voice")
+      (js \\ "type").head.as[String] shouldBe Right("voice")
     }
   }
 
@@ -73,7 +69,7 @@ class InlineQueryResultTest extends FlatSpec
     forAll { inlineQueryResultDocument: InlineQueryResultDocument ⇒
       val js = inlineQueryResultDocument.asJson
       js should not be Json.Null
-      js.cursor.downField("type").flatMap(_.focus.asString) shouldBe Some("document")
+      (js \\ "type").head.as[String] shouldBe Right("document")
     }
   }
 
@@ -81,7 +77,7 @@ class InlineQueryResultTest extends FlatSpec
     forAll { inlineQueryResultLocation: InlineQueryResultLocation ⇒
       val js = inlineQueryResultLocation.asJson
       js should not be Json.Null
-      js.cursor.downField("type").flatMap(_.focus.asString) shouldBe Some("location")
+      (js \\ "type").head.as[String] shouldBe Right("location")
     }
   }
 
@@ -89,7 +85,7 @@ class InlineQueryResultTest extends FlatSpec
     forAll { inlineQueryResultVenue: InlineQueryResultVenue ⇒
       val js = inlineQueryResultVenue.asJson
       js should not be Json.Null
-      js.cursor.downField("type").flatMap(_.focus.asString) shouldBe Some("venue")
+      (js \\ "type").head.as[String] shouldBe Right("venue")
     }
   }
 
@@ -97,7 +93,7 @@ class InlineQueryResultTest extends FlatSpec
     forAll { inlineQueryResultContact: InlineQueryResultContact ⇒
       val js = inlineQueryResultContact.asJson
       js should not be Json.Null
-      js.cursor.downField("type").flatMap(_.focus.asString) shouldBe Some("contact")
+      (js \\ "type").head.as[String] shouldBe Right("contact")
     }
   }
 
@@ -105,7 +101,7 @@ class InlineQueryResultTest extends FlatSpec
     forAll { inlineQueryResultCachedPhoto: InlineQueryResultCachedPhoto ⇒
       val js = inlineQueryResultCachedPhoto.asJson
       js should not be Json.Null
-      js.cursor.downField("type").flatMap(_.focus.asString) shouldBe Some("photo")
+      (js \\ "type").head.as[String] shouldBe Right("photo")
     }
   }
 
@@ -113,7 +109,7 @@ class InlineQueryResultTest extends FlatSpec
     forAll { inlineQueryResultCachedGif: InlineQueryResultCachedGif ⇒
       val js = inlineQueryResultCachedGif.asJson
       js should not be Json.Null
-      js.cursor.downField("type").flatMap(_.focus.asString) shouldBe Some("gif")
+      (js \\ "type").head.as[String] shouldBe Right("gif")
     }
   }
 
@@ -121,7 +117,7 @@ class InlineQueryResultTest extends FlatSpec
     forAll { inlineQueryResultCachedMpeg4Gif: InlineQueryResultCachedMpeg4Gif ⇒
       val js = inlineQueryResultCachedMpeg4Gif.asJson
       js should not be Json.Null
-      js.cursor.downField("type").flatMap(_.focus.asString) shouldBe Some("mpeg4_gif")
+      (js \\ "type").head.as[String] shouldBe Right("mpeg4_gif")
     }
   }
 
@@ -129,7 +125,7 @@ class InlineQueryResultTest extends FlatSpec
     forAll { inlineQueryResultCachedSticker: InlineQueryResultCachedSticker ⇒
       val js = inlineQueryResultCachedSticker.asJson
       js should not be Json.Null
-      js.cursor.downField("type").flatMap(_.focus.asString) shouldBe Some("sticker")
+      (js \\ "type").head.as[String] shouldBe Right("sticker")
     }
   }
 
@@ -137,7 +133,7 @@ class InlineQueryResultTest extends FlatSpec
     forAll { inlineQueryResultCachedDocument: InlineQueryResultCachedDocument ⇒
       val js = inlineQueryResultCachedDocument.asJson
       js should not be Json.Null
-      js.cursor.downField("type").flatMap(_.focus.asString) shouldBe Some("document")
+      (js \\ "type").head.as[String] shouldBe Right("document")
     }
   }
 
@@ -145,7 +141,7 @@ class InlineQueryResultTest extends FlatSpec
     forAll { inlineQueryResultCachedVideo: InlineQueryResultCachedVideo ⇒
       val js = inlineQueryResultCachedVideo.asJson
       js should not be Json.Null
-      js.cursor.downField("type").flatMap(_.focus.asString) shouldBe Some("video")
+      (js \\ "type").head.as[String] shouldBe Right("video")
     }
   }
 
@@ -153,7 +149,7 @@ class InlineQueryResultTest extends FlatSpec
     forAll { inlineQueryResultCachedVoice: InlineQueryResultCachedVoice ⇒
       val js = inlineQueryResultCachedVoice.asJson
       js should not be Json.Null
-      js.cursor.downField("type").flatMap(_.focus.asString) shouldBe Some("voice")
+      (js \\ "type").head.as[String] shouldBe Right("voice")
     }
   }
 
@@ -161,7 +157,7 @@ class InlineQueryResultTest extends FlatSpec
     forAll { inlineQueryResultCachedAudio: InlineQueryResultCachedAudio ⇒
       val js = inlineQueryResultCachedAudio.asJson
       js should not be Json.Null
-      js.cursor.downField("type").flatMap(_.focus.asString) shouldBe Some("audio")
+      (js \\ "type").head.as[String] shouldBe Right("audio")
     }
   }
 
@@ -169,7 +165,7 @@ class InlineQueryResultTest extends FlatSpec
     forAll { inlineQueryResultGame: InlineQueryResultGame ⇒
       val js = inlineQueryResultGame.asJson
       js should not be Json.Null
-      js.cursor.downField("type").flatMap(_.focus.asString) shouldBe Some("game")
+      (js \\ "type").head.as[String] shouldBe Right("game")
     }
   }
 }

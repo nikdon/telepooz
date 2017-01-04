@@ -1,3 +1,19 @@
+/*
+ * Copyright 2016 Nikolay Donets
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.github.nikdon.telepooz.raw
 
 import java.time.Duration
@@ -14,8 +30,6 @@ import io.circe.generic.auto._
 import io.circe.generic.semiauto._
 import shapeless.tag._
 
-
-
 trait CirceEncoders {
 
   // Types
@@ -29,8 +43,8 @@ trait CirceEncoders {
   implicit def queryIdTagEncoder[A : IsResourceId : Encoder]: Encoder[A @@ QueryId] = Encoder[A].contramap[A @@ QueryId](identity)
 
   // Models
-  private implicit val dateEncoder: Encoder[Date] = Encoder[Long].contramap[Date](d ⇒ d.getTime)                      // TODO Check
-  private implicit val durationEncoder: Encoder[Duration] = Encoder[Int].contramap[Duration](d ⇒ d.getSeconds.toInt)  // TODO Check
+  implicit val dateEncoder: Encoder[Date] = Encoder[Long].contramap[Date](d ⇒ d.getTime)                      // TODO Check
+  implicit val durationEncoder: Encoder[Duration] = Encoder[Int].contramap[Duration](d ⇒ d.getSeconds.toInt)  // TODO Check
 
   implicit def audioEncoder(implicit E: Encoder[String @@ FileId]): Encoder[Audio] = deriveEncoder[Audio]
   implicit def callbackQueryEncoder(implicit E: Encoder[String @@ QueryId]): Encoder[CallbackQuery] = deriveEncoder[CallbackQuery]
