@@ -31,15 +31,20 @@ import shapeless.tag._
 
 import scala.concurrent.{ExecutionContext, Future}
 
+abstract class Reactions {
+  def react(m: Message)(implicit ec: ExecutionContext): Future[Done.type]
+}
 
-case class Reactions(private val r: Map[String, Message ⇒ Reactions.Arguments ⇒ Reactions.IO] = Map.empty) {
-  def on(command: String)(reaction: Message ⇒ Reactions.Arguments ⇒ Reactions.IO) =
-    Reactions(r + (command → reaction))
+case class CommandBasedReactions(
+    private val r: Map[String, Message ⇒ CommandBasedReactions.Arguments ⇒ CommandBasedReactions.IO] = Map.empty)
+    extends Reactions {
+  def on(command: String)(reaction: Message ⇒ CommandBasedReactions.Arguments ⇒ CommandBasedReactions.IO) =
+    CommandBasedReactions(r + (command → reaction))
 
   def react(m: Message)(implicit ec: ExecutionContext): Future[Done.type] = {
-    val maybeReaction: Option[Reactions.IO] = for {
+    val maybeReaction: Option[CommandBasedReactions.IO] = for {
       text ← m.text
-      Array(cmd, args@_*) = text.trim.split(" ")
+      Array(cmd, args @ _ *) = text.trim.split(" ")
       reaction ← r.get(cmd)
     } yield reaction(m)(args)
 
@@ -47,25 +52,26 @@ case class Reactions(private val r: Map[String, Message ⇒ Reactions.Arguments 
   }
 }
 
-object Reactions {
+object CommandBasedReactions {
   type Arguments = Seq[String]
   type IO        = Future[_]
 }
 
-
-abstract class Reactor(implicit are: ApiRequestExecutor, ec: ExecutionContext, logger: LoggingAdapter) extends CirceEncoders {
+abstract class Reactor(implicit are: ApiRequestExecutor, ec: ExecutionContext, logger: LoggingAdapter)
+    extends CirceEncoders {
 
   val reactions: Reactions
 
-  private[this] val config     : Config = ConfigFactory.load()
-  private[this] val parallelism: Int    = config.getInt("telegram.polling.parallelism")
+  private[this] val config: Config   = ConfigFactory.load()
+  private[this] val parallelism: Int = config.getInt("telegram.polling.parallelism")
 
   /** Sink that for each incoming `Update` reacts according to an actions in `reactions` */
-  val react: Sink[Update, Future[Done]] = Sink.foreachParallel(parallelism)(update ⇒ update.message match {
-    case None    ⇒ logger.debug(s"Update ${update.update_id} with empty message")
-    case Some(m) ⇒
-      logger.debug(s"Reacting on update ${update.update_id}")
-      reactions.react(m)
+  val react: Sink[Update, Future[Done]] = Sink.foreachParallel(parallelism)(update ⇒
+    update.message match {
+      case None ⇒ logger.debug(s"Update ${update.update_id} with empty message")
+      case Some(m) ⇒
+        logger.debug(s"Reacting on update ${update.update_id}")
+        reactions.react(m)
   })
 
   /**
@@ -89,15 +95,17 @@ abstract class Reactor(implicit are: ApiRequestExecutor, ec: ExecutionContext, l
             disableWebPagePreview: Option[Boolean] = None,
             disableNotification: Option[Boolean] = None,
             replyToMessageId: Option[Long @@ MessageId] = None,
-            replyMarkup: Option[ReplyMarkup] = Some(ReplyKeyboardHide(hide_keyboard = true, None)))
-           (implicit message: Message): Future[Response[Message]] = {
-    val m = methods.SendMessage(message.chat.id.toString.chatId,
-                                text = text,
-                                parse_mode = parseMode,
-                                disable_web_page_preview = disableWebPagePreview,
-                                disable_notification = disableNotification,
-                                reply_to_message_id = replyToMessageId,
-                                reply_markup = replyMarkup)
+            replyMarkup: Option[ReplyMarkup] = Some(ReplyKeyboardHide(hide_keyboard = true, None)))(
+      implicit message: Message): Future[Response[Message]] = {
+    val m = methods.SendMessage(
+      message.chat.id.toString.chatId,
+      text = text,
+      parse_mode = parseMode,
+      disable_web_page_preview = disableWebPagePreview,
+      disable_notification = disableNotification,
+      reply_to_message_id = replyToMessageId,
+      reply_markup = replyMarkup
+    )
     api.execute(m.toRawRequest).foldMap(are)
   }
 

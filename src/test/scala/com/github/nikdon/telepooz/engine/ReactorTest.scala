@@ -41,7 +41,7 @@ class ReactorTest
   it should "handle input Update" in {
 
     val reactor = new Reactor() {
-      val reactions: Reactions = Reactions()
+      val reactions: CommandBasedReactions = CommandBasedReactions()
     }
 
     forAll { id: Long ⇒
@@ -56,7 +56,7 @@ class ReactorTest
     val probe = TestProbe()
 
     val triggeringReactor = new Reactor() {
-      val reactions = Reactions().on("/test")(implicit message ⇒ args ⇒ Future.successful("test") pipeTo probe.ref)
+      val reactions = CommandBasedReactions().on("/test")(implicit message ⇒ args ⇒ Future.successful("test") pipeTo probe.ref)
     }
 
     forAll { (update: Update, message: Message) ⇒
@@ -75,7 +75,7 @@ class ReactorTest
     val probe = TestProbe()
 
     val triggeringReactor = new Reactor() {
-      val reactions = Reactions()
+      val reactions = CommandBasedReactions()
         .on("/test1")(implicit message ⇒ args ⇒ Future.successful("test-1") pipeTo probe.ref)
         .on("/test2")(implicit message ⇒ args ⇒ Future.successful("test-2") pipeTo probe.ref)
     }
@@ -100,7 +100,7 @@ class ReactorTest
     val probe = TestProbe()
 
     val triggeringReactor = new Reactor() {
-      val reactions = Reactions().on("/test")(implicit message ⇒ args ⇒ Future.successful("test") pipeTo probe.ref)
+      val reactions = CommandBasedReactions().on("/test")(implicit message ⇒ args ⇒ Future.successful("test") pipeTo probe.ref)
     }
 
     val update = arbitrary[Update].sample.get
