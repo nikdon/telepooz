@@ -3,7 +3,7 @@ package com.github.nikdon.telepooz.examples
 import com.github.nikdon.telepooz.engine.{
   MockApiRequestExecutor,
   Polling,
-  Reactions,
+  CommandBasedReactions,
   Reactor,
   Telepooz
 }
@@ -14,7 +14,7 @@ object SelfBot extends Telepooz with App {
   implicit val are = new MockApiRequestExecutor(1000)
   val poller       = new Polling
   val reactor      = new Reactor {
-    val reactions = Reactions()
+    val reactions = CommandBasedReactions()
   }
 
   instance.run((are, poller, reactor))
