@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-## [0.3.4] 20176-01-04
+## [0.3.4] 2017-01-04
 
 - update dependencies to the present state
 - refactor tests
