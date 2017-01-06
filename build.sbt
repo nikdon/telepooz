@@ -62,6 +62,7 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-http-testkit" % akkaHttpV,
   "io.circe"          %% "circe-core"        % circeVersion,
   "io.circe"          %% "circe-generic"     % circeVersion,
+  "io.circe"          %% "circe-generic-extras" % circeVersion,
   "io.circe"          %% "circe-parser"      % circeVersion,
   "io.circe"          %% "circe-testing"     % circeVersion,
   "de.heikoseeberger" %% "akka-http-circe"   % akkaHttpJsonV,

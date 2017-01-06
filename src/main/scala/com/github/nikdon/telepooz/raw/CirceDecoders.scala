@@ -66,10 +66,7 @@ trait CirceDecoders {
 
   implicit def photoSizeDecoder(implicit D: Decoder[String @@ FileId]): Decoder[PhotoSize] = deriveDecoder[PhotoSize]
 
-  implicit val forceReplyDecoder: Decoder[ForceReply] = deriveDecoder[ForceReply]
-  implicit val inlineKeyboardMarkupDecoder: Decoder[InlineKeyboardMarkup] = deriveDecoder[InlineKeyboardMarkup]
-  implicit val replyKeyboardHideDecoder: Decoder[ReplyKeyboardHide] = deriveDecoder[ReplyKeyboardHide]
-  implicit val replyKeyboardMarkupDecoder: Decoder[ReplyKeyboardMarkup] = deriveDecoder[ReplyKeyboardMarkup]
+  implicit val replyMarkupDecoder: Decoder[ReplyMarkup] = deriveDecoder[ReplyMarkup]
 
   implicit def stickerDecoder(implicit D: Decoder[String @@ FileId]): Decoder[Sticker] = deriveDecoder[Sticker]
   implicit def userDecoder(implicit D: Decoder[Int @@ UserId]): Decoder[User] = deriveDecoder[User]

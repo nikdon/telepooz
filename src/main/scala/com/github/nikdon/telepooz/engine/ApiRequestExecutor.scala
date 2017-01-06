@@ -47,15 +47,26 @@ abstract class ApiRequestExecutor(implicit system: ActorSystem,
 
   private[this] lazy val http = Http()
 
-  private[this] def dropNulls(j: Json): Json = j.withObject { c ⇒
-    val fields = c.toList.filterNot { case (_, v) ⇒ v.isNull }
-    JsonObject.fromIterable(fields).asJson
+  private[this] def dropNulls(j: Json): Json = {
+    j match {
+      case x if x.isArray => x.asArray.get.map(dropNulls).asJson
+      case x if x.isObject =>
+        val filtered = x.asObject.get.toList.flatMap {
+          case (k, _) if k === discriminator => None
+          case (_, v) if v.isNull            => None
+          case (k, v)                        => Some(k -> dropNulls(v))
+        }
+        JsonObject.fromIterable(filtered).asJson
+      case x => x
+    }
   }
 
   private[this] def go[B: Decoder](methodName: String, payload: Json): Future[Response[B]] = {
-    val uri = "https://" |+| telegramHost |+| "/bot" + token |+| "/" + methodName
+    val uri  = "https://" |+| telegramHost |+| "/bot" + token |+| "/" + methodName
+    val data = dropNulls(payload)
+    val body = RequestBuilding.Post(Uri(uri), content = data)
     for {
-      response <- http.singleRequest(RequestBuilding.Post(Uri(uri), content = dropNulls(payload)))
+      response <- http.singleRequest(body)
       decoded  <- circeUnmarshaller(responseDecoder).apply(response.entity)
     } yield decoded
   }

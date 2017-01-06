@@ -26,11 +26,17 @@ import com.github.nikdon.telepooz.tags._
 import com.github.nikdon.telepooz.utils._
 import io.circe.Encoder
 import io.circe.syntax._
-import io.circe.generic.auto._
-import io.circe.generic.semiauto._
+import io.circe.generic.extras.auto._
+import io.circe.generic.extras.semiauto._
+import io.circe.generic.extras._
 import shapeless.tag._
 
 trait CirceEncoders {
+
+  val discriminator = "type"
+
+  implicit val customConfig: Configuration =
+    Configuration.default.withSnakeCaseKeys.withDefaults.withDiscriminator(discriminator)
 
   // Types
   implicit def chatIdTagEncoder[A : IsResourceId : Encoder]: Encoder[A @@ ChatId] = Encoder[A].contramap[A @@ ChatId](identity)
@@ -77,10 +83,7 @@ trait CirceEncoders {
 
   implicit def photoSizeEncoder(implicit E: Encoder[String @@ FileId]): Encoder[PhotoSize] = deriveEncoder[PhotoSize]
 
-  implicit val forceReplyEncoder          : Encoder[ForceReply]           = deriveEncoder[ForceReply]
-  implicit val inlineKeyboardMarkupEncoder: Encoder[InlineKeyboardMarkup] = deriveEncoder[InlineKeyboardMarkup]
-  implicit val replyKeyboardHideEncoder   : Encoder[ReplyKeyboardHide]    = deriveEncoder[ReplyKeyboardHide]
-  implicit val replyKeyboardMarkupEncoder : Encoder[ReplyKeyboardMarkup]  = deriveEncoder[ReplyKeyboardMarkup]
+  implicit val replyMarkupEncoder : Encoder[ReplyMarkup] = deriveEncoder[ReplyMarkup]
 
   implicit def stickerEncoder(implicit E: Encoder[String @@ FileId]): Encoder[Sticker] = deriveEncoder[Sticker]
   implicit def userEncoder(implicit E: Encoder[Int @@ UserId]): Encoder[User] = deriveEncoder[User]

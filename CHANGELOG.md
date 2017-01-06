@@ -2,7 +2,11 @@
 
 ## Unreleased
 
-## [0.3.5] 2017-01-07
+## [0.3.6] 2017-01-07
+
+- fix incorrect construction of jsons for request api
+
+## [0.3.5] 2017-01-06
 
 - fix incorrect post request payloads
 

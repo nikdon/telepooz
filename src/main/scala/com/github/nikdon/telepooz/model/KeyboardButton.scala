@@ -31,5 +31,5 @@ package com.github.nikdon.telepooz.model
   *                           the button is pressed. Available in private chats only
   */
 case class KeyboardButton(text: String,
-                          request_contact: Option[Boolean],
-                          request_location: Option[Boolean])
+                          request_contact: Option[Boolean] = None,
+                          request_location: Option[Boolean] = None)
