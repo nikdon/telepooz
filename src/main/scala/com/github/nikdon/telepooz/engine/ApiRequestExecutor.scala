@@ -28,7 +28,8 @@ import com.github.nikdon.telepooz.raw.RawRequest._
 import com.github.nikdon.telepooz.raw._
 import com.typesafe.config.{Config, ConfigFactory}
 import de.heikoseeberger.akkahttpcirce.CirceSupport
-import io.circe.{Decoder, Json, Printer}
+import io.circe.{Decoder, Json, JsonObject}
+import io.circe.syntax._
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
 
@@ -46,12 +47,15 @@ abstract class ApiRequestExecutor(implicit system: ActorSystem,
 
   private[this] lazy val http = Http()
 
-  private[this] val dropNulls = Printer.noSpaces.copy(dropNullKeys = true)
+  private[this] def dropNulls(j: Json): Json = j.withObject { c ⇒
+    val fields = c.toList.filterNot { case (_, v) ⇒ v.isNull }
+    JsonObject.fromIterable(fields).asJson
+  }
 
   private[this] def go[B: Decoder](methodName: String, payload: Json): Future[Response[B]] = {
     val uri = "https://" |+| telegramHost |+| "/bot" + token |+| "/" + methodName
     for {
-      response <- http.singleRequest(RequestBuilding.Post(Uri(uri), content = payload.pretty(dropNulls)))
+      response <- http.singleRequest(RequestBuilding.Post(Uri(uri), content = dropNulls(payload)))
       decoded  <- circeUnmarshaller(responseDecoder).apply(response.entity)
     } yield decoded
   }

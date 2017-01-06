@@ -70,8 +70,9 @@ class Polling(implicit apiRequestExecutor: ApiRequestExecutor, ec: ExecutionCont
     /** Execute a [[methods.GetUpdates]] via the provided api */
     val D: FlowShape[methods.GetUpdates, immutable.Seq[Update]] = builder.add(Flow[methods.GetUpdates].mapAsync(parallelism) {
       gu: methods.GetUpdates ⇒
-        logger.debug("Executing a GetUpdates request")
-        api.execute(gu.toRawRequest).foldMap(apiRequestExecutor).map(_.result.fold(Vector.empty[Update])(identity))
+        logger.debug(s"Executing a GetUpdates request: $gu")
+        val res = api.execute(gu.toRawRequest).foldMap(apiRequestExecutor).map(_.result.fold(Vector.empty[Update])(identity))
+        res
     })
 
     /** Merge two input streams of [[methods.GetUpdates]]. Created because of the initial producer [[A]] */
@@ -83,7 +84,7 @@ class Polling(implicit apiRequestExecutor: ApiRequestExecutor, ec: ExecutionCont
 
     /** Emits a [[methods.GetUpdates]] when [[Trigger]] comes to input */
     val Z = builder.add(ZipWith((tick: methods.GetUpdates, trigger: Trigger.type) ⇒ {
-      logger.debug(s"Trigger pulled")
+      logger.debug(s"Trigger pulled: $tick")
       tick
     }))
 
@@ -93,9 +94,7 @@ class Polling(implicit apiRequestExecutor: ApiRequestExecutor, ec: ExecutionCont
              C ~> Z.in0
         B ~>      Z.in1
                   Z.out ~> F
-    A          ~>          F ~> D
-                                D ~> E
-                                     E ~> Y
+    A          ~>          F ~> D ~> E ~> Y
              C           <~          E
 
     SourceShape(Y.out)

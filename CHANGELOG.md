@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## [0.3.5] 2017-01-07
+
+- fix incorrect post request payloads
+
 ## [0.3.4] 2017-01-04
 
 - update dependencies to the present state
