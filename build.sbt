@@ -5,7 +5,7 @@ headers := Map("scala" -> Apache2_0("2016", "Nikolay Donets"))
 lazy val buildSettings = Seq(
   organization := "com.github.nikdon",
   name := "telepooz",
-  version := "0.3.4",
+  version := "0.4.0",
 
   scalaVersion := "2.12.1",
   licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
