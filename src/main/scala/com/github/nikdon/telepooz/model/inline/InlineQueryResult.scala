@@ -17,8 +17,6 @@
 package com.github.nikdon.telepooz.model.inline
 
 import com.github.nikdon.telepooz.model.InlineKeyboardMarkup
-import com.github.nikdon.telepooz.tags.{FoursquareId, ResultId}
-import shapeless.tag.@@
 
 
 /** This object represents one result of an inline query */
@@ -39,7 +37,7 @@ sealed trait InlineQueryResult extends Product with Serializable
   * @param thumb_width            Thumbnail width
   * @param thumb_height           Thumbnail height
   */
-case class InlineQueryResultArticle(id: String @@ ResultId,
+case class InlineQueryResultArticle(id: String,
                                     title: String,
                                     input_message_content: InputMessageContent,
                                     reply_markup: Option[InlineKeyboardMarkup] = None,
@@ -69,7 +67,7 @@ object InlineQueryResultArticle {
   * @param reply_markup           Inline keyboard attached to the message
   * @param input_message_content  Content of the message to be sent instead of the photo
   */
-case class InlineQueryResultPhoto(id: String @@ ResultId,
+case class InlineQueryResultPhoto(id: String,
                                   photo_url: String,
                                   thumb_url: String,
                                   photo_width: Option[Int] = None,
@@ -99,7 +97,7 @@ object InlineQueryResultPhoto {
   * @param reply_markup           Inline keyboard attached to the message
   * @param input_message_content  Content of the message to be sent instead of the GIF animation
   */
-case class InlineQueryResultGif(id: String @@ ResultId,
+case class InlineQueryResultGif(id: String,
                                 gif_url: String,
                                 gif_width: Option[Int] = None,
                                 gif_height: Option[Int] = None,
@@ -128,7 +126,7 @@ object InlineQueryResultGif {
   * @param reply_markup           Inline keyboard attached to the message
   * @param input_message_content  Content of the message to be sent instead of the video animation
   */
-case class InlineQueryResultMpeg4Gif(id: String @@ ResultId,
+case class InlineQueryResultMpeg4Gif(id: String,
                                      mpeg4_url: String,
                                      mpeg4_width: Option[Int] = None,
                                      mpeg4_height: Option[Int] = None,
@@ -160,7 +158,7 @@ object InlineQueryResultMpeg4Gif {
   * @param reply_markup           Inline keyboard attached to the message
   * @param input_message_content  Content of the message to be sent instead of the video
   */
-case class InlineQueryResultVideo(id: String @@ ResultId,
+case class InlineQueryResultVideo(id: String,
                                   video_url: String,
                                   mime_type: String,
                                   thumb_url: String,
@@ -189,7 +187,7 @@ object InlineQueryResultVideo {
   * @param reply_markup           Inline keyboard attached to the message
   * @param input_message_content  Content of the message to be sent instead of the audio
   */
-case class InlineQueryResultAudio(id: String @@ ResultId,
+case class InlineQueryResultAudio(id: String,
                                   audio_url: String,
                                   title: String,
                                   caption: Option[String] = None,
@@ -214,7 +212,7 @@ object InlineQueryResultAudio {
   * @param reply_markup           Inline keyboard attached to the message
   * @param input_message_content  Content of the message to be sent instead of the voice recording
   */
-case class InlineQueryResultVoice(id: String @@ ResultId,
+case class InlineQueryResultVoice(id: String,
                                   voice_url: String,
                                   title: String,
                                   caption: Option[String] = None,
@@ -308,7 +306,7 @@ case class InlineQueryResultVenue(id: String,
                                   latitude: Double,
                                   longitude: Double,
                                   address: String,
-                                  foursquare_id: Option[String @@ FoursquareId] = None,
+                                  foursquare_id: Option[String] = None,
                                   thumb_url: Option[String] = None,
                                   thumb_width: Option[Int] = None,
                                   thumb_height: Option[Int] = None,
@@ -385,7 +383,7 @@ object InlineQueryResultCachedPhoto {
   * @param reply_markup           An Inline keyboard attached to the message
   * @param input_message_content  Content of the message to be sent instead of the GIF animation
   */
-case class InlineQueryResultCachedGif(id: String @@ ResultId,
+case class InlineQueryResultCachedGif(id: String,
                                       gif_file_id: String,
                                       title: Option[String] = None,
                                       caption: Option[String] = None,
@@ -408,7 +406,7 @@ object InlineQueryResultCachedGif {
   * @param reply_markup           An Inline keyboard attached to the message
   * @param input_message_content  Content of the message to be sent instead of the video animation
   */
-case class InlineQueryResultCachedMpeg4Gif(id: String @@ ResultId,
+case class InlineQueryResultCachedMpeg4Gif(id: String,
                                            mpeg4_file_id: String,
                                            title: Option[String] = None,
                                            caption: Option[String] = None,
@@ -428,7 +426,7 @@ object InlineQueryResultCachedMpeg4Gif {
   * @param reply_markup           An Inline keyboard attached to the message
   * @param input_message_content  Content of the message to be sent instead of the sticker
   */
-case class InlineQueryResultCachedSticker(id: String @@ ResultId,
+case class InlineQueryResultCachedSticker(id: String,
                                           sticker_file_id: String,
                                           reply_markup: Option[InlineKeyboardMarkup] = None,
                                           input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
@@ -473,7 +471,7 @@ object InlineQueryResultCachedDocument {
   * @param reply_markup           An Inline keyboard attached to the message
   * @param input_message_content  Content of the message to be sent instead of the video
   */
-case class InlineQueryResultCachedVideo(id: String @@ ResultId,
+case class InlineQueryResultCachedVideo(id: String,
                                         video_file_id: String,
                                         title: String,
                                         description: Option[String] = None,
@@ -497,7 +495,7 @@ object InlineQueryResultCachedVideo {
   * @param reply_markup           An Inline keyboard attached to the message
   * @param input_message_content  Content of the message to be sent instead of the voice message
   */
-case class InlineQueryResultCachedVoice(id: String @@ ResultId,
+case class InlineQueryResultCachedVoice(id: String,
                                         voice_file_id: String,
                                         title: String,
                                         caption: Option[String] = None,
@@ -518,7 +516,7 @@ object InlineQueryResultCachedVoice {
   * @param reply_markup           An Inline keyboard attached to the message
   * @param input_message_content  Content of the message to be sent instead of the audio
   */
-case class InlineQueryResultCachedAudio(id: String @@ ResultId,
+case class InlineQueryResultCachedAudio(id: String,
                                         audio_file_id: String,
                                         caption: Option[String] = None,
                                         reply_markup: Option[InlineKeyboardMarkup] = None,
@@ -527,7 +525,7 @@ object InlineQueryResultCachedAudio {
   final val `type` = Map("type" → "audio")
 }
 
-case class InlineQueryResultGame(id: String @@ ResultId,
+case class InlineQueryResultGame(id: String,
                                  game_short_name: String,
                                  reply_markup: Option[InlineKeyboardMarkup] = None) extends InlineQueryResult
 object InlineQueryResultGame {

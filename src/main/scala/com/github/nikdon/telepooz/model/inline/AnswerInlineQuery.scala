@@ -16,9 +16,6 @@
 
 package com.github.nikdon.telepooz.model.inline
 
-import com.github.nikdon.telepooz.tags.QueryId
-import shapeless.tag.@@
-
 
 /**
   * Use this method to send answers to an inline query. On success, True is returned.
@@ -38,7 +35,7 @@ import shapeless.tag.@@
   *                             switch_pm_parameter
   * @param switch_pm_parameter  Parameter for the start message sent to the bot when user presses the switch button
   */
-case class AnswerInlineQuery(inline_query_id: String @@ QueryId,
+case class AnswerInlineQuery(inline_query_id: String,
                              results: Vector[InlineQueryResult],
                              cache_time: Option[Int] = None,
                              is_personal: Option[Boolean] = None,

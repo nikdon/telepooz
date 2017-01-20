@@ -16,10 +16,7 @@
 
 package com.github.nikdon.telepooz.model.methods
 
-import com.github.nikdon.telepooz.IsResourceId
-import com.github.nikdon.telepooz.tags.{ChatId, UserId}
-import shapeless.tag.@@
-
+import com.github.nikdon.telepooz.model.Response
 
 /**
   * Use this method to kick a user from a group or a supergroup. In the case of supergroups, the user will not be able
@@ -30,5 +27,7 @@ import shapeless.tag.@@
   *                 (in the format @supergroupusername)
   * @param user_id  Unique identifier of the target user
   */
-case class KickChatMember[A: IsResourceId](chat_id: A @@ ChatId,
-                                           user_id: Int @@ UserId)
+case class KickChatMember(
+    chat_id: String,
+    user_id: Int
+) extends Method[Response[Boolean]]

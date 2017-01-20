@@ -24,19 +24,19 @@ import akka.stream._
 import cats.implicits._
 import cats.~>
 import com.github.nikdon.telepooz.model._
-import com.github.nikdon.telepooz.raw.RawRequest._
+import com.github.nikdon.telepooz.model.methods._
 import com.github.nikdon.telepooz.raw._
 import com.typesafe.config.{Config, ConfigFactory}
 import de.heikoseeberger.akkahttpcirce.CirceSupport
-import io.circe.{Decoder, Json, JsonObject}
 import io.circe.syntax._
+import io.circe.{Decoder, Json, JsonObject}
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
 
 abstract class ApiRequestExecutor(implicit system: ActorSystem,
                                   materializer: Materializer,
                                   ec: ExecutionContextExecutor)
-    extends (RawRequest ~> Future)
+    extends (Method ~> Future)
     with CirceSupport
     with CirceEncoders
     with CirceDecoders {
@@ -61,9 +61,8 @@ abstract class ApiRequestExecutor(implicit system: ActorSystem,
     }
   }
 
-  private[this] def go[B: Decoder](methodName: String, payload: Json): Future[Response[B]] = {
+  private[this] def go[B: Decoder](methodName: String, data: Json): Future[Response[B]] = {
     val uri  = "https://" |+| telegramHost |+| "/bot" + token |+| "/" + methodName
-    val data = dropNulls(payload)
     val body = RequestBuilding.Post(Uri(uri), content = data)
     for {
       response <- http.singleRequest(body)
@@ -71,38 +70,38 @@ abstract class ApiRequestExecutor(implicit system: ActorSystem,
     } yield decoded
   }
 
-  override def apply[A](fa: RawRequest[A]): Future[A] = fa match {
-    case m: GetMe.type             => go(m.name, m.payload)
-    case m: GetWebhookInfo.type    => go(m.name, m.payload)
-    case m: SendMessage            => go(m.name, m.payload)
-    case m: SendGame               => go(m.name, m.payload)
-    case m: SetGameScore           => go(m.name, m.payload)
-    case m: GetGameHighScores      => go(m.name, m.payload)
-    case m: ForwardMessage         => go(m.name, m.payload)
-    case m: GetUpdates             => go(m.name, m.payload)
-    case m: SendPhoto              => go(m.name, m.payload)
-    case m: SendAudio              => go(m.name, m.payload)
-    case m: SendDocument           => go(m.name, m.payload)
-    case m: SendSticker            => go(m.name, m.payload)
-    case m: SendVideo              => go(m.name, m.payload)
-    case m: SendVoice              => go(m.name, m.payload)
-    case m: SendLocation           => go(m.name, m.payload)
-    case m: SendVenue              => go(m.name, m.payload)
-    case m: SendContact            => go(m.name, m.payload)
-    case m: SendChatAction         => go(m.name, m.payload)
-    case m: GetUserProfilePhotos   => go(m.name, m.payload)
-    case m: GetFile                => go(m.name, m.payload)
-    case m: KickChatMember         => go(m.name, m.payload)
-    case m: LeaveChat              => go(m.name, m.payload)
-    case m: UnbanChatMember        => go(m.name, m.payload)
-    case m: GetChat                => go(m.name, m.payload)
-    case m: GetChatAdministrators  => go(m.name, m.payload)
-    case m: GetChatMembersCount    => go(m.name, m.payload)
-    case m: GetChatMember          => go(m.name, m.payload)
-    case m: AnswerCallbackQuery    => go(m.name, m.payload)
-    case m: EditMessageCaption     => go(m.name, m.payload)
-    case m: EditMessageReplyMarkup => go(m.name, m.payload)
-    case m: EditMessageText        => go(m.name, m.payload)
-    case m: SetWebhook             => go(m.name, m.payload)
+  override def apply[A](fa: Method[A]): Future[A] = fa match {
+    case m: GetMe.type             => go(m.name, dropNulls(m.asJson))
+    case m: GetWebhookInfo.type    => go(m.name, dropNulls(m.asJson))
+    case m: SendMessage            => go(m.name, dropNulls(m.asJson))
+    case m: SendGame               => go(m.name, dropNulls(m.asJson))
+    case m: SetGameScore           => go(m.name, dropNulls(m.asJson))
+    case m: GetGameHighScores      => go(m.name, dropNulls(m.asJson))
+    case m: ForwardMessage         => go(m.name, dropNulls(m.asJson))
+    case m: GetUpdates             => go(m.name, dropNulls(m.asJson))
+    case m: SendPhoto              => go(m.name, dropNulls(m.asJson))
+    case m: SendAudio              => go(m.name, dropNulls(m.asJson))
+    case m: SendDocument           => go(m.name, dropNulls(m.asJson))
+    case m: SendSticker            => go(m.name, dropNulls(m.asJson))
+    case m: SendVideo              => go(m.name, dropNulls(m.asJson))
+    case m: SendVoice              => go(m.name, dropNulls(m.asJson))
+    case m: SendLocation           => go(m.name, dropNulls(m.asJson))
+    case m: SendVenue              => go(m.name, dropNulls(m.asJson))
+    case m: SendContact            => go(m.name, dropNulls(m.asJson))
+    case m: SendChatAction         => go(m.name, dropNulls(m.asJson))
+    case m: GetUserProfilePhotos   => go(m.name, dropNulls(m.asJson))
+    case m: GetFile                => go(m.name, dropNulls(m.asJson))
+    case m: KickChatMember         => go(m.name, dropNulls(m.asJson))
+    case m: LeaveChat              => go(m.name, dropNulls(m.asJson))
+    case m: UnbanChatMember        => go(m.name, dropNulls(m.asJson))
+    case m: GetChat                => go(m.name, dropNulls(m.asJson))
+    case m: GetChatAdministrators  => go(m.name, dropNulls(m.asJson))
+    case m: GetChatMembersCount    => go(m.name, dropNulls(m.asJson))
+    case m: GetChatMember          => go(m.name, dropNulls(m.asJson))
+    case m: AnswerCallbackQuery    => go(m.name, dropNulls(m.asJson))
+    case m: EditMessageCaption     => go(m.name, dropNulls(m.asJson))
+    case m: EditMessageReplyMarkup => go(m.name, dropNulls(m.asJson))
+    case m: EditMessageText        => go(m.name, dropNulls(m.asJson))
+    case m: SetWebhook             => go(m.name, dropNulls(m.asJson))
   }
 }

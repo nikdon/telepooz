@@ -16,10 +16,7 @@
 
 package com.github.nikdon.telepooz.model.methods
 
-import com.github.nikdon.telepooz.IsResourceId
-import com.github.nikdon.telepooz.tags.{ChatId, UserId}
-import shapeless.tag.@@
-
+import com.github.nikdon.telepooz.model.{ChatMember, Response}
 
 /**
   * Use this method to get information about a member of a chat. Returns a ChatMember object on success.
@@ -28,5 +25,7 @@ import shapeless.tag.@@
   *                 (in the format @supergroupusername)
   * @param user_id  Unique identifier of the target user
   */
-case class GetChatMember[A: IsResourceId](chat_id: A @@ ChatId,
-                                          user_id: Int @@ UserId)
+case class GetChatMember(
+    chat_id: String,
+    user_id: Int
+) extends Method[Response[ChatMember]]

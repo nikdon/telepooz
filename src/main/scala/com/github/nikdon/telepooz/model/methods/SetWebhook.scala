@@ -16,4 +16,6 @@
 
 package com.github.nikdon.telepooz.model.methods
 
-case class SetWebhook(url: String /*, certificate: InputFile */)
+import com.github.nikdon.telepooz.model.Response
+
+case class SetWebhook(url: String /*, certificate: InputFile */ ) extends Method[Response[Boolean]]

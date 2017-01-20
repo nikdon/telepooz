@@ -16,11 +16,7 @@
 
 package com.github.nikdon.telepooz.model.methods
 
-import com.github.nikdon.telepooz.IsResourceId
-import com.github.nikdon.telepooz.model.ReplyMarkup
-import com.github.nikdon.telepooz.tags.{ChatId, FileId, MessageId}
-import shapeless.tag.@@
-
+import com.github.nikdon.telepooz.model.{Message, ReplyMarkup, Response}
 
 /**
   * Use this method to send general files. On success, the sent Message is returned. Bots can currently send files of
@@ -37,9 +33,11 @@ import shapeless.tag.@@
   * @param reply_markup         Additional interface options. A JSON-serialized object for an inline keyboard, custom
   *                             reply keyboard, instructions to hide reply keyboard or to force a reply from the user.
   */
-case class SendDocument[A: IsResourceId](chat_id: A @@ ChatId,
-                                         document: String @@ FileId, // TODO Add file upload
-                                         caption: Option[String] = None,
-                                         disable_notification: Option[Boolean] = None,
-                                         reply_to_message_id: Option[Long @@ MessageId] = None,
-                                         reply_markup: Option[ReplyMarkup] = None)
+case class SendDocument(
+    chat_id: String,
+    document: String, // TODO Add file upload
+    caption: Option[String] = None,
+    disable_notification: Option[Boolean] = None,
+    reply_to_message_id: Option[Long] = None,
+    reply_markup: Option[ReplyMarkup] = None
+) extends Method[Response[Message]]

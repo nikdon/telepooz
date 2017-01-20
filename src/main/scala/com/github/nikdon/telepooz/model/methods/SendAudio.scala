@@ -16,14 +16,9 @@
 
 package com.github.nikdon.telepooz.model.methods
 
-
 import java.time.Duration
 
-import com.github.nikdon.telepooz.IsResourceId
-import com.github.nikdon.telepooz.model.ReplyMarkup
-import com.github.nikdon.telepooz.tags.{ChatId, FileId, MessageId}
-import shapeless.tag.@@
-
+import com.github.nikdon.telepooz.model.{Message, ReplyMarkup, Response}
 
 /**
   * Use this method to send audio files, if you want Telegram clients to display them in the music player. Your audio
@@ -44,12 +39,14 @@ import shapeless.tag.@@
   * @param reply_markup         Additional interface options. A JSON-serialized object for an inline keyboard, custom
   *                             reply keyboard, instructions to hide reply keyboard or to force a reply from the user.
   */
-case class SendAudio[A: IsResourceId](chat_id: A @@ ChatId,
-                                      audio: String @@ FileId, // TODO Add file upload
-                                      caption: Option[String] = None,
-                                      duration: Option[Duration] = None,
-                                      performer: Option[String] = None,
-                                      title: Option[String] = None,
-                                      disable_notification: Option[Boolean] = None,
-                                      reply_to_message_id: Option[Long @@ MessageId] = None,
-                                      reply_markup: Option[ReplyMarkup] = None)
+case class SendAudio(
+    chat_id: String,
+    audio: String, // TODO Add file upload
+    caption: Option[String] = None,
+    duration: Option[Duration] = None,
+    performer: Option[String] = None,
+    title: Option[String] = None,
+    disable_notification: Option[Boolean] = None,
+    reply_to_message_id: Option[Long] = None,
+    reply_markup: Option[ReplyMarkup] = None
+) extends Method[Response[Message]]

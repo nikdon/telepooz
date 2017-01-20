@@ -16,10 +16,7 @@
 
 package com.github.nikdon.telepooz.model.methods
 
-import com.github.nikdon.telepooz.IsResourceId
-import com.github.nikdon.telepooz.tags.{ChatId, MessageId, UserId}
-import shapeless.tag._
-
+import com.github.nikdon.telepooz.model.{Message, Response}
 
 /**
   * Use this method to set the score of the specified user in a game. On success, if the message was sent by the bot,
@@ -34,11 +31,11 @@ import shapeless.tag._
   * @param inline_message_id  Required if chat_id and message_id are not specified. Identifier of the inline message
   * @param edit_message       Pass True, if the game message should be automatically edited to include the current scoreboard
   */
-case class SetGameScore[A: IsResourceId](
-  user_id: Long @@ UserId,
-  score: Int,
-  chat_id: A @@ ChatId,
-  message_id: Option[Long @@ MessageId] = None,
-  inline_message_id: Option[String @@ MessageId] = None,
-  edit_message: Option[Boolean] = None
-)
+case class SetGameScore(
+    user_id: Long,
+    score: Int,
+    chat_id: String,
+    message_id: Option[Long] = None,
+    inline_message_id: Option[String] = None,
+    edit_message: Option[Boolean] = None
+) extends Method[Response[Message]]

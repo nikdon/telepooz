@@ -16,9 +16,7 @@
 
 package com.github.nikdon.telepooz.model.methods
 
-import com.github.nikdon.telepooz.tags.FileId
-import shapeless.tag.@@
-
+import com.github.nikdon.telepooz.model.{File, Response}
 
 /**
   * Use this method to get basic info about a file and prepare it for downloading. For the moment, bots can download
@@ -29,4 +27,4 @@ import shapeless.tag.@@
   *
   * @param file_id  File identifier to get info about
   */
-case class GetFile(file_id: String @@ FileId)
+case class GetFile(file_id: String) extends Method[Response[File]]

@@ -16,10 +16,7 @@
 
 package com.github.nikdon.telepooz.model.methods
 
-import com.github.nikdon.telepooz.IsResourceId
-import com.github.nikdon.telepooz.model.{ParseMode, ReplyMarkup}
-import com.github.nikdon.telepooz.tags.{ChatId, MessageId}
-import shapeless.tag.@@
+import com.github.nikdon.telepooz.model.{Message, ParseMode, ReplyMarkup, Response}
 
 
 /**
@@ -36,12 +33,12 @@ import shapeless.tag.@@
   * @param disable_web_page_preview Disables link previews for links in this message
   * @param reply_markup             A JSON-serialized object for an inline keyboard.
   */
-case class EditMessageText[A: IsResourceId](
-  chat_id: A @@ ChatId,
-  message_id: Long @@ MessageId,
-  inline_message_id: String @@ MessageId,
+case class EditMessageText(
+  chat_id: String,
+  message_id: Long,
+  inline_message_id: String,
   text: String,
   parse_mode: Option[ParseMode] = None,
   disable_web_page_preview: Option[Boolean] = None,
   reply_markup: Option[ReplyMarkup] = None
-)
+) extends Method[Response[Either[Boolean, Message]]]

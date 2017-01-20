@@ -7,7 +7,7 @@ lazy val buildSettings = Seq(
   name := "telepooz",
   version := "0.3.4",
 
-  scalaVersion := "2.11.8",
+  scalaVersion := "2.12.1",
   licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
 )
 

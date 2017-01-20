@@ -17,8 +17,6 @@
 package com.github.nikdon.telepooz.model
 
 import com.github.nikdon.telepooz.model
-import com.github.nikdon.telepooz.tags.FoursquareId
-import shapeless.tag.@@
 
 
 /**
@@ -32,4 +30,4 @@ import shapeless.tag.@@
 case class Venue(location: model.Location,
                  title: String,
                  address: String,
-                 foursquare_id: Option[String @@ FoursquareId])
+                 foursquare_id: Option[String])

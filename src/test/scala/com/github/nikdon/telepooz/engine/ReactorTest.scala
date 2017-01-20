@@ -45,7 +45,7 @@ class ReactorTest
     }
 
     forAll { id: Long ⇒
-      val future = Source.single(Update(id.updateId)).runWith(reactor.react)
+      val future = Source.single(Update(id)).runWith(reactor.react)
       whenReady(future) { res ⇒
         res shouldBe Done
       }

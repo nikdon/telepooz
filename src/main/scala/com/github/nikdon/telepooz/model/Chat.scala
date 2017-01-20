@@ -17,8 +17,6 @@
 package com.github.nikdon.telepooz.model
 
 import com.github.nikdon.telepooz._
-import com.github.nikdon.telepooz.tags.ChatId
-import shapeless.tag._
 
 
 /**
@@ -33,7 +31,7 @@ import shapeless.tag._
   * @param all_members_are_admins True if a group has ‘All Members Are Admins’ enabled.
   */
 case class Chat(
-  id: Long @@ ChatId,
+  id: String,
   `type`: ChatType,
   title: Option[String] = None,
   username: Option[String] = None,

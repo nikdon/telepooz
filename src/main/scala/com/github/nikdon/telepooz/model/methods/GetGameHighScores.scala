@@ -16,9 +16,7 @@
 
 package com.github.nikdon.telepooz.model.methods
 
-import com.github.nikdon.telepooz.IsResourceId
-import com.github.nikdon.telepooz.tags.{ChatId, MessageId, UserId}
-import shapeless.tag.@@
+import com.github.nikdon.telepooz.model.{GameHighScore, Response}
 
 
 /**
@@ -31,9 +29,9 @@ import shapeless.tag.@@
   * @param message_id         Required if inline_message_id is not specified. Unique identifier of the sent message
   * @param inline_message_id  	Required if chat_id and message_id are not specified. Identifier of the inline message
   */
-case class GetGameHighScores[A: IsResourceId](
-  user_id: Long @@ UserId,
-  chat_id: Option[A @@ ChatId] = None,
-  message_id: Option[Long @@ MessageId] = None,
-  inline_message_id: Option[String @@ MessageId] = None
-)
+case class GetGameHighScores(
+  user_id: Long,
+  chat_id: Option[String] = None,
+  message_id: Option[Long] = None,
+  inline_message_id: Option[String] = None
+)  extends Method[Response[Vector[GameHighScore]]]
