@@ -6,7 +6,7 @@ import com.github.nikdon.telepooz.model.EqInstances._
 import com.github.nikdon.telepooz.model._
 import com.github.nikdon.telepooz.model.inline.AnswerInlineQuery
 import com.github.nikdon.telepooz.model.methods._
-import com.github.nikdon.telepooz.raw.{CirceDecoders, CirceEncoders}
+import com.github.nikdon.telepooz.json.{CirceDecoders, CirceEncoders}
 
 class ModelSuite extends CirceSuite with CirceDecoders with CirceEncoders {
   checkCodec[Animation]("Animation")

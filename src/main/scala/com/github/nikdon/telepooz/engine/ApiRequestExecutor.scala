@@ -25,7 +25,7 @@ import cats.implicits._
 import cats.~>
 import com.github.nikdon.telepooz.model._
 import com.github.nikdon.telepooz.model.methods._
-import com.github.nikdon.telepooz.raw._
+import com.github.nikdon.telepooz.json._
 import com.typesafe.config.{Config, ConfigFactory}
 import de.heikoseeberger.akkahttpcirce.CirceSupport
 import io.circe.syntax._
@@ -52,7 +52,6 @@ abstract class ApiRequestExecutor(implicit system: ActorSystem,
       case x if x.isArray => x.asArray.get.map(dropNulls).asJson
       case x if x.isObject =>
         val filtered = x.asObject.get.toList.flatMap {
-          case (k, _) if k === discriminator => None
           case (_, v) if v.isNull            => None
           case (k, v)                        => Some(k -> dropNulls(v))
         }

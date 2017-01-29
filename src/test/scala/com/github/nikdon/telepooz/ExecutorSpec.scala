@@ -8,7 +8,7 @@ import com.github.nikdon.telepooz.api._
 import com.github.nikdon.telepooz.engine.MockApiRequestExecutor
 import com.github.nikdon.telepooz.model.methods.{ChatAction, Method}
 import com.github.nikdon.telepooz.model.{Message, Response, methods}
-import com.github.nikdon.telepooz.raw.CirceEncoders
+import com.github.nikdon.telepooz.json.CirceEncoders
 import org.scalatest.concurrent.{Eventually, ScalaFutures}
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
 import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers, OptionValues}

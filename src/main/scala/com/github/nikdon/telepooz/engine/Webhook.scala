@@ -31,7 +31,7 @@ import cats.instances.future._
 import com.github.nikdon.telepooz.api._
 import com.github.nikdon.telepooz.model.Update
 import com.github.nikdon.telepooz.model.methods.SetWebhook
-import com.github.nikdon.telepooz.raw.CirceDecoders
+import com.github.nikdon.telepooz.json.CirceDecoders
 import de.heikoseeberger.akkahttpcirce.CirceSupport._
 
 class Webhook(endpoint: String, interface: String = "::0", port: Int = 8080)(implicit are: ApiRequestExecutor,

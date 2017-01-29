@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.nikdon.telepooz.raw
+package com.github.nikdon.telepooz.json
 
 import java.time.Duration
 import java.util.Date
@@ -30,10 +30,7 @@ import io.circe.generic.extras.auto._
 
 trait CirceEncoders {
 
-  val discriminator = "descriminator"
-
-  implicit val customConfig: Configuration =
-    Configuration.default.withSnakeCaseKeys.withDefaults.withDiscriminator(discriminator)
+  implicit val customConfig: Configuration = Configuration.default.withSnakeCaseKeys.withDefaults
 
   // Models
   implicit val dateEncoder: Encoder[Date]         = Encoder[Long].contramap[Date](d ⇒ d.getTime)
@@ -71,7 +68,12 @@ trait CirceEncoders {
 
   implicit val photoSizeEncoder: Encoder[PhotoSize] = deriveEncoder[PhotoSize]
 
-  implicit val replyMarkupEncoder: Encoder[ReplyMarkup] = deriveEncoder[ReplyMarkup]
+  implicit val replyMarkupEncoder: Encoder[ReplyMarkup] = Encoder.instance {
+    case fr: ForceReply            => fr.asJson
+    case ikm: InlineKeyboardMarkup => ikm.asJson
+    case rkh: ReplyKeyboardHide    => rkh.asJson
+    case rkm: ReplyKeyboardMarkup  => rkm.asJson
+  }
 
   implicit val stickerEncoder: Encoder[Sticker]                     = deriveEncoder[Sticker]
   implicit val userEncoder: Encoder[User]                           = deriveEncoder[User]
@@ -83,7 +85,7 @@ trait CirceEncoders {
 
   // Inline
   implicit val inlineQueryEncoder: Encoder[inline.InlineQuery]              = deriveEncoder[inline.InlineQuery]
-  implicit val choosenInlineQueryEncoder: Encoder[inline.ChosenInlineQuery] = deriveEncoder[inline.ChosenInlineQuery]
+  implicit val chosenInlineQueryEncoder: Encoder[inline.ChosenInlineQuery] = deriveEncoder[inline.ChosenInlineQuery]
   implicit val inputContactMessageContentEncoder: Encoder[inline.InputContactMessageContent] =
     deriveEncoder[inline.InputContactMessageContent]
   implicit val inputVenueMessageContent: Encoder[inline.InputVenueMessageContent] =

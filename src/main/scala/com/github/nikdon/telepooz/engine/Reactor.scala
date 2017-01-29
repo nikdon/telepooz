@@ -22,7 +22,7 @@ import akka.stream.scaladsl.Sink
 import cats.implicits._
 import com.github.nikdon.telepooz.api._
 import com.github.nikdon.telepooz.model.{methods, _}
-import com.github.nikdon.telepooz.raw.CirceEncoders
+import com.github.nikdon.telepooz.json.CirceEncoders
 import com.typesafe.config.{Config, ConfigFactory}
 
 import scala.concurrent.{ExecutionContext, Future}

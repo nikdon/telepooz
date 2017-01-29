@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.nikdon.telepooz.raw
+package com.github.nikdon.telepooz.json
 
 import java.time.Duration
 import java.util.Date
