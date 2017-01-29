@@ -28,7 +28,7 @@ import akka.stream.actor.ActorPublisher
 import akka.stream.actor.ActorPublisherMessage.{Cancel, Request}
 import akka.stream.scaladsl.Source
 import cats.instances.future._
-import com.github.nikdon.telepooz.api
+import com.github.nikdon.telepooz.api._
 import com.github.nikdon.telepooz.model.Update
 import com.github.nikdon.telepooz.model.methods.SetWebhook
 import com.github.nikdon.telepooz.raw.CirceDecoders
@@ -66,14 +66,14 @@ private[this] class UpdatePublisher(endpoint: String, interface: String, port: I
     }
   }
 
-  override def preStart() =
-    api
-      .execute(SetWebhook(endpoint))
+  override def preStart() = {
+    SetWebhook(endpoint)
       .foldMap(are)
       .flatMap(_ ⇒ {
         Http().bindAndHandle(route, interface, port)
       })
       .pipeTo(self)
+  }
 
   def inactive: Receive = {
     case bind: ServerBinding ⇒

@@ -4,6 +4,7 @@ import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
 import cats.free.Free
 import cats.implicits._
+import com.github.nikdon.telepooz.api._
 import com.github.nikdon.telepooz.engine.MockApiRequestExecutor
 import com.github.nikdon.telepooz.model.methods.{ChatAction, Method}
 import com.github.nikdon.telepooz.model.{Message, Response, methods}
@@ -39,33 +40,33 @@ class ExecutorSpec
 
   it should "allow to compose requests" in {
     val req: Free[Method, Response[Message]] = for {
-      a ← api.execute(methods.GetMe)
-      c ← api.execute(methods.AnswerCallbackQuery("query"))
-      d ← api.execute(methods.ForwardMessage("123", "321", 0L))
-      e ← api.execute(methods.GetChat("123"))
-      f ← api.execute(methods.GetChatAdministrators("123"))
-      g ← api.execute(methods.GetChatMember("123", 321))
-      h ← api.execute(methods.GetChatMembersCount("123"))
-      i ← api.execute(methods.GetFile("file"))
-      j ← api.execute(methods.GetUpdates())
-      k ← api.execute(methods.GetUserProfilePhotos(123))
-      l ← api.execute(methods.KickChatMember("123", 321))
-      m ← api.execute(methods.LeaveChat("123"))
-      n ← api.execute(methods.SendAudio("123", "auau"))
-      o ← api.execute(methods.SendChatAction("123", ChatAction.FindLocation))
-      p ← api.execute(methods.SendContact("123", "123321", "John"))
-      q ← api.execute(methods.SendDocument("123", "doc"))
-      r ← api.execute(methods.SendLocation("123", 0.0, 0.0))
-      s ← api.execute(methods.SendPhoto("123", "photo"))
-      t ← api.execute(methods.SendSticker("123", "sticker"))
-      u ← api.execute(methods.SendVenue("123", 0.0, 0.0, "zero", "pole"))
-      v ← api.execute(methods.SendVideo("123", "video"))
-      w ← api.execute(methods.SendVoice("123", "voice"))
-      x ← api.execute(methods.UnbanChatMember("123", 321))
-      b ← api.execute(methods.SendMessage("123", a.result.fold("empty")(_.first_name)))
-      _ ← api.execute(methods.EditMessageReplyMarkup("123L", 333L, "bb"))
-      _ ← api.execute(methods.EditMessageCaption("123L", 333L, "aa"))
-      _ ← api.execute(methods.EditMessageText("123L", 333L, "cc", "TEST"))
+      a ← methods.GetMe
+      c ← methods.AnswerCallbackQuery("query")
+      d ← methods.ForwardMessage("123", "321", 0L)
+      e ← methods.GetChat("123")
+      f ← methods.GetChatAdministrators("123")
+      g ← methods.GetChatMember("123", 321)
+      h ← methods.GetChatMembersCount("123")
+      i ← methods.GetFile("file")
+      j ← methods.GetUpdates()
+      k ← methods.GetUserProfilePhotos(123)
+      l ← methods.KickChatMember("123", 321)
+      m ← methods.LeaveChat("123")
+      n ← methods.SendAudio("123", "auau")
+      o ← methods.SendChatAction("123", ChatAction.FindLocation)
+      p ← methods.SendContact("123", "123321", "John")
+      q ← methods.SendDocument("123", "doc")
+      r ← methods.SendLocation("123", 0.0, 0.0)
+      s ← methods.SendPhoto("123", "photo")
+      t ← methods.SendSticker("123", "sticker")
+      u ← methods.SendVenue("123", 0.0, 0.0, "zero", "pole")
+      v ← methods.SendVideo("123", "video")
+      w ← methods.SendVoice("123", "voice")
+      x ← methods.UnbanChatMember("123", 321)
+      b ← methods.SendMessage("123", a.result.fold("empty")(_.first_name))
+      _ ← methods.EditMessageReplyMarkup("123L", 333L, "bb")
+      _ ← methods.EditMessageCaption("123L", 333L, "aa")
+      _ ← methods.EditMessageText("123L", 333L, "cc", "TEST")
     } yield b
 
     val res = req.foldMap(mockApiReqExe)
@@ -82,9 +83,9 @@ class ExecutorSpec
 
   it should "allow to update messages" in {
     val req = for {
-      a ← api.execute(methods.EditMessageReplyMarkup("123L", 333L, "bb"))
-      b ← api.execute(methods.EditMessageCaption("123L", 333L, "aa"))
-      c ← api.execute(methods.EditMessageText("123L", 333L, "cc", "TEST"))
+      a ← methods.EditMessageReplyMarkup("123L", 333L, "bb")
+      b ← methods.EditMessageCaption("123L", 333L, "aa")
+      c ← methods.EditMessageText("123L", 333L, "cc", "TEST")
     } yield c
 
     val res = req.foldMap(mockApiReqExe)

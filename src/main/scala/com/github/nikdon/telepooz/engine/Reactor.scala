@@ -20,7 +20,7 @@ import akka.Done
 import akka.event.LoggingAdapter
 import akka.stream.scaladsl.Sink
 import cats.implicits._
-import com.github.nikdon.telepooz.api
+import com.github.nikdon.telepooz.api._
 import com.github.nikdon.telepooz.model.{methods, _}
 import com.github.nikdon.telepooz.raw.CirceEncoders
 import com.typesafe.config.{Config, ConfigFactory}
@@ -102,7 +102,7 @@ abstract class Reactor(implicit are: ApiRequestExecutor, ec: ExecutionContext, l
       reply_to_message_id = replyToMessageId,
       reply_markup = replyMarkup
     )
-    api.execute(m).foldMap(are)
+    m.foldMap(are)
   }
 
 }
