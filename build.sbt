@@ -44,10 +44,10 @@ lazy val baseSettings = Seq(
 buildSettings ++ baseSettings
 
 lazy val akkaVersion      = "2.4.16"
-lazy val akkaHttpV        = "10.0.1"
-lazy val akkaHttpJsonV    = "1.11.0"
-lazy val catsV            = "0.8.1"
-lazy val circeVersion     = "0.6.1"
+lazy val akkaHttpV        = "10.0.3"
+lazy val akkaHttpJsonV    = "1.12.0"
+lazy val catsV            = "0.9.0"
+lazy val circeVersion     = "0.7.0"
 lazy val shapelessVersion = "2.3.2"
 
 lazy val scalaTestV  = "3.0.1"
