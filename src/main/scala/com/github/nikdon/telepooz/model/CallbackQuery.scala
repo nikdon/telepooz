@@ -16,9 +16,6 @@
 
 package com.github.nikdon.telepooz.model
 
-import com.github.nikdon.telepooz.tags.QueryId
-import shapeless.tag.@@
-
 
 /**
   * This object represents an incoming callback query from a callback button in an inline keyboard.
@@ -34,8 +31,8 @@ import shapeless.tag.@@
   * @param data               Data associated with the callback button.
   *                           Be aware that a bad client can send arbitrary data in this field
   */
-case class CallbackQuery(id: String @@ QueryId,
+case class CallbackQuery(id: String,
                          from: Option[User] = None,
                          message: Option[Message] = None,
-                         inline_message_id: Option[String @@ QueryId] = None,
+                         inline_message_id: Option[String] = None,
                          data: String)

@@ -16,9 +16,7 @@
 
 package com.github.nikdon.telepooz.model.methods
 
-import com.github.nikdon.telepooz.tags.QueryId
-import shapeless.tag.@@
-
+import com.github.nikdon.telepooz.model.Response
 
 /**
   * Use this method to send answers to callback queries sent from inline keyboards. The answer will be displayed to the
@@ -32,7 +30,9 @@ import shapeless.tag.@@
   *                           conditions via @Botfather, specify the URL that opens your game – note that this will only
   *                           work if the query comes from a callback_game button.
   */
-case class AnswerCallbackQuery(callback_query_id: String @@ QueryId,
-                               text: Option[String] = None,
-                               show_alert: Option[Boolean] = None,
-                               url: Option[String] = None)
+case class AnswerCallbackQuery(
+    callback_query_id: String,
+    text: Option[String] = None,
+    show_alert: Option[Boolean] = None,
+    url: Option[String] = None
+) extends Method[Response[Boolean]]

@@ -16,10 +16,7 @@
 
 package com.github.nikdon.telepooz.model.methods
 
-import com.github.nikdon.telepooz.IsResourceId
-import com.github.nikdon.telepooz.model.ReplyMarkup
-import com.github.nikdon.telepooz.tags.{ChatId, MessageId}
-import shapeless.tag.@@
+import com.github.nikdon.telepooz.model.{Message, ReplyMarkup, Response}
 
 
 /**
@@ -32,9 +29,9 @@ import shapeless.tag.@@
   * @param inline_message_id  Required if chat_id and message_id are not specified. Identifier of the inline message
   * @param reply_markup       A JSON-serialized object for an inline keyboard.
   */
-case class EditMessageReplyMarkup[A: IsResourceId](
-  chat_id: A @@ ChatId,
-  message_id: Long @@ MessageId,
-  inline_message_id: String @@ MessageId,
+case class EditMessageReplyMarkup(
+  chat_id: String,
+  message_id: Long,
+  inline_message_id: String,
   reply_markup: Option[ReplyMarkup] = None
-)
+) extends Method[Response[Either[Boolean, Message]]]

@@ -17,8 +17,6 @@
 package com.github.nikdon.telepooz.model.inline
 
 import com.github.nikdon.telepooz.model.{Location, User}
-import com.github.nikdon.telepooz.tags.QueryId
-import shapeless.tag.@@
 
 
 /**
@@ -31,7 +29,7 @@ import shapeless.tag.@@
   * @param query    Text of the query (up to 512 characters)
   * @param offset   Offset of the results to be returned, can be controlled by the bot
   */
-case class InlineQuery(id: String @@ QueryId,
+case class InlineQuery(id: String,
                        from: User,
                        location: Option[Location] = None,
                        query: String,

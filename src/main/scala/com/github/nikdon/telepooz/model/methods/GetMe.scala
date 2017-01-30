@@ -16,9 +16,11 @@
 
 package com.github.nikdon.telepooz.model.methods
 
+import com.github.nikdon.telepooz.model.{Response, User}
+
 
 /**
   * A simple method for testing your bot's auth token. Requires no parameters.
   * Returns basic information about the bot in form of a User object.
   */
-case object GetMe
+case object GetMe extends Method[Response[User]]

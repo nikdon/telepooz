@@ -21,100 +21,99 @@ import java.util.Date
 import akka.actor.ActorSystem
 import akka.stream.Materializer
 import com.github.nikdon.telepooz.model._
-import com.github.nikdon.telepooz.raw.RawRequest
-import com.github.nikdon.telepooz.raw.RawRequest._
-import com.github.nikdon.telepooz.tags
+import com.github.nikdon.telepooz.model.methods._
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
 import scala.util.Random
 
-
-class MockApiRequestExecutor(nUpdates: Int = 1)(implicit system: ActorSystem, materializer: Materializer, ec: ExecutionContextExecutor)
-    extends ApiRequestExecutor()(system, materializer, ec)
-    with tags.Syntax {
+class MockApiRequestExecutor(
+    nUpdates: Int = 1)(implicit system: ActorSystem, materializer: Materializer, ec: ExecutionContextExecutor)
+    extends ApiRequestExecutor()(system, materializer, ec) {
 
   def r = Random
 
-  val fakeChat              = Chat(r.nextLong.chatId, ChatType.Private)
-  val fakeFile              = File(r.nextString(5).fileId, None, None)
-  val fakeMessage           = Message(r.nextLong.messageId, new Date(r.nextLong), Chat(r.nextLong.chatId, ChatType.Private))
+  val fakeChat              = Chat(r.nextString(3), ChatType.Private)
+  val fakeFile              = File(r.nextString(5), None, None)
+  val fakeMessage           = Message(r.nextLong, new Date(r.nextLong), Chat(r.nextString(3), ChatType.Private))
   val fakeUserProfilePhotos = UserProfilePhotos(r.nextInt, Vector.empty)
-  val fakeUser              = User(r.nextInt.userId, r.nextString(3))
+  val fakeUser              = User(r.nextInt, r.nextString(3))
 
   lazy val updates =
-    Vector.tabulate(nUpdates)(_ ⇒ Update(r.nextLong.updateId, Some(Message(r.nextLong.messageId, new Date(r.nextLong), fakeChat))))
+    Vector.tabulate(nUpdates)(_ ⇒ Update(r.nextLong, Some(Message(r.nextLong, new Date(r.nextLong), fakeChat))))
 
-  override def apply[A](fa: RawRequest[A]): Future[A] = fa match {
+  override def apply[A](fa: Method[A]): Future[A] = fa match {
     case m @ GetMe =>
-      Future.successful(Response(ok = true, Some(User(r.nextInt.userId, r.nextString(5)))))
+      Future.successful(Response(ok = true, Some(User(r.nextInt, r.nextString(5)))))
 
     case m @ GetWebhookInfo =>
-      Future.successful(Response(ok = true, Some(WebhookInfo(r.nextString(5), r.nextBoolean, r.nextLong, r.nextLong, r.nextString(5)))))
+      Future.successful(
+        Response(ok = true,
+                 Some(WebhookInfo(r.nextString(5), r.nextBoolean, r.nextLong, r.nextLong, r.nextString(5)))))
 
-    case m @ SendMessage(payload) =>
+    case m: SendMessage =>
       Future.successful(Response(ok = true, Some(fakeMessage)))
-    case m @ ForwardMessage(payload) =>
+    case m: ForwardMessage =>
       Future.successful(Response(ok = true, Some(fakeMessage)))
 
-    case m @ SendGame(payload) ⇒
+    case m: SendGame ⇒
       Future.successful(Response(ok = true, Some(fakeMessage)))
-    case m @ SetGameScore(payload) ⇒
+    case m: SetGameScore ⇒
       Future.successful(Response(ok = true, Some(fakeMessage)))
-    case m @ GetGameHighScores(payload) ⇒
+    case m: GetGameHighScores ⇒
       Future.successful(Response(ok = true, Some(Vector(GameHighScore(r.nextInt, fakeUser, r.nextInt)))))
 
-    case m @ SendPhoto(payload) ⇒
+    case m: SendPhoto ⇒
       Future.successful(Response(ok = true, Some(fakeMessage)))
-    case m @ SendAudio(payload) ⇒
+    case m: SendAudio ⇒
       Future.successful(Response(ok = true, Some(fakeMessage)))
-    case m @ SendDocument(payload) ⇒
+    case m: SendDocument ⇒
       Future.successful(Response(ok = true, Some(fakeMessage)))
-    case m @ SendSticker(payload) ⇒
+    case m: SendSticker ⇒
       Future.successful(Response(ok = true, Some(fakeMessage)))
-    case m @ SendVideo(payload) ⇒
+    case m: SendVideo ⇒
       Future.successful(Response(ok = true, Some(fakeMessage)))
-    case m @ SendVoice(payload) ⇒
+    case m: SendVoice ⇒
       Future.successful(Response(ok = true, Some(fakeMessage)))
-    case m @ SendLocation(payload) ⇒
+    case m: SendLocation ⇒
       Future.successful(Response(ok = true, Some(fakeMessage)))
-    case m @ SendVenue(payload) ⇒
+    case m: SendVenue ⇒
       Future.successful(Response(ok = true, Some(fakeMessage)))
-    case m @ SendContact(payload) ⇒
+    case m: SendContact ⇒
       Future.successful(Response(ok = true, Some(fakeMessage)))
-    case m @ SendChatAction(payload) ⇒
+    case m: SendChatAction ⇒
       Future.successful(Response(ok = true, Some(true)))
-    case m @ GetUserProfilePhotos(payload) ⇒
+    case m: GetUserProfilePhotos ⇒
       Future.successful(Response(ok = true, Some(fakeUserProfilePhotos)))
-    case m @ GetFile(payload) ⇒
+    case m: GetFile ⇒
       Future.successful(Response(ok = true, Some(fakeFile)))
-    case m @ KickChatMember(payload) ⇒
+    case m: KickChatMember ⇒
       Future.successful(Response(ok = true, Some(true)))
-    case m @ LeaveChat(payload) ⇒
+    case m: LeaveChat ⇒
       Future.successful(Response(ok = true, Some(true)))
-    case m @ UnbanChatMember(payload) ⇒
+    case m: UnbanChatMember ⇒
       Future.successful(Response(ok = true, Some(true)))
-    case m @ GetChat(payload) ⇒
+    case m: GetChat ⇒
       Future.successful(Response(ok = true, Some(fakeChat)))
-    case m @ GetChatAdministrators(payload) ⇒
+    case m: GetChatAdministrators ⇒
       Future.successful(Response(ok = true, Some(Vector(ChatMember(fakeUser, MemberStatus.Member)))))
-    case m @ GetChatMembersCount(payload) ⇒
+    case m: GetChatMembersCount ⇒
       Future.successful(Response(ok = true, Some(r.nextInt)))
-    case m @ GetChatMember(payload) ⇒
+    case m: GetChatMember ⇒
       Future.successful(Response(ok = true, Some(ChatMember(fakeUser, MemberStatus.Member))))
-    case m @ AnswerCallbackQuery(payload) ⇒
+    case m: AnswerCallbackQuery ⇒
       Future.successful(Response(ok = true, Some(true)))
 
-    case m @ GetUpdates(payload) =>
+    case m: GetUpdates =>
       Future.successful(Response(ok = true, Some(updates)))
 
-    case m @ EditMessageCaption(payload) ⇒
+    case m: EditMessageCaption ⇒
       Future.successful(Response(ok = true, Some(Right(fakeMessage))))
-    case m @ EditMessageReplyMarkup(payload) ⇒
+    case m: EditMessageReplyMarkup ⇒
       Future.successful(Response(ok = true, Some(Right(fakeMessage))))
-    case m @ EditMessageText(payload) ⇒
+    case m: EditMessageText ⇒
       Future.successful(Response(ok = true, Some(Right(fakeMessage))))
 
-    case m @ SetWebhook(payload) ⇒
+    case m: SetWebhook ⇒
       Future.successful(Response(ok = true, Some(true)))
   }
 

@@ -6,7 +6,7 @@ import akka.http.scaladsl.testkit.ScalatestRouteTest
 import akka.stream.scaladsl.{Sink, Source}
 import com.github.nikdon.telepooz.helpers.Arbitraries._
 import com.github.nikdon.telepooz.model.Update
-import com.github.nikdon.telepooz.raw.CirceEncoders
+import com.github.nikdon.telepooz.json.CirceEncoders
 import io.circe.syntax._
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalatest.concurrent.{ScalaFutures, ScaledTimeSpans}

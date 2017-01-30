@@ -16,11 +16,7 @@
 
 package com.github.nikdon.telepooz.model.methods
 
-import com.github.nikdon.telepooz.IsResourceId
-import com.github.nikdon.telepooz.model.ReplyMarkup
-import com.github.nikdon.telepooz.tags.{ChatId, MessageId}
-import shapeless.tag.@@
-
+import com.github.nikdon.telepooz.model.{Message, ReplyMarkup, Response}
 
 /**
   * Use this method to edit captions of messages sent by the bot or via the bot (for inline bots). On success, if edited
@@ -33,10 +29,10 @@ import shapeless.tag.@@
   * @param caption            New caption of the message
   * @param reply_markup       A JSON-serialized object for an inline keyboard.
   */
-case class EditMessageCaption[A: IsResourceId](
-  chat_id: A @@ ChatId,
-  message_id: Long @@ MessageId,
-  inline_message_id: String @@ MessageId,
-  caption: Option[String] = None,
-  reply_markup: Option[ReplyMarkup] = None
-)
+case class EditMessageCaption(
+    chat_id: String,
+    message_id: Long,
+    inline_message_id: String,
+    caption: Option[String] = None,
+    reply_markup: Option[ReplyMarkup] = None
+) extends Method[Response[Either[Boolean, Message]]]

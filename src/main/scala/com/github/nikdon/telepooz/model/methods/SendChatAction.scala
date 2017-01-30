@@ -16,10 +16,7 @@
 
 package com.github.nikdon.telepooz.model.methods
 
-import com.github.nikdon.telepooz.IsResourceId
-import com.github.nikdon.telepooz.tags.ChatId
-import shapeless.tag._
-
+import com.github.nikdon.telepooz.model.Response
 
 /**
   * Use this method when you need to tell the user that something is happening on the bot's side. The status is set for
@@ -32,19 +29,20 @@ import shapeless.tag._
   *                 record_audio or upload_audio for audio files, upload_document for general files, find_location
   *                 for location data.
   */
-case class SendChatAction[A: IsResourceId](chat_id: A @@ ChatId,
-                                           action: ChatAction)
+case class SendChatAction(
+    chat_id: String,
+    action: ChatAction
+) extends Method[Response[Boolean]]
 
-
-sealed trait ChatAction extends Product with Serializable {def name: String = this.productPrefix}
+sealed trait ChatAction extends Product with Serializable { def name: String = this.productPrefix }
 
 object ChatAction {
-  case object Typing extends ChatAction {override val name = super.name}
-  case object UploadPhoto extends ChatAction {override val name = super.name}
-  case object RecordVideo extends ChatAction {override val name = super.name}
-  case object UploadVideo extends ChatAction {override val name = super.name}
-  case object RecordAudio extends ChatAction {override val name = super.name}
-  case object UploadAudio extends ChatAction {override val name = super.name}
-  case object UploadDocument extends ChatAction {override val name = super.name}
-  case object FindLocation extends ChatAction {override val name = super.name}
+  case object Typing         extends ChatAction { override val name = super.name }
+  case object UploadPhoto    extends ChatAction { override val name = super.name }
+  case object RecordVideo    extends ChatAction { override val name = super.name }
+  case object UploadVideo    extends ChatAction { override val name = super.name }
+  case object RecordAudio    extends ChatAction { override val name = super.name }
+  case object UploadAudio    extends ChatAction { override val name = super.name }
+  case object UploadDocument extends ChatAction { override val name = super.name }
+  case object FindLocation   extends ChatAction { override val name = super.name }
 }

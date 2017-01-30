@@ -17,8 +17,6 @@
 package com.github.nikdon.telepooz.model.inline
 
 import com.github.nikdon.telepooz.model.{Location, User}
-import com.github.nikdon.telepooz.tags.{MessageId, ResultId}
-import shapeless.tag.@@
 
 
 /**
@@ -32,8 +30,8 @@ import shapeless.tag.@@
   *                           to edit the message.
   * @param query              The query that was used to obtain the result
   */
-case class ChosenInlineQuery(result_id: String @@ ResultId,
+case class ChosenInlineQuery(result_id: String,
                              from: User,
                              location: Option[Location] = None,
-                             inline_message_id: Option[String @@ MessageId] = None,
+                             inline_message_id: Option[String] = None,
                              query: String)

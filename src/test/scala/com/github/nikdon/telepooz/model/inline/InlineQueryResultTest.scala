@@ -1,7 +1,7 @@
 package com.github.nikdon.telepooz.model.inline
 
 import com.github.nikdon.telepooz.helpers.Arbitraries._
-import com.github.nikdon.telepooz.raw.CirceEncoders
+import com.github.nikdon.telepooz.json.CirceEncoders
 import io.circe.Json
 import io.circe.syntax._
 import org.scalatest.prop.GeneratorDrivenPropertyChecks

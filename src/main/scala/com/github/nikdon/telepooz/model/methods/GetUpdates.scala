@@ -16,9 +16,7 @@
 
 package com.github.nikdon.telepooz.model.methods
 
-import com.github.nikdon.telepooz.tags.UpdateId
-import shapeless.tag.@@
-
+import com.github.nikdon.telepooz.model.{Response, Update}
 
 /**
   * Use this method to receive incoming updates using long polling (wiki). An Array of Update objects is returned.
@@ -31,7 +29,15 @@ import shapeless.tag.@@
   *                 will forgotten.
   * @param limit    Limits the number of updates to be retrieved. Values between 1—100 are accepted. Defaults to 100.
   * @param timeout  Timeout in seconds for long polling. Defaults to 0, i.e. usual short polling
+  * @param allowed_updates List the types of updates you want your bot to receive. For example, specify
+  *                        [“message”, “edited_channel_post”, “callback_query”] to only receive updates of these types.
+  *                        See Update for a complete list of available update types.
+  *                        Specify an empty list to receive all updates regardless of type (default).
+  *                        If not specified, the previous setting will be used.
   */
-case class GetUpdates(offset: Option[Long @@ UpdateId] = None,
-                      limit: Option[Int] = Some(100),
-                      timeout: Option[Int] = Some(0))
+case class GetUpdates(
+    offset: Option[Long] = None,
+    limit: Option[Int] = Some(100),
+    timeout: Option[Int] = Some(0),
+    allowed_updates: Option[List[String]] = None
+) extends Method[Response[Vector[Update]]]

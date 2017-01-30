@@ -6,7 +6,7 @@ import com.github.nikdon.telepooz.model.EqInstances._
 import com.github.nikdon.telepooz.model._
 import com.github.nikdon.telepooz.model.inline.AnswerInlineQuery
 import com.github.nikdon.telepooz.model.methods._
-import com.github.nikdon.telepooz.raw.{CirceDecoders, CirceEncoders}
+import com.github.nikdon.telepooz.json.{CirceDecoders, CirceEncoders}
 
 class ModelSuite extends CirceSuite with CirceDecoders with CirceEncoders {
   checkCodec[Animation]("Animation")
@@ -34,17 +34,17 @@ class ModelSuite extends CirceSuite with CirceDecoders with CirceEncoders {
   checkCodec[Video]("Video")
 
   checkEncodeIsNotNull[AnswerCallbackQuery]("AnswerCallbackQuery")
-  checkEncodeIsNotNull[EditMessageCaption[Long]]("EditMessageCaption")
-  checkEncodeIsNotNull[EditMessageReplyMarkup[Long]]("EditMessageReplyMarkup")
-  checkEncodeIsNotNull[EditMessageText[Long]]("EditMessageText")
-  checkEncodeIsNotNull[ForwardMessage[Long, Long]]("ForwardMessage")
-  checkEncodeIsNotNull[GetChatAdministrators[Long]]("GetChatAdministrators")
-  checkEncodeIsNotNull[GetChatMembersCount[Long]]("GetChatMembersCount")
-  checkEncodeIsNotNull[GetChatMember[Long]]("GetChatMember")
-  checkEncodeIsNotNull[GetChat[Long]]("GetChat")
+  checkEncodeIsNotNull[EditMessageCaption]("EditMessageCaption")
+  checkEncodeIsNotNull[EditMessageReplyMarkup]("EditMessageReplyMarkup")
+  checkEncodeIsNotNull[EditMessageText]("EditMessageText")
+  checkEncodeIsNotNull[ForwardMessage]("ForwardMessage")
+  checkEncodeIsNotNull[GetChatAdministrators]("GetChatAdministrators")
+  checkEncodeIsNotNull[GetChatMembersCount]("GetChatMembersCount")
+  checkEncodeIsNotNull[GetChatMember]("GetChatMember")
+  checkEncodeIsNotNull[GetChat]("GetChat")
   checkEncodeIsNull[GetMe.type]("GetMe")
-  checkEncodeIsNotNull[SendChatAction[Long]]("SendChatAction")
-  checkEncodeIsNotNull[SendMessage[Long]]("SendMessage")
+  checkEncodeIsNotNull[SendChatAction]("SendChatAction")
+  checkEncodeIsNotNull[SendMessage]("SendMessage")
 
   checkEncodeIsNotNull[AnswerInlineQuery]("AnswerInlineQuery")
 }

@@ -21,17 +21,13 @@ import akka.event.LoggingAdapter
 import akka.stream._
 import akka.stream.scaladsl.{Broadcast, Flow, GraphDSL, Merge, Source, ZipWith}
 import cats.implicits._
-import com.github.nikdon.telepooz.ToRawRequest._
-import com.github.nikdon.telepooz.ToRawRequest.syntax._
-import com.github.nikdon.telepooz.api
+import com.github.nikdon.telepooz.api._
 import com.github.nikdon.telepooz.model.{Update, methods}
-import com.github.nikdon.telepooz.tags.syntax._
 import com.typesafe.config.{Config, ConfigFactory}
 
 import scala.collection.immutable
 import scala.concurrent.ExecutionContextExecutor
 import scala.concurrent.duration._
-
 
 class Polling(implicit apiRequestExecutor: ApiRequestExecutor, ec: ExecutionContextExecutor, logger: LoggingAdapter) {
 
@@ -62,18 +58,18 @@ class Polling(implicit apiRequestExecutor: ApiRequestExecutor, ec: ExecutionCont
         methods.GetUpdates()
       case updates ⇒
         logger.debug(s"Received ${updates.length} updates: ${updates.map(_.update_id).mkString(", ")}")
-        val lastUpdate  = updates.maxBy(_.update_id.toInt)
-        val akkUpdateId = (lastUpdate.update_id + 1).updateId
-        methods.GetUpdates(Some(akkUpdateId), Some(limit))
+        val lastUpdate = updates.maxBy(_.update_id.toInt)
+        val ack        = lastUpdate.update_id + 1
+        methods.GetUpdates(Some(ack), Some(limit))
     })
 
     /** Execute a [[methods.GetUpdates]] via the provided api */
-    val D: FlowShape[methods.GetUpdates, immutable.Seq[Update]] = builder.add(Flow[methods.GetUpdates].mapAsync(parallelism) {
-      gu: methods.GetUpdates ⇒
+    val D: FlowShape[methods.GetUpdates, immutable.Seq[Update]] =
+      builder.add(Flow[methods.GetUpdates].mapAsync(parallelism) { gu: methods.GetUpdates ⇒
         logger.debug(s"Executing a GetUpdates request: $gu")
-        val res = api.execute(gu.toRawRequest).foldMap(apiRequestExecutor).map(_.result.fold(Vector.empty[Update])(identity))
+        val res = gu.foldMap(apiRequestExecutor).map(_.result.fold(Vector.empty[Update])(identity))
         res
-    })
+      })
 
     /** Merge two input streams of [[methods.GetUpdates]]. Created because of the initial producer [[A]] */
     val F: UniformFanInShape[methods.GetUpdates, methods.GetUpdates] = builder.add(Merge[methods.GetUpdates](2))

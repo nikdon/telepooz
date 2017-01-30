@@ -20,14 +20,10 @@ import akka.Done
 import akka.event.LoggingAdapter
 import akka.stream.scaladsl.Sink
 import cats.implicits._
-import com.github.nikdon.telepooz.ToRawRequest.syntax._
-import com.github.nikdon.telepooz.api
+import com.github.nikdon.telepooz.api._
 import com.github.nikdon.telepooz.model.{methods, _}
-import com.github.nikdon.telepooz.raw.CirceEncoders
-import com.github.nikdon.telepooz.tags.MessageId
-import com.github.nikdon.telepooz.tags.syntax._
+import com.github.nikdon.telepooz.json.CirceEncoders
 import com.typesafe.config.{Config, ConfigFactory}
-import shapeless.tag._
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -94,11 +90,11 @@ abstract class Reactor(implicit are: ApiRequestExecutor, ec: ExecutionContext, l
             parseMode: Option[ParseMode] = None,
             disableWebPagePreview: Option[Boolean] = None,
             disableNotification: Option[Boolean] = None,
-            replyToMessageId: Option[Long @@ MessageId] = None,
+            replyToMessageId: Option[Long] = None,
             replyMarkup: Option[ReplyMarkup] = Some(ReplyKeyboardHide(hide_keyboard = true, None)))(
       implicit message: Message): Future[Response[Message]] = {
     val m = methods.SendMessage(
-      message.chat.id.toString.chatId,
+      message.chat.id,
       text = text,
       parse_mode = parseMode,
       disable_web_page_preview = disableWebPagePreview,
@@ -106,7 +102,7 @@ abstract class Reactor(implicit are: ApiRequestExecutor, ec: ExecutionContext, l
       reply_to_message_id = replyToMessageId,
       reply_markup = replyMarkup
     )
-    api.execute(m.toRawRequest).foldMap(are)
+    m.foldMap(are)
   }
 
 }

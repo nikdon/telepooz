@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+## [0.4.0] 2017-01-30
+
+- remove shapeless tags and simplify models
+- fix json encoder errors
+- update to December's api changes
+- shift to scala 2.12
+- update dependencies to the current state
+- update readme to last changes
+- refactor api calls (remove redundant calls of **Free** fns instead of plain `_.lift`)
+
 ## [0.3.6] 2017-01-07
 
 - fix incorrect construction of jsons for request api

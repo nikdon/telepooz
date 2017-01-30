@@ -17,7 +17,6 @@
 package com.github.nikdon.telepooz.model
 
 import cats.Eq
-import com.github.nikdon.telepooz.IsResourceId
 import com.github.nikdon.telepooz.model.inline.AnswerInlineQuery
 import com.github.nikdon.telepooz.model.methods._
 
@@ -50,18 +49,18 @@ object EqInstances {
   implicit val eqVoice: Eq[Voice]                               = Eq.fromUniversalEquals
   implicit val eqVideo: Eq[Video]                               = Eq.fromUniversalEquals
 
-  implicit val eqAnswerCallbackQuery: Eq[AnswerCallbackQuery]                               = Eq.fromUniversalEquals
-  implicit def eqEditMessageCaption[A: IsResourceId]: Eq[EditMessageCaption[A]]             = Eq.fromUniversalEquals
-  implicit def eqEditMessageReplyMarkup[A: IsResourceId]: Eq[EditMessageReplyMarkup[A]]     = Eq.fromUniversalEquals
-  implicit def eqEditMessageText[A: IsResourceId]: Eq[EditMessageText[A]]                   = Eq.fromUniversalEquals
-  implicit def eqForwardMessage[A: IsResourceId, B: IsResourceId]: Eq[ForwardMessage[A, B]] = Eq.fromUniversalEquals
-  implicit def eqGetChatAdministrators[A: IsResourceId]: Eq[GetChatAdministrators[A]]       = Eq.fromUniversalEquals
-  implicit def eqGetChatMembersCount[A: IsResourceId]: Eq[GetChatMembersCount[A]]           = Eq.fromUniversalEquals
-  implicit def eqGetChatMember[A: IsResourceId]: Eq[GetChatMember[A]]                       = Eq.fromUniversalEquals
-  implicit def eqGetChat[A: IsResourceId]: Eq[GetChat[A]]                                   = Eq.fromUniversalEquals
-  implicit val eqGetMe: Eq[GetMe.type]                                                      = Eq.fromUniversalEquals
-  implicit def eqSendChatAction[A: IsResourceId]: Eq[SendChatAction[A]]                     = Eq.fromUniversalEquals
-  implicit def eqSendMessage[A: IsResourceId]: Eq[SendMessage[A]]                           = Eq.fromUniversalEquals
+  implicit val eqAnswerCallbackQuery: Eq[AnswerCallbackQuery]       = Eq.fromUniversalEquals
+  implicit val eqEditMessageCaption: Eq[EditMessageCaption]         = Eq.fromUniversalEquals
+  implicit val eqEditMessageReplyMarkup: Eq[EditMessageReplyMarkup] = Eq.fromUniversalEquals
+  implicit val eqEditMessageText: Eq[EditMessageText]               = Eq.fromUniversalEquals
+  implicit val eqForwardMessage: Eq[ForwardMessage]                 = Eq.fromUniversalEquals
+  implicit val eqGetChatAdministrators: Eq[GetChatAdministrators]   = Eq.fromUniversalEquals
+  implicit val eqGetChatMembersCount: Eq[GetChatMembersCount]       = Eq.fromUniversalEquals
+  implicit val eqGetChatMember: Eq[GetChatMember]                   = Eq.fromUniversalEquals
+  implicit val eqGetChat: Eq[GetChat]                               = Eq.fromUniversalEquals
+  implicit val eqGetMe: Eq[GetMe.type]                              = Eq.fromUniversalEquals
+  implicit val eqSendChatAction: Eq[SendChatAction]                 = Eq.fromUniversalEquals
+  implicit val eqSendMessage: Eq[SendMessage]                       = Eq.fromUniversalEquals
 
-  implicit def eqAnswerInlineQuery: Eq[AnswerInlineQuery] = Eq.fromUniversalEquals
+  implicit val eqAnswerInlineQuery: Eq[AnswerInlineQuery] = Eq.fromUniversalEquals
 }

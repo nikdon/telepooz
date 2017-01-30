@@ -16,10 +16,7 @@
 
 package com.github.nikdon.telepooz.model.methods
 
-import com.github.nikdon.telepooz.IsResourceId
-import com.github.nikdon.telepooz.tags.{ChatId, MessageId}
-import shapeless.tag.@@
-
+import com.github.nikdon.telepooz.model.{Message, Response}
 
 /**
   * Use this method to forward messages of any kind. On success, the sent Message is returned.
@@ -32,7 +29,9 @@ import shapeless.tag.@@
   * @param disable_notification Sends the message silently. iOS users will not receive a notification, Android users
   *                             will receive a notification with no sound.
   */
-case class ForwardMessage[A: IsResourceId, B: IsResourceId](chat_id: A @@ ChatId,
-                                                            from_chat_id: B @@ ChatId,
-                                                            message_id: Long @@ MessageId,
-                                                            disable_notification: Option[Boolean] = None)
+case class ForwardMessage(
+    chat_id: String,
+    from_chat_id: String,
+    message_id: Long,
+    disable_notification: Option[Boolean] = None
+) extends Method[Response[Message]]

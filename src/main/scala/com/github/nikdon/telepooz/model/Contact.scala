@@ -16,9 +16,6 @@
 
 package com.github.nikdon.telepooz.model
 
-import com.github.nikdon.telepooz.tags.UserId
-import shapeless.tag.@@
-
 
 /**
   * This object represents a phone contact.
@@ -31,4 +28,4 @@ import shapeless.tag.@@
 case class Contact(phone_number: String,
                    first_name: String,
                    last_name: Option[String],
-                   user_id: Option[Int @@ UserId])
+                   user_id: Option[Int])

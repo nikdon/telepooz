@@ -7,24 +7,11 @@ import com.github.nikdon.telepooz.model.MessageEntityType._
 import com.github.nikdon.telepooz.model._
 import com.github.nikdon.telepooz.model.inline.{ChosenInlineQuery, _}
 import com.github.nikdon.telepooz.model.methods._
-import com.github.nikdon.telepooz.tags._
-import com.github.nikdon.telepooz.{IsResourceId, tags}
 import org.scalacheck.Arbitrary._
 import org.scalacheck.{Arbitrary, Gen}
-import shapeless.tag._
 
 
-object Arbitraries extends tags.Syntax {
-
-  /** [[tags]] */
-  implicit def chatIdArb[A: IsResourceId: Arbitrary]: Arbitrary[A @@ ChatId] = Arbitrary(arbitrary[A].map(_.chatId))
-  implicit def fileIdArb[A: IsResourceId : Arbitrary]: Arbitrary[A @@ FileId] = Arbitrary(arbitrary[A].map(_.fileId))
-  implicit def foursquareIdArv[A: IsResourceId : Arbitrary]: Arbitrary[A @@ FoursquareId] = Arbitrary(arbitrary[A].map(_.foursquareId))
-  implicit def messageIdArb[A: IsResourceId: Arbitrary]: Arbitrary[A @@ MessageId] = Arbitrary(arbitrary[A].map(_.messageId))
-  implicit def resultIdArb[A: IsResourceId: Arbitrary]: Arbitrary[A @@ ResultId] = Arbitrary(arbitrary[A].map(_.resultId))
-  implicit def queryIdArb[A: IsResourceId : Arbitrary]: Arbitrary[A @@ QueryId] = Arbitrary(arbitrary[A].map(_.queryId))
-  implicit def updateIdArb[A: IsResourceId: Arbitrary]: Arbitrary[A @@ UpdateId] = Arbitrary(arbitrary[A].map(_.updateId))
-  implicit def userIdArb[A: IsResourceId: Arbitrary]: Arbitrary[A @@ UserId] = Arbitrary(arbitrary[A].map(_.userId))
+object Arbitraries {
 
   implicit val durationArb: Arbitrary[Duration] = Arbitrary(arbitrary[Int].map(s ⇒ Duration.ofSeconds(s.toLong)))
 
@@ -68,7 +55,7 @@ object Arbitraries extends tags.Syntax {
 
   implicit val messageArb             : Arbitrary[Message]              = {
     val g: Gen[Message] = for {
-      messageId ← arbitrary[Long @@ MessageId]
+      messageId ← arbitrary[Long]
       date ← arbitrary[Date]
       chat ← arbitrary[Chat]
       from ← arbitrary[Option[User]]
@@ -97,8 +84,8 @@ object Arbitraries extends tags.Syntax {
       groupChatCreated ← arbitrary[Option[Boolean]]
       superGroupChatCreated ← arbitrary[Option[Boolean]]
       channelChatCreated ← arbitrary[Option[Boolean]]
-      migrateToChatId ← arbitrary[Option[Long @@ ChatId]]
-      migrateFromChatId ← arbitrary[Option[Long @@ ChatId]]
+      migrateToChatId ← arbitrary[Option[Long]]
+      migrateFromChatId ← arbitrary[Option[Long]]
       pinnedMessage ← arbitrary[Option[Message]]
     } yield Message(
       messageId, date, chat, from, forwardFrom, forwardFromChat, forwardDate, replyToMessage, text, entities, audio,
@@ -180,21 +167,21 @@ object Arbitraries extends tags.Syntax {
   ))
 
   /** Methods */
-  implicit val getMeArb                : Arbitrary[GetMe.type]                  = Arbitrary(Gen.const(GetMe))
-  implicit val sendMessageArb          : Arbitrary[SendMessage[Long]]           = Arbitrary(Gen.resultOf(SendMessage[Long] _))
-  implicit val forwardMessageArb       : Arbitrary[ForwardMessage[Long, Long]]  = Arbitrary(Gen.resultOf(ForwardMessage[Long, Long] _))
-  implicit val answerCallbackQueryArb  : Arbitrary[AnswerCallbackQuery]         = Arbitrary(Gen.resultOf(AnswerCallbackQuery))
-  implicit val getChatAdministratorsArb: Arbitrary[GetChatAdministrators[Long]] = Arbitrary(Gen.resultOf(GetChatAdministrators[Long] _))
-  implicit val getChatMembersCountArb  : Arbitrary[GetChatMembersCount[Long]]   = Arbitrary(Gen.resultOf(GetChatMembersCount[Long] _))
-  implicit val getChatMemberArb        : Arbitrary[GetChatMember[Long]]         = Arbitrary(Gen.resultOf(GetChatMember[Long] _))
-  implicit val getChatArb              : Arbitrary[GetChat[Long]]               = Arbitrary(Gen.resultOf(GetChat[Long] _))
-  implicit val chatActionArb           : Arbitrary[ChatAction]                  = Arbitrary(Gen.oneOf(
+  implicit val getMeArb                : Arbitrary[GetMe.type]            = Arbitrary(Gen.const(GetMe))
+  implicit val sendMessageArb          : Arbitrary[SendMessage]           = Arbitrary(Gen.resultOf(SendMessage.apply _))
+  implicit val forwardMessageArb       : Arbitrary[ForwardMessage]        = Arbitrary(Gen.resultOf(ForwardMessage.apply _))
+  implicit val answerCallbackQueryArb  : Arbitrary[AnswerCallbackQuery]   = Arbitrary(Gen.resultOf(AnswerCallbackQuery))
+  implicit val getChatAdministratorsArb: Arbitrary[GetChatAdministrators] = Arbitrary(Gen.resultOf(GetChatAdministrators.apply _))
+  implicit val getChatMembersCountArb  : Arbitrary[GetChatMembersCount]   = Arbitrary(Gen.resultOf(GetChatMembersCount.apply _))
+  implicit val getChatMemberArb        : Arbitrary[GetChatMember]         = Arbitrary(Gen.resultOf(GetChatMember.apply _))
+  implicit val getChatArb              : Arbitrary[GetChat]               = Arbitrary(Gen.resultOf(GetChat.apply _))
+  implicit val chatActionArb           : Arbitrary[ChatAction]            = Arbitrary(Gen.oneOf(
     ChatAction.Typing, ChatAction.UploadPhoto, ChatAction.RecordVideo, ChatAction.UploadVideo,
     ChatAction.RecordAudio, ChatAction.UploadAudio, ChatAction.UploadDocument, ChatAction.FindLocation
   ))
-  implicit val sendChatActionArb       : Arbitrary[SendChatAction[Long]]        = Arbitrary(Gen.resultOf(SendChatAction[Long] _))
+  implicit val sendChatActionArb       : Arbitrary[SendChatAction]        = Arbitrary(Gen.resultOf(SendChatAction.apply _))
 
-  implicit val editMessageTextArb: Arbitrary[EditMessageText[Long]] = Arbitrary(Gen.resultOf(EditMessageText[Long] _))
-  implicit val editMessageCaptionArb: Arbitrary[EditMessageCaption[Long]] = Arbitrary(Gen.resultOf(EditMessageCaption[Long] _))
-  implicit val editMessageReplyMarkupArb: Arbitrary[EditMessageReplyMarkup[Long]] = Arbitrary(Gen.resultOf(EditMessageReplyMarkup[Long] _))
+  implicit val editMessageTextArb: Arbitrary[EditMessageText] = Arbitrary(Gen.resultOf(EditMessageText.apply _))
+  implicit val editMessageCaptionArb: Arbitrary[EditMessageCaption] = Arbitrary(Gen.resultOf(EditMessageCaption.apply _))
+  implicit val editMessageReplyMarkupArb: Arbitrary[EditMessageReplyMarkup] = Arbitrary(Gen.resultOf(EditMessageReplyMarkup.apply _))
 }

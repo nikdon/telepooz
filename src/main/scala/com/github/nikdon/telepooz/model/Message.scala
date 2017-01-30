@@ -18,9 +18,6 @@ package com.github.nikdon.telepooz.model
 
 import java.util.Date
 
-import com.github.nikdon.telepooz.tags.{ChatId, MessageId}
-import shapeless.tag.@@
-
 
 /**
   * This object represents a message.
@@ -59,7 +56,7 @@ import shapeless.tag.@@
   * @param pinned_message           Specified message was pinned. Note that the Message object in this field
   *                                 will not contain further reply_to_message fields even if it is itself a reply.
   */
-case class Message(message_id: Long @@ MessageId,
+case class Message(message_id: Long,
                    date: Date,
                    chat: Chat,
                    from: Option[User] = None,
@@ -88,6 +85,6 @@ case class Message(message_id: Long @@ MessageId,
                    group_chat_created: Option[Boolean] = None,
                    supergroup_chat_created: Option[Boolean] = None,
                    channel_chat_created: Option[Boolean] = None,
-                   migrate_to_chat_id: Option[Long @@ ChatId] = None,
-                   migrate_from_chat_id: Option[Long @@ ChatId] = None,
+                   migrate_to_chat_id: Option[Long] = None,
+                   migrate_from_chat_id: Option[Long] = None,
                    pinned_message: Option[Message] = None)

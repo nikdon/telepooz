@@ -16,9 +16,6 @@
 
 package com.github.nikdon.telepooz.model
 
-import com.github.nikdon.telepooz.tags.FileId
-import shapeless.tag.@@
-
 
 /**
   * This object represents a file ready to be downloaded. The file can be downloaded via the link
@@ -29,6 +26,6 @@ import shapeless.tag.@@
   * @param file_size File size, if known
   * @param file_path File path. Use [[https://api.telegram.org/file/bot<token>/<file_path>]] to get the file.
   */
-case class File(file_id: String @@ FileId,
+case class File(file_id: String,
                 file_size: Option[Int] = None,
                 file_path: Option[String] = None)
