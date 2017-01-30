@@ -41,10 +41,15 @@ trait CirceEncoders {
 
   implicit val callbackGameEncoder: Encoder[CallbackGame] = deriveEncoder[CallbackGame]
 
-  implicit val chatTypeEncoder: Encoder[ChatType]         = Encoder[String].contramap[ChatType](_.productPrefix)
-  implicit val chatEncoder: Encoder[Chat]                 = deriveEncoder[Chat]
-  implicit val memberStatusEncoder: Encoder[MemberStatus] = Encoder[String].contramap[MemberStatus](_.productPrefix)
-  implicit val chatMemberEncoder: Encoder[ChatMember]     = deriveEncoder[ChatMember]
+  implicit val chatTypeEncoder: Encoder[ChatType] =
+    Encoder[String].contramap[ChatType](e => snakenize(e.productPrefix))
+
+  implicit val chatEncoder: Encoder[Chat] = deriveEncoder[Chat]
+
+  implicit val memberStatusEncoder: Encoder[MemberStatus] =
+    Encoder[String].contramap[MemberStatus](e => snakenize(e.productPrefix))
+
+  implicit val chatMemberEncoder: Encoder[ChatMember] = deriveEncoder[ChatMember]
 
   implicit val contactEncoder: Encoder[Contact]   = deriveEncoder[Contact]
   implicit val documentEncoder: Encoder[Document] = deriveEncoder[Document]
@@ -61,10 +66,12 @@ trait CirceEncoders {
   implicit val messageEncoder: Encoder[Message] = deriveEncoder[Message]
 
   implicit val messageEntityTypeEncoder: Encoder[MessageEntityType] =
-    Encoder[String].contramap[MessageEntityType](e ⇒ snakenize { e.productPrefix })
+    Encoder[String].contramap[MessageEntityType](e ⇒ snakenize(e.productPrefix))
+
   implicit val messageEntityEncoder: Encoder[MessageEntity] = deriveEncoder[MessageEntity]
 
-  implicit val parseModeEncoder: Encoder[ParseMode] = Encoder[String].contramap[ParseMode](_.productPrefix)
+  implicit val parseModeEncoder: Encoder[ParseMode] =
+    Encoder[String].contramap[ParseMode](e => snakenize(e.productPrefix))
 
   implicit val photoSizeEncoder: Encoder[PhotoSize] = deriveEncoder[PhotoSize]
 
@@ -84,7 +91,7 @@ trait CirceEncoders {
   implicit val updateEncoder: Encoder[Update]                       = deriveEncoder[Update]
 
   // Inline
-  implicit val inlineQueryEncoder: Encoder[inline.InlineQuery]              = deriveEncoder[inline.InlineQuery]
+  implicit val inlineQueryEncoder: Encoder[inline.InlineQuery]             = deriveEncoder[inline.InlineQuery]
   implicit val chosenInlineQueryEncoder: Encoder[inline.ChosenInlineQuery] = deriveEncoder[inline.ChosenInlineQuery]
   implicit val inputContactMessageContentEncoder: Encoder[inline.InputContactMessageContent] =
     deriveEncoder[inline.InputContactMessageContent]
@@ -168,8 +175,10 @@ trait CirceEncoders {
   implicit val sendGameEncoder: Encoder[SendGame]                   = deriveEncoder[SendGame]
   implicit val setGameScoreEncoder: Encoder[SetGameScore]           = deriveEncoder[SetGameScore]
   implicit val getGameHighScoresEncoder: Encoder[GetGameHighScores] = deriveEncoder[GetGameHighScores]
+
   implicit val chatActionEncoder: Encoder[ChatAction] =
-    Encoder[String].contramap[ChatAction](e ⇒ snakenize { e.productPrefix })
+    Encoder[String].contramap[ChatAction](e ⇒ snakenize(e.productPrefix))
+
   implicit val sendChatActionEncoder: Encoder[SendChatAction]               = deriveEncoder[SendChatAction]
   implicit val getUserProfilePhotosEncoder: Encoder[GetUserProfilePhotos]   = deriveEncoder[GetUserProfilePhotos]
   implicit val getFileEncoder: Encoder[GetFile]                             = deriveEncoder[GetFile]

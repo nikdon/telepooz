@@ -22,12 +22,12 @@ import com.github.nikdon.telepooz._
 /**
   * This object represents a chat.
   *
-  * @param id         Unique identifier for this chat, not exceeding 1e13 by absolute value
-  * @param `type`     Type of chat, can be either “private”, “group”, “supergroup” or “channel”
-  * @param title      Title, for channels and group chats
-  * @param username   Username, for private chats and channels if available
-  * @param first_name First name of the other party in a private chat
-  * @param last_name  Last name of the other party in a private chat
+  * @param id                     Unique identifier for this chat, not exceeding 1e13 by absolute value
+  * @param `type`                 Type of chat, can be either “private”, “group”, “supergroup” or “channel”
+  * @param title                  Title, for channels and group chats
+  * @param username               Username, for private chats and channels if available
+  * @param first_name             First name of the other party in a private chat
+  * @param last_name              Last name of the other party in a private chat
   * @param all_members_are_admins True if a group has ‘All Members Are Admins’ enabled.
   */
 case class Chat(
