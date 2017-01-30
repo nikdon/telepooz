@@ -3,7 +3,7 @@
 [![codecov](https://codecov.io/gh/nikdon/telepooz/branch/master/graph/badge.svg)](https://codecov.io/gh/nikdon/telepooz)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/42eedce6ec0d4c03bab471f610020aec)](https://www.codacy.com/app/nd/telepooz?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=nikdon/telepooz&amp;utm_campaign=Badge_Grade)
 [![](https://jitpack.io/v/nikdon/telepooz.svg)](https://jitpack.io/#nikdon/telepooz)
-[![Telegram API](https://img.shields.io/badge/Telegram%20API-October%203%2C%202016-green.svg)](https://core.telegram.org/bots/api#recent-changes)
+[![Telegram API](https://img.shields.io/badge/Telegram%20API-December%204%2C%202016-green.svg)](https://core.telegram.org/bots/api#recent-changes)
 
 telepooz is a scala wrapper for **[Telegram Bot API][telegram-api]**.
 
@@ -16,11 +16,11 @@ telepooz is a scala wrapper for **[Telegram Bot API][telegram-api]**.
 
 ## Quick start
 
-telepooz built for scala-2.11. To use it add following to build file:
+telepooz built for **scala-2.12**. To use it add following to build file:
 
 ```scala
 resolvers += "jitpack" at "https://jitpack.io"
-libraryDependencies += "com.github.nikdon" % "telepooz" % "0.3.6"
+libraryDependencies += "com.github.nikdon" % "telepooz" % "0.4.0"
 ```
 
 And configure telepooz via the `reference.conf` or `aplication.conf` or by, for ex., env variables:
@@ -50,15 +50,19 @@ telegram {
 ## Why?
 
 The only one reason to write was curiosity. Telepooz written on top of **[Akka Streams][akka]** with intention to 
-maximize using of functional abstractions provided by **[cats][cats]** and [shapeless][shapeless]. For example, API 
+maximize using of functional abstractions provided by **[cats][cats]**. For example, API 
 requests are composable:
 
 ```scala
-// def execute[F[_], R](m: F[R]): Free[F, R] = m.step
+import com.github.nikdon.telepooz.api._
+import com.github.nikdon.telepooz.model.methods
+import com.github.nikdon.telepooz.engine.ApiRequestExecutor
+
+val apiRequestExecutor = new ApiRequestExecutor() {}
 
 val req = for {
-  a ← api.execute(model.methods.GetMe.toRawRequest)
-  b ← api.execute(model.methods.SendMessage(123L.chatId, a.result.fold("empty")(_.first_name)).toRawRequest)
+  a ← methods.GetMe
+  b ← methods.SendMessage("abc", a.result.fold("empty")(_.first_name))
 } yield b
 
 val res = req.foldMap(apiRequestExecutor)
@@ -87,12 +91,14 @@ for `instance.run(...)` with all three components described above.
 
 ```scala
 /** Just an example of how the bot might look like */
+import com.github.nikdon.telepooz.engine._
+
 object NaiveBot extends Telepooz with App {
 
   implicit val are = new ApiRequestExecutor {}
   val poller       = new Polling
   val reactor      = new Reactor {
-    val reactions = Reactions()
+    val reactions = CommandBasedReactions()
       .on("/start")(implicit message ⇒ args ⇒ reply("You are started!"))
       .on("/test")(implicit message ⇒ args ⇒ reply("Hi there!"))
   }
