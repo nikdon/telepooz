@@ -67,6 +67,9 @@ class ExecutorSpec
       _ ← methods.EditMessageReplyMarkup("123L", 333L, "bb")
       _ ← methods.EditMessageCaption("123L", 333L, "aa")
       _ ← methods.EditMessageText("123L", 333L, "cc", "TEST")
+      _ <- methods.GetWebhookInfo
+      _ <- methods.SetGameScore(123L, 100500, "game_chat_id")
+      _ <- methods.GetGameHighScores(123L)
     } yield b
 
     val res = req.foldMap(mockApiReqExe)
