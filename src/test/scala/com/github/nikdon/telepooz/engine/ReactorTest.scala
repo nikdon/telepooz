@@ -1,5 +1,7 @@
 package com.github.nikdon.telepooz.engine
 
+import java.time.Instant
+
 import akka.Done
 import akka.actor.ActorSystem
 import akka.event.Logging
@@ -18,7 +20,6 @@ import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContextExecutor, Future}
-
 
 class ReactorTest
     extends FlatSpec
@@ -56,7 +57,8 @@ class ReactorTest
     val probe = TestProbe()
 
     val triggeringReactor = new Reactor() {
-      val reactions = CommandBasedReactions().on("/test")(implicit message ⇒ args ⇒ Future.successful("test") pipeTo probe.ref)
+      val reactions =
+        CommandBasedReactions().on("/test")(implicit message ⇒ args ⇒ Future.successful("test") pipeTo probe.ref)
     }
 
     forAll { (update: Update, message: Message) ⇒
@@ -100,7 +102,8 @@ class ReactorTest
     val probe = TestProbe()
 
     val triggeringReactor = new Reactor() {
-      val reactions = CommandBasedReactions().on("/test")(implicit message ⇒ args ⇒ Future.successful("test") pipeTo probe.ref)
+      val reactions =
+        CommandBasedReactions().on("/test")(implicit message ⇒ args ⇒ Future.successful("test") pipeTo probe.ref)
     }
 
     val update = arbitrary[Update].sample.get
@@ -111,6 +114,25 @@ class ReactorTest
     whenReady(future) { res ⇒
       res shouldBe Done
       probe.expectNoMsg(100.millis)
+    }
+  }
+
+  it should "provide helper reply method" in {
+    val reactor = new Reactor() {
+      val reactions: CommandBasedReactions = CommandBasedReactions()
+    }
+
+    implicit val m = Message(123L, java.util.Date.from(Instant.now), Chat("100500", ChatType.Channel))
+
+    val f = reactor.reply("test")
+
+    whenReady(f) { res =>
+      res shouldBe a[Response[_]]
+      res.result shouldBe a[Option[_]]
+      res.result.foreach { m =>
+        m.text shouldBe "test"
+        m.message_id shouldBe 123L
+      }
     }
   }
 
