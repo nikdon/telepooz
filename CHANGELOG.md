@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## [0.4.1] 2017-02-11
+
+- update akka to 2.4.17
+
 ## [0.4.0] 2017-01-30
 
 - remove shapeless tags and simplify models
