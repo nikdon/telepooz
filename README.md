@@ -124,3 +124,6 @@ limitations under the License.
 [shapeless]: https://github.com/milessabin/shapeless
 [telegram-api]: https://core.telegram.org/bots/api
 [webhooks]: https://core.telegram.org/bots/api#getting-updates
+
+
+[![Analytics](https://ga-beacon.appspot.com/UA-91956314-1/telepooz/readme?pixel)](https://github.com/igrigorik/ga-beacon)
