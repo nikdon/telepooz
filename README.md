@@ -20,7 +20,7 @@ telepooz built for **scala-2.12**. To use it add following to build file:
 
 ```scala
 resolvers += "jitpack" at "https://jitpack.io"
-libraryDependencies += "com.github.nikdon" % "telepooz" % "0.4.1"
+libraryDependencies += "com.github.nikdon" % "telepooz" % "0.4.2"
 ```
 
 And configure telepooz via the `reference.conf` or `aplication.conf` or by, for ex., env variables:
