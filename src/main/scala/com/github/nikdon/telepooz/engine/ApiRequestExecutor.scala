@@ -27,7 +27,7 @@ import com.github.nikdon.telepooz.model._
 import com.github.nikdon.telepooz.model.methods._
 import com.github.nikdon.telepooz.json._
 import com.typesafe.config.{Config, ConfigFactory}
-import de.heikoseeberger.akkahttpcirce.CirceSupport
+import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
 import io.circe.syntax._
 import io.circe.{Decoder, Json, JsonObject}
 
@@ -37,7 +37,7 @@ abstract class ApiRequestExecutor(implicit system: ActorSystem,
                                   materializer: Materializer,
                                   ec: ExecutionContextExecutor)
     extends (Method ~> Future)
-    with CirceSupport
+    with FailFastCirceSupport
     with CirceEncoders
     with CirceDecoders {
 
@@ -65,7 +65,7 @@ abstract class ApiRequestExecutor(implicit system: ActorSystem,
     val body = RequestBuilding.Post(Uri(uri), content = data)
     for {
       response <- http.singleRequest(body)
-      decoded  <- circeUnmarshaller(responseDecoder).apply(response.entity)
+      decoded  <- unmarshaller(responseDecoder).apply(response.entity)
     } yield decoded
   }
 
