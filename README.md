@@ -12,7 +12,8 @@ telepooz is a scala wrapper for **[Telegram Bot API][telegram-api]**.
 1. [Quick start](#quick-start)
 2. [Why?](#why)
 3. [Usage](#usage)
-4. [License](#license)
+4. [Contributors and participation](#contribution-and-participation)
+5. [License](#license)
 
 ## Quick start
 
@@ -107,9 +108,21 @@ object NaiveBot extends Telepooz with App {
 }
 ```
 
+## Contributors and participation
+
+* [Nikolay Donets](https://github.com/nikdon)
+
+**telepooz** support the [Typelevel][typelevel] [code of conduct][code-of-conduct], 
+contributions are always welcome. Good ways to contribute include:
+
+ * Raising bugs and feature requests,
+ * Fixing bugs and developing new features (I will attempt to merge in pull requests ASAP),
+ * Improving the performance of **telepooz**,
+ * Provide examples of bots.
+
 ## License
 
-telepooz is licensed under the **[Apache License, Version 2.0][apache]** (the "License"); 
+**telepooz** is licensed under the **[Apache License, Version 2.0][apache]** (the "License"); 
 you may not use this software except in compliance with the License.
 
 Unless required by applicable law or agreed to in writing, software
@@ -121,8 +134,10 @@ limitations under the License.
 [akka]: https://github.com/akka/akka
 [apache]: http://www.apache.org/licenses/LICENSE-2.0
 [cats]: https://github.com/typelevel/cats
+[code-of-conduct]: http://typelevel.org/conduct.html
 [shapeless]: https://github.com/milessabin/shapeless
 [telegram-api]: https://core.telegram.org/bots/api
+[typelevel]: http://typelevel.org/
 [webhooks]: https://core.telegram.org/bots/api#getting-updates
 
 
