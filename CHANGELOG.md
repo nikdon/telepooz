@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## [0.4.3] 2017-03-09
+
+- update akka-http-json to 1.13.0 - using `FailFastCirceSupport`
+
 ## [0.4.2] 2017-02-11
 
 - update akka-http to 10.0.4

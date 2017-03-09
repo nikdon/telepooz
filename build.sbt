@@ -45,7 +45,7 @@ buildSettings ++ baseSettings
 
 lazy val akkaVersion      = "2.4.17"
 lazy val akkaHttpV        = "10.0.4"
-lazy val akkaHttpJsonV    = "1.12.0"
+lazy val akkaHttpJsonV    = "1.13.0"
 lazy val catsV            = "0.9.0"
 lazy val circeVersion     = "0.7.0"
 lazy val shapelessVersion = "2.3.2"
