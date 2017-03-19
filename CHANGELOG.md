@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## [0.4.4] 2017-03-19
+
+- update akka-http to 10.0.5
+- update scalacheck to 1.13.5
+
 ## [0.4.3] 2017-03-09
 
 - update akka-http-json to 1.13.0 - using `FailFastCirceSupport`
