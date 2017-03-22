@@ -5,7 +5,7 @@
 [![](https://jitpack.io/v/nikdon/telepooz.svg)](https://jitpack.io/#nikdon/telepooz)
 [![Telegram API](https://img.shields.io/badge/Telegram%20API-December%204%2C%202016-green.svg)](https://core.telegram.org/bots/api#recent-changes)
 
-telepooz is a scala wrapper for **[Telegram Bot API][telegram-api]**.
+**telepooz** is a scala wrapper for **[Telegram Bot API][telegram-api]**.
 
 ## Table of contents
 
@@ -21,7 +21,7 @@ telepooz built for **scala-2.12**. To use it add following to build file:
 
 ```scala
 resolvers += "jitpack" at "https://jitpack.io"
-libraryDependencies += "com.github.nikdon" % "telepooz" % "0.4.4"
+libraryDependencies += "com.github.nikdon" % "telepooz" % "0.4.5"
 ```
 
 And configure telepooz via the `reference.conf` or `aplication.conf` or by, for ex., env variables:
