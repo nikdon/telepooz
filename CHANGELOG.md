@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## [0.4.6] 2017-05-22
+
+- update akka to 2.5.0
+- update akka-http-json to 1.15.0
+- update circe to 7.0.1
+
 ## [0.4.5] 2017-03-23
 
 - update akka-http-json to 1.14.0
