@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-## [0.4.6] 2017-04-16
+## [0.4.6] 2017-05-22
 
 - update akka to 2.5.0
 - update akka-http-json to 1.15.0
