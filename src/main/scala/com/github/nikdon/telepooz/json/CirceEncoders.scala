@@ -21,6 +21,8 @@ import java.util.Date
 
 import com.github.nikdon.telepooz.model._
 import com.github.nikdon.telepooz.model.methods._
+import com.github.nikdon.telepooz.model.methods.payments.{AnswerPreCheckoutQuery, AnswerShippingQuery, SendInvoice}
+import com.github.nikdon.telepooz.model.payments._
 import com.github.nikdon.telepooz.utils._
 import io.circe.Encoder
 import io.circe.generic.extras._
@@ -87,7 +89,19 @@ trait CirceEncoders {
   implicit val userProfilePhotosEncoder: Encoder[UserProfilePhotos] = deriveEncoder[UserProfilePhotos]
   implicit val venueEncoder: Encoder[Venue]                         = deriveEncoder[Venue]
   implicit val videoEncoder: Encoder[Video]                         = deriveEncoder[Video]
+  implicit val videoNoteEncoder: Encoder[VideoNote]                 = deriveEncoder[VideoNote]
   implicit val voiceEncoder: Encoder[Voice]                         = deriveEncoder[Voice]
+
+  // Payments
+  implicit val labeledPriceEncoder: Encoder[LabeledPrice]           = deriveEncoder[LabeledPrice]
+  implicit val invoiceEncoder: Encoder[Invoice]                     = deriveEncoder[Invoice]
+  implicit val shippingAddressEncoder: Encoder[ShippingAddress]     = deriveEncoder[ShippingAddress]
+  implicit val shippingQueryEncoder: Encoder[ShippingQuery]         = deriveEncoder[ShippingQuery]
+  implicit val orderInfoEncoder: Encoder[OrderInfo]                 = deriveEncoder[OrderInfo]
+  implicit val preCheckoutQueryEncoder: Encoder[PreCheckoutQuery]   = deriveEncoder[PreCheckoutQuery]
+  implicit val shippingOptionEncoder: Encoder[ShippingOption]       = deriveEncoder[ShippingOption]
+  implicit val successfulPaymentEncoder: Encoder[SuccessfulPayment] = deriveEncoder[SuccessfulPayment]
+
   implicit val updateEncoder: Encoder[Update]                       = deriveEncoder[Update]
 
   // Inline
@@ -168,6 +182,7 @@ trait CirceEncoders {
   implicit val sendDocumentEncoder: Encoder[SendDocument]           = deriveEncoder[SendDocument]
   implicit val sendStickerEncoder: Encoder[SendSticker]             = deriveEncoder[SendSticker]
   implicit val sendVideoEncoder: Encoder[SendVideo]                 = deriveEncoder[SendVideo]
+  implicit val sendVideoNoteEncoder: Encoder[SendVideoNote]         = deriveEncoder[SendVideoNote]
   implicit val sendVoiceEncoder: Encoder[SendVoice]                 = deriveEncoder[SendVoice]
   implicit val sendLocationEncoder: Encoder[SendLocation]           = deriveEncoder[SendLocation]
   implicit val sendVenueEncoder: Encoder[SendVenue]                 = deriveEncoder[SendVenue]
@@ -175,6 +190,11 @@ trait CirceEncoders {
   implicit val sendGameEncoder: Encoder[SendGame]                   = deriveEncoder[SendGame]
   implicit val setGameScoreEncoder: Encoder[SetGameScore]           = deriveEncoder[SetGameScore]
   implicit val getGameHighScoresEncoder: Encoder[GetGameHighScores] = deriveEncoder[GetGameHighScores]
+
+  // Payment Methods
+  implicit val answerPreCheckoutQueryEncoder: Encoder[AnswerPreCheckoutQuery] = deriveEncoder[AnswerPreCheckoutQuery]
+  implicit val answerShippingQueryEncoder: Encoder[AnswerShippingQuery]       = deriveEncoder[AnswerShippingQuery]
+  implicit val sendInvoiceEncoder: Encoder[SendInvoice]                       = deriveEncoder[SendInvoice]
 
   implicit val chatActionEncoder: Encoder[ChatAction] =
     Encoder[String].contramap[ChatAction](e ⇒ snakenize(e.productPrefix))
@@ -185,6 +205,7 @@ trait CirceEncoders {
   implicit val kickChatMemberEncoder: Encoder[KickChatMember]               = deriveEncoder[KickChatMember]
   implicit val leaveChatEncoder: Encoder[LeaveChat]                         = deriveEncoder[LeaveChat]
   implicit val unbanChatMemberEncoder: Encoder[UnbanChatMember]             = deriveEncoder[UnbanChatMember]
+  implicit val deleteMessageEncoder: Encoder[DeleteMessage]                 = deriveEncoder[DeleteMessage]
   implicit val getChatEncoder: Encoder[GetChat]                             = deriveEncoder[GetChat]
   implicit val getChatAdministratorsEncoder: Encoder[GetChatAdministrators] = deriveEncoder[GetChatAdministrators]
   implicit val getChatMembersCountEncoder: Encoder[GetChatMembersCount]     = deriveEncoder[GetChatMembersCount]

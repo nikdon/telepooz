@@ -14,8 +14,23 @@
  * limitations under the License.
  */
 
-package com.github.nikdon.telepooz.model.methods
+package com.github.nikdon.telepooz.model.payments
 
-trait Method[Result] extends Product with Serializable {
-  lazy val name: String = this.productPrefix
-}
+import com.github.nikdon.telepooz.model.User
+
+/**
+  * This object contains information about an incoming shipping query.
+  *
+  * @param id               Unique query identifier
+  * @param from             User who sent the query
+  * @param invoice_payload  Bot specified invoice payload
+  * @param shipping_address User specified shipping address
+  */
+case class ShippingQuery(
+    id: String,
+    from: User,
+    invoice_payload: String,
+    shipping_address: ShippingAddress
+)
+
+

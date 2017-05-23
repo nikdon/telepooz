@@ -14,8 +14,19 @@
  * limitations under the License.
  */
 
-package com.github.nikdon.telepooz.model.methods
+package com.github.nikdon.telepooz.model.payments
 
-trait Method[Result] extends Product with Serializable {
-  lazy val name: String = this.productPrefix
-}
+/**
+  * This object represents information about an order.
+  *
+  * @param name             User name
+  * @param phone_number     User's phone number
+  * @param email            User email
+  * @param shipping_address User shipping address
+  */
+case class OrderInfo(
+    name: Option[String] = None,
+    phone_number: Option[String] = None,
+    email: Option[String] = None,
+    shipping_address: Option[ShippingAddress] = None
+)

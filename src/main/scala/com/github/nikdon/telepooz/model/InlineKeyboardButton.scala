@@ -16,7 +16,6 @@
 
 package com.github.nikdon.telepooz.model
 
-
 /**
   * This object represents one button of an inline keyboard. You must use exactly one of the optional fields.
   *
@@ -32,10 +31,13 @@ package com.github.nikdon.telepooz.model
   *                                         only the bot’s username will be inserted.
   * @param callback_game        Description of the game that will be launched when the user presses the button.
   *                             NOTE: This type of button must always be the first button in the first row.
+  * @param pay                  Specify True, to send a Pay button.
+  *                             NOTE: This type of button must always be the first button in the first row.
   */
 case class InlineKeyboardButton(text: String,
                                 url: Option[String] = None,
                                 callback_data: Option[String] = None,
                                 switch_inline_query: Option[String] = None,
                                 switch_inline_query_current_chat: Option[String] = None,
-                                callback_game: Option[CallbackGame] = None)
+                                callback_game: Option[CallbackGame] = None,
+                                pay: Option[Boolean])

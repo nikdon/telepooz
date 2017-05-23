@@ -18,7 +18,6 @@ package com.github.nikdon.telepooz.model
 
 import java.util.Date
 
-
 /**
   * This object represents a message.
   *
@@ -38,12 +37,13 @@ import java.util.Date
   * @param photo                    Message is a photo, available sizes of the photo
   * @param sticker                  Message is a sticker, information about the sticker
   * @param video                    Message is a video, information about the video
+  * @param video_note               Message is a video note, information about the video message
   * @param voice                    Message is a voice message, information about the file
   * @param caption                  Caption for the document, photo or video, 0-200 characters
   * @param contact                  Message is a shared contact, information about the contact
   * @param location                 Message is a shared location, information about the location
   * @param venue                    Message is a venue, information about the venue
-  * @param new_chat_member          A new member was added to the group, information about them (this member may be the bot itself)
+  * @param new_chat_members         A new member was added to the group, information about them (this member may be the bot itself)
   * @param left_chat_member         A member was removed from the group, information about them (this member may be the bot itself)
   * @param new_chat_title           A chat title was changed to this value
   * @param new_chat_photo           A chat photo was changed to this value
@@ -72,12 +72,13 @@ case class Message(message_id: Long,
                    photo: Option[Vector[PhotoSize]] = None,
                    sticker: Option[Sticker] = None,
                    video: Option[Video] = None,
+                   video_note: Option[VideoNote] = None,
                    voice: Option[Voice] = None,
                    caption: Option[String] = None,
                    contact: Option[Contact] = None,
                    location: Option[Location] = None,
                    venue: Option[Venue] = None,
-                   new_chat_member: Option[User] = None,
+                   new_chat_members: Option[List[User]] = None,
                    left_chat_member: Option[User] = None,
                    new_chat_title: Option[String] = None,
                    new_chat_photo: Option[Vector[PhotoSize]] = None,

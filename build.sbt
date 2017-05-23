@@ -1,6 +1,5 @@
-import de.heikoseeberger.sbtheader.license.Apache2_0
-
-headers := Map("scala" -> Apache2_0("2016", "Nikolay Donets"))
+enablePlugins(AutomateHeaderPlugin)
+headerLicense := Some(HeaderLicense.ALv2("2016", "Nikolay Donets"))
 
 lazy val buildSettings = Seq(
   organization := "com.github.nikdon",

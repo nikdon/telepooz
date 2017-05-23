@@ -19,6 +19,7 @@ package com.github.nikdon.telepooz.model
 import cats.Eq
 import com.github.nikdon.telepooz.model.inline.AnswerInlineQuery
 import com.github.nikdon.telepooz.model.methods._
+import com.github.nikdon.telepooz.model.payments._
 
 object EqInstances {
   implicit val eqAnimation: Eq[Animation]                       = Eq.fromUniversalEquals
@@ -48,6 +49,17 @@ object EqInstances {
   implicit val eqVenue: Eq[Venue]                               = Eq.fromUniversalEquals
   implicit val eqVoice: Eq[Voice]                               = Eq.fromUniversalEquals
   implicit val eqVideo: Eq[Video]                               = Eq.fromUniversalEquals
+  implicit val eqVideoNote: Eq[VideoNote]                       = Eq.fromUniversalEquals
+
+  // Payments
+  implicit val invoiceEq: Eq[Invoice]                     = Eq.fromUniversalEquals
+  implicit val labeledPriceEq: Eq[LabeledPrice]           = Eq.fromUniversalEquals
+  implicit val orderInfoEq: Eq[OrderInfo]                 = Eq.fromUniversalEquals
+  implicit val preCheckoutQueryEq: Eq[PreCheckoutQuery]   = Eq.fromUniversalEquals
+  implicit val shippingAddressEq: Eq[ShippingAddress]     = Eq.fromUniversalEquals
+  implicit val shippingOptionEq: Eq[ShippingOption]       = Eq.fromUniversalEquals
+  implicit val shippingQueryEq: Eq[ShippingQuery]         = Eq.fromUniversalEquals
+  implicit val successfulPaymentEq: Eq[SuccessfulPayment] = Eq.fromUniversalEquals
 
   implicit val eqAnswerCallbackQuery: Eq[AnswerCallbackQuery]       = Eq.fromUniversalEquals
   implicit val eqEditMessageCaption: Eq[EditMessageCaption]         = Eq.fromUniversalEquals

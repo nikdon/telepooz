@@ -58,7 +58,7 @@ private[this] class UpdatePublisher(endpoint: String, interface: String, port: I
 
   var binding: ServerBinding = _
 
-  private[this] val route: Route = pathEndOrSingleSlash {
+  private[this] val route: Route = path(endpoint) {
     entity(as[Update]) { update ⇒
       log.debug("Received request with update {}", update.update_id)
       self ! update

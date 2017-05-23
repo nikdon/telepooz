@@ -26,6 +26,7 @@ import cats.~>
 import com.github.nikdon.telepooz.model._
 import com.github.nikdon.telepooz.model.methods._
 import com.github.nikdon.telepooz.json._
+import com.github.nikdon.telepooz.model.methods.payments.{AnswerPreCheckoutQuery, AnswerShippingQuery, SendInvoice}
 import com.typesafe.config.{Config, ConfigFactory}
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
 import io.circe.syntax._
@@ -52,8 +53,8 @@ abstract class ApiRequestExecutor(implicit system: ActorSystem,
       case x if x.isArray => x.asArray.get.map(dropNulls).asJson
       case x if x.isObject =>
         val filtered = x.asObject.get.toList.flatMap {
-          case (_, v) if v.isNull            => None
-          case (k, v)                        => Some(k -> dropNulls(v))
+          case (_, v) if v.isNull => None
+          case (k, v)             => Some(k -> dropNulls(v))
         }
         JsonObject.fromIterable(filtered).asJson
       case x => x
@@ -83,6 +84,7 @@ abstract class ApiRequestExecutor(implicit system: ActorSystem,
     case m: SendDocument           => go(m.name, dropNulls(m.asJson))
     case m: SendSticker            => go(m.name, dropNulls(m.asJson))
     case m: SendVideo              => go(m.name, dropNulls(m.asJson))
+    case m: SendVideoNote          => go(m.name, dropNulls(m.asJson))
     case m: SendVoice              => go(m.name, dropNulls(m.asJson))
     case m: SendLocation           => go(m.name, dropNulls(m.asJson))
     case m: SendVenue              => go(m.name, dropNulls(m.asJson))
@@ -93,6 +95,7 @@ abstract class ApiRequestExecutor(implicit system: ActorSystem,
     case m: KickChatMember         => go(m.name, dropNulls(m.asJson))
     case m: LeaveChat              => go(m.name, dropNulls(m.asJson))
     case m: UnbanChatMember        => go(m.name, dropNulls(m.asJson))
+    case m: DeleteMessage          => go(m.name, dropNulls(m.asJson))
     case m: GetChat                => go(m.name, dropNulls(m.asJson))
     case m: GetChatAdministrators  => go(m.name, dropNulls(m.asJson))
     case m: GetChatMembersCount    => go(m.name, dropNulls(m.asJson))
@@ -102,5 +105,8 @@ abstract class ApiRequestExecutor(implicit system: ActorSystem,
     case m: EditMessageReplyMarkup => go(m.name, dropNulls(m.asJson))
     case m: EditMessageText        => go(m.name, dropNulls(m.asJson))
     case m: SetWebhook             => go(m.name, dropNulls(m.asJson))
+    case m: AnswerPreCheckoutQuery => go(m.name, dropNulls(m.asJson))
+    case m: AnswerShippingQuery    => go(m.name, dropNulls(m.asJson))
+    case m: SendInvoice            => go(m.name, dropNulls(m.asJson))
   }
 }

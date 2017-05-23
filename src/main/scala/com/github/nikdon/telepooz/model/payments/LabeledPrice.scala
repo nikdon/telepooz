@@ -14,8 +14,15 @@
  * limitations under the License.
  */
 
-package com.github.nikdon.telepooz.model.methods
+package com.github.nikdon.telepooz.model.payments
 
-trait Method[Result] extends Product with Serializable {
-  lazy val name: String = this.productPrefix
-}
+/**
+  * This object represents a portion of the price for goods or services.
+  *
+  * @param label  Portion label
+  * @param amount Price of the product in the smallest units of the currency (integer, not float/double).
+  *               For example, for a price of US$ 1.45 pass amount = 145.
+  *               See the exp parameter in currencies.json, it shows the number of digits past
+  *               the decimal point for each currency (2 for the majority of currencies).
+  */
+case class LabeledPrice(label: String, amount: Int)
