@@ -22,6 +22,7 @@ import akka.actor.ActorSystem
 import akka.stream.Materializer
 import com.github.nikdon.telepooz.model._
 import com.github.nikdon.telepooz.model.methods._
+import com.github.nikdon.telepooz.model.methods.payments.{AnswerPreCheckoutQuery, AnswerShippingQuery, SendInvoice}
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
 import scala.util.Random
@@ -62,6 +63,10 @@ class MockApiRequestExecutor(
     case m: GetGameHighScores ⇒
       Future.successful(Response(ok = true, Some(Vector(GameHighScore(r.nextInt, fakeUser, r.nextInt)))))
 
+    case m: AnswerPreCheckoutQuery ⇒ Future.successful(Response(ok = true, Some(true)))
+    case m: AnswerShippingQuery    ⇒ Future.successful(Response(ok = true, Some(true)))
+    case m: SendInvoice            ⇒ Future.successful(Response(ok = true, Some(fakeMessage)))
+
     case m: SendPhoto ⇒
       Future.successful(Response(ok = true, Some(fakeMessage)))
     case m: SendAudio ⇒
@@ -71,6 +76,8 @@ class MockApiRequestExecutor(
     case m: SendSticker ⇒
       Future.successful(Response(ok = true, Some(fakeMessage)))
     case m: SendVideo ⇒
+      Future.successful(Response(ok = true, Some(fakeMessage)))
+    case m: SendVideoNote ⇒
       Future.successful(Response(ok = true, Some(fakeMessage)))
     case m: SendVoice ⇒
       Future.successful(Response(ok = true, Some(fakeMessage)))
@@ -91,6 +98,8 @@ class MockApiRequestExecutor(
     case m: LeaveChat ⇒
       Future.successful(Response(ok = true, Some(true)))
     case m: UnbanChatMember ⇒
+      Future.successful(Response(ok = true, Some(true)))
+    case m: DeleteMessage ⇒
       Future.successful(Response(ok = true, Some(true)))
     case m: GetChat ⇒
       Future.successful(Response(ok = true, Some(fakeChat)))

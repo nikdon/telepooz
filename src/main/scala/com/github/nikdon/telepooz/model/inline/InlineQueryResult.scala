@@ -18,10 +18,8 @@ package com.github.nikdon.telepooz.model.inline
 
 import com.github.nikdon.telepooz.model.InlineKeyboardMarkup
 
-
 /** This object represents one result of an inline query */
 sealed trait InlineQueryResult extends Product with Serializable
-
 
 /**
   * Represents a link to an article or web page.
@@ -46,11 +44,11 @@ case class InlineQueryResultArticle(id: String,
                                     description: Option[String] = None,
                                     thumb_url: Option[String] = None,
                                     thumb_width: Option[Int] = None,
-                                    thumb_height: Option[Int] = None) extends InlineQueryResult
+                                    thumb_height: Option[Int] = None)
+    extends InlineQueryResult
 object InlineQueryResultArticle {
   final val `type` = Map("type" → "article")
 }
-
 
 /**
   * Represents a link to a photo. By default, this photo will be sent by the user with optional caption. Alternatively,
@@ -76,11 +74,11 @@ case class InlineQueryResultPhoto(id: String,
                                   description: Option[String] = None,
                                   caption: Option[String] = None,
                                   reply_markup: Option[InlineKeyboardMarkup] = None,
-                                  input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+                                  input_message_content: Option[InputMessageContent] = None)
+    extends InlineQueryResult
 object InlineQueryResultPhoto {
   final val `type` = Map("type" → "photo")
 }
-
 
 /**
   * Represents a link to an animated GIF file. By default, this animated GIF file will be sent by the user with optional
@@ -91,6 +89,7 @@ object InlineQueryResultPhoto {
   * @param gif_url                A valid URL for the GIF file. File size must not exceed 1MB
   * @param gif_width              Width of the GIF
   * @param gif_height             Height of the GIF
+  * @param gif_duration           Duration of the GIF
   * @param thumb_url              URL of the static thumbnail for the result (jpeg or gif)
   * @param title                  Title for the result
   * @param caption                Caption of the GIF file to be sent, 0-200 characters
@@ -101,15 +100,16 @@ case class InlineQueryResultGif(id: String,
                                 gif_url: String,
                                 gif_width: Option[Int] = None,
                                 gif_height: Option[Int] = None,
+                                gif_duration: Option[Int],
                                 thumb_url: String,
                                 title: Option[String] = None,
                                 caption: Option[String] = None,
                                 reply_markup: Option[InlineKeyboardMarkup] = None,
-                                input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+                                input_message_content: Option[InputMessageContent] = None)
+    extends InlineQueryResult
 object InlineQueryResultGif {
   final val `type` = Map("type" → "gif")
 }
-
 
 /**
   * Represents a link to a video animation (H.264/MPEG-4 AVC video without sound). By default, this animated MPEG-4 file
@@ -120,6 +120,7 @@ object InlineQueryResultGif {
   * @param mpeg4_url              A valid URL for the MP4 file. File size must not exceed 1MB
   * @param mpeg4_width            Video width
   * @param mpeg4_height           Video height
+  * @param mpeg4_duration         Video duration
   * @param thumb_url              URL of the static thumbnail (jpeg or gif) for the result
   * @param title                  Title for the result
   * @param caption                Caption of the MPEG-4 file to be sent, 0-200 characters
@@ -130,15 +131,16 @@ case class InlineQueryResultMpeg4Gif(id: String,
                                      mpeg4_url: String,
                                      mpeg4_width: Option[Int] = None,
                                      mpeg4_height: Option[Int] = None,
+                                     mpeg4_duration: Option[Int],
                                      thumb_url: String,
                                      title: Option[String] = None,
                                      caption: Option[String] = None,
                                      reply_markup: Option[InlineKeyboardMarkup] = None,
-                                     input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+                                     input_message_content: Option[InputMessageContent] = None)
+    extends InlineQueryResult
 object InlineQueryResultMpeg4Gif {
   final val `type` = Map("type" → "mpeg4_gif")
 }
-
 
 /**
   * Represents a link to a page containing an embedded video player or a video file. By default, this video file will be
@@ -169,11 +171,11 @@ case class InlineQueryResultVideo(id: String,
                                   video_duration: Option[Int] = None,
                                   description: Option[String] = None,
                                   reply_markup: Option[InlineKeyboardMarkup] = None,
-                                  input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+                                  input_message_content: Option[InputMessageContent] = None)
+    extends InlineQueryResult
 object InlineQueryResultVideo {
   final val `type` = Map("type" → "video")
 }
-
 
 /**
   * Represents a link to an mp3 audio file. By default, this audio file will be sent by the user. Alternatively, you can
@@ -194,11 +196,11 @@ case class InlineQueryResultAudio(id: String,
                                   performer: Option[String] = None,
                                   audio_duration: Option[Int] = None,
                                   reply_markup: Option[InlineKeyboardMarkup] = None,
-                                  input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+                                  input_message_content: Option[InputMessageContent] = None)
+    extends InlineQueryResult
 object InlineQueryResultAudio {
   final val `type` = Map("type" → "audio")
 }
-
 
 /**
   * Represents a link to a voice recording in an .ogg container encoded with OPUS. By default, this voice recording will
@@ -218,11 +220,11 @@ case class InlineQueryResultVoice(id: String,
                                   caption: Option[String] = None,
                                   voice_duration: Option[Int] = None,
                                   reply_markup: Option[InlineKeyboardMarkup] = None,
-                                  input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+                                  input_message_content: Option[InputMessageContent] = None)
+    extends InlineQueryResult
 object InlineQueryResultVoice {
   final val `type` = Map("type" → "voice")
 }
-
 
 /**
   * Represents a link to a file. By default, this file will be sent by the user with an optional caption. Alternatively,
@@ -251,11 +253,11 @@ case class InlineQueryResultDocument(id: String,
                                      thumb_width: Option[Int] = None,
                                      thumb_height: Option[Int] = None,
                                      reply_markup: Option[InlineKeyboardMarkup] = None,
-                                     input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+                                     input_message_content: Option[InputMessageContent] = None)
+    extends InlineQueryResult
 object InlineQueryResultDocument {
   final val `type` = Map("type" → "document")
 }
-
 
 /**
   * Represents a location on a map. By default, the location will be sent by the user. Alternatively, you can use
@@ -279,11 +281,11 @@ case class InlineQueryResultLocation(id: String,
                                      thumb_width: Option[Int] = None,
                                      thumb_height: Option[Int] = None,
                                      reply_markup: Option[InlineKeyboardMarkup] = None,
-                                     input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+                                     input_message_content: Option[InputMessageContent] = None)
+    extends InlineQueryResult
 object InlineQueryResultLocation {
   final val `type` = Map("type" → "location")
 }
-
 
 /**
   * Represents a venue. By default, the venue will be sent by the user. Alternatively, you can use input_message_content
@@ -311,11 +313,11 @@ case class InlineQueryResultVenue(id: String,
                                   thumb_width: Option[Int] = None,
                                   thumb_height: Option[Int] = None,
                                   reply_markup: Option[InlineKeyboardMarkup] = None,
-                                  input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+                                  input_message_content: Option[InputMessageContent] = None)
+    extends InlineQueryResult
 object InlineQueryResultVenue {
   final val `type` = Map("type" → "venue")
 }
-
 
 /**
   * Represents a contact with a phone number. By default, this contact will be sent by the user. Alternatively, you can
@@ -340,11 +342,11 @@ case class InlineQueryResultContact(id: String,
                                     thumb_width: Option[Int] = None,
                                     thumb_height: Option[Int] = None,
                                     reply_markup: Option[InlineKeyboardMarkup] = None,
-                                    input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+                                    input_message_content: Option[InputMessageContent] = None)
+    extends InlineQueryResult
 object InlineQueryResultContact {
   final val `type` = Map("type" → "contact")
 }
-
 
 /**
   * Represents a link to a photo stored on the Telegram servers. By default, this photo will be sent by the user with an
@@ -365,11 +367,11 @@ case class InlineQueryResultCachedPhoto(id: String,
                                         description: Option[String] = None,
                                         caption: Option[String] = None,
                                         reply_markup: Option[InlineKeyboardMarkup] = None,
-                                        input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+                                        input_message_content: Option[InputMessageContent] = None)
+    extends InlineQueryResult
 object InlineQueryResultCachedPhoto {
   final val `type` = Map("type" → "photo")
 }
-
 
 /**
   * Represents a link to an animated GIF file stored on the Telegram servers. By default, this animated GIF file will be
@@ -388,11 +390,11 @@ case class InlineQueryResultCachedGif(id: String,
                                       title: Option[String] = None,
                                       caption: Option[String] = None,
                                       reply_markup: Option[InlineKeyboardMarkup] = None,
-                                      input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+                                      input_message_content: Option[InputMessageContent] = None)
+    extends InlineQueryResult
 object InlineQueryResultCachedGif {
   final val `type` = Map("type" → "gif")
 }
-
 
 /**
   * Represents a link to a video animation (H.264/MPEG-4 AVC video without sound) stored on the Telegram servers. By
@@ -411,11 +413,11 @@ case class InlineQueryResultCachedMpeg4Gif(id: String,
                                            title: Option[String] = None,
                                            caption: Option[String] = None,
                                            reply_markup: Option[InlineKeyboardMarkup] = None,
-                                           input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+                                           input_message_content: Option[InputMessageContent] = None)
+    extends InlineQueryResult
 object InlineQueryResultCachedMpeg4Gif {
   final val `type` = Map("type" → "mpeg4_gif")
 }
-
 
 /**
   * Represents a link to a sticker stored on the Telegram servers. By default, this sticker will be sent by the user.
@@ -429,11 +431,11 @@ object InlineQueryResultCachedMpeg4Gif {
 case class InlineQueryResultCachedSticker(id: String,
                                           sticker_file_id: String,
                                           reply_markup: Option[InlineKeyboardMarkup] = None,
-                                          input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+                                          input_message_content: Option[InputMessageContent] = None)
+    extends InlineQueryResult
 object InlineQueryResultCachedSticker {
   final val `type` = Map("type" → "sticker")
 }
-
 
 /**
   * Represents a link to a file stored on the Telegram servers. By default, this file will be sent by the user with an
@@ -452,11 +454,11 @@ case class InlineQueryResultCachedDocument(id: String,
                                            document_file_id: String,
                                            description: Option[String] = None,
                                            caption: Option[String] = None,
-                                           input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+                                           input_message_content: Option[InputMessageContent] = None)
+    extends InlineQueryResult
 object InlineQueryResultCachedDocument {
   final val `type` = Map("type" → "document")
 }
-
 
 /**
   * Represents a link to a video file stored on the Telegram servers. By default, this video file will be sent by the
@@ -477,11 +479,11 @@ case class InlineQueryResultCachedVideo(id: String,
                                         description: Option[String] = None,
                                         caption: Option[String] = None,
                                         reply_markup: Option[InlineKeyboardMarkup] = None,
-                                        input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+                                        input_message_content: Option[InputMessageContent] = None)
+    extends InlineQueryResult
 object InlineQueryResultCachedVideo {
   final val `type` = Map("type" → "video")
 }
-
 
 /**
   * Represents a link to a voice message stored on the Telegram servers. By default, this voice message will be sent by
@@ -500,11 +502,11 @@ case class InlineQueryResultCachedVoice(id: String,
                                         title: String,
                                         caption: Option[String] = None,
                                         reply_markup: Option[InlineKeyboardMarkup] = None,
-                                        input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+                                        input_message_content: Option[InputMessageContent] = None)
+    extends InlineQueryResult
 object InlineQueryResultCachedVoice {
   final val `type` = Map("type" → "voice")
 }
-
 
 /**
   * Represents a link to an mp3 audio file stored on the Telegram servers. By default, this audio file will be sent by
@@ -520,14 +522,16 @@ case class InlineQueryResultCachedAudio(id: String,
                                         audio_file_id: String,
                                         caption: Option[String] = None,
                                         reply_markup: Option[InlineKeyboardMarkup] = None,
-                                        input_message_content: Option[InputMessageContent] = None) extends InlineQueryResult
+                                        input_message_content: Option[InputMessageContent] = None)
+    extends InlineQueryResult
 object InlineQueryResultCachedAudio {
   final val `type` = Map("type" → "audio")
 }
 
 case class InlineQueryResultGame(id: String,
                                  game_short_name: String,
-                                 reply_markup: Option[InlineKeyboardMarkup] = None) extends InlineQueryResult
+                                 reply_markup: Option[InlineKeyboardMarkup] = None)
+    extends InlineQueryResult
 object InlineQueryResultGame {
   final val `type` = Map("type" → "game")
 }

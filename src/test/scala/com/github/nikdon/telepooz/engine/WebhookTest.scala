@@ -1,3 +1,19 @@
+/*
+ * Copyright 2016 Nikolay Donets
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.github.nikdon.telepooz.engine
 
 import akka.http.scaladsl.Http
@@ -21,24 +37,22 @@ class WebhookTest
     with ScalaFutures
     with ScaledTimeSpans {
 
-  override def spanScaleFactor: Double = 50.0
+  override def spanScaleFactor: Double = 500.0
 
   val encoders = new CirceEncoders {}
   import encoders._
 
   val are = new MockApiRequestExecutor()
-  val whs = new Webhook("http://127.0.0.1:8080", "::0", 8080)(are, materializer).source
+  val whs = new Webhook("", "::0", 8080)(are, materializer).source
 
   behavior of "Webhooks"
 
   it should "handle incoming request with updates" in {
     val httpRequest =
-      Post("http://127.0.0.1:8080")
+      Post("http://0.0.0.0:8080/")
         .withEntity(ContentTypes.`application/json`, arbitrary[Update].sample.get.asJson.noSpaces)
 
-    val t = for {
-      upds ← whs.concat(Source.fromFuture(Http().singleRequest(httpRequest))).take(1).runWith(Sink.seq)
-    } yield upds
+    val t = whs.concat(Source.fromFuture(Http().singleRequest(httpRequest))).take(1).runWith(Sink.seq)
 
     whenReady(t) { updates ⇒
       updates.size shouldBe 1

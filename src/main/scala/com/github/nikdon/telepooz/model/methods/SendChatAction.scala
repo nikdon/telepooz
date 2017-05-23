@@ -37,12 +37,14 @@ case class SendChatAction(
 sealed trait ChatAction extends Product with Serializable { def name: String = this.productPrefix }
 
 object ChatAction {
-  case object Typing         extends ChatAction { override val name = super.name }
-  case object UploadPhoto    extends ChatAction { override val name = super.name }
-  case object RecordVideo    extends ChatAction { override val name = super.name }
-  case object UploadVideo    extends ChatAction { override val name = super.name }
-  case object RecordAudio    extends ChatAction { override val name = super.name }
-  case object UploadAudio    extends ChatAction { override val name = super.name }
-  case object UploadDocument extends ChatAction { override val name = super.name }
-  case object FindLocation   extends ChatAction { override val name = super.name }
+  case object Typing          extends ChatAction { override val name = super.name }
+  case object UploadPhoto     extends ChatAction { override val name = super.name }
+  case object RecordVideo     extends ChatAction { override val name = super.name }
+  case object UploadVideo     extends ChatAction { override val name = super.name }
+  case object RecordAudio     extends ChatAction { override val name = super.name }
+  case object UploadAudio     extends ChatAction { override val name = super.name }
+  case object UploadDocument  extends ChatAction { override val name = super.name }
+  case object FindLocation    extends ChatAction { override val name = super.name }
+  case object RecordVideoNote extends ChatAction { override val name = super.name }
+  case object UploadVideoNote extends ChatAction { override val name = super.name }
 }

@@ -21,6 +21,7 @@ import java.util.Date
 
 import com.github.nikdon.telepooz.model._
 import com.github.nikdon.telepooz.model.inline._
+import com.github.nikdon.telepooz.model.payments._
 import com.github.nikdon.telepooz.utils._
 import io.circe.Decoder
 import io.circe.generic.semiauto._
@@ -61,6 +62,7 @@ trait CirceDecoders {
   implicit val userProfilePhotosDecoder: Decoder[UserProfilePhotos] = deriveDecoder[UserProfilePhotos]
   implicit val venueDecoder: Decoder[Venue]                         = deriveDecoder[Venue]
   implicit val videoDecoder: Decoder[Video]                         = deriveDecoder[Video]
+  implicit val videoNoteDecoder: Decoder[VideoNote]                 = deriveDecoder[VideoNote]
   implicit val voiceDecoder: Decoder[Voice]                         = deriveDecoder[Voice]
 
   // Game
@@ -85,6 +87,16 @@ trait CirceDecoders {
     deriveDecoder[InputLocationMessageContent]
   implicit val inputTextMessageContentDecoder: Decoder[InputTextMessageContent] =
     deriveDecoder[InputTextMessageContent]
+
+  // Payments
+  implicit val labeledPriceDecoder: Decoder[LabeledPrice]           = deriveDecoder[LabeledPrice]
+  implicit val invoiceDecoder: Decoder[Invoice]                     = deriveDecoder[Invoice]
+  implicit val shippingAddressDecoder: Decoder[ShippingAddress]     = deriveDecoder[ShippingAddress]
+  implicit val shippingQueryDecoder: Decoder[ShippingQuery]         = deriveDecoder[ShippingQuery]
+  implicit val orderInfoDecoder: Decoder[OrderInfo]                 = deriveDecoder[OrderInfo]
+  implicit val preCheckoutQueryDecoder: Decoder[PreCheckoutQuery]   = deriveDecoder[PreCheckoutQuery]
+  implicit val shippingOptionDecoder: Decoder[ShippingOption]       = deriveDecoder[ShippingOption]
+  implicit val successfulPaymentDecoder: Decoder[SuccessfulPayment] = deriveDecoder[SuccessfulPayment]
 
   implicit def eitherResponseDecoder[A, B](implicit D: Decoder[A], DD: Decoder[B]): Decoder[Either[A, B]] =
     deriveDecoder[Either[A, B]]

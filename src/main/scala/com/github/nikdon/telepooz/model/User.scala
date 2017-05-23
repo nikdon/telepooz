@@ -16,16 +16,17 @@
 
 package com.github.nikdon.telepooz.model
 
-
 /**
   * This object represents a Telegram user or bot.
   *
-  * @param id         Unique identifier for this user or bot
-  * @param first_name User‘s or bot’s first name
-  * @param last_name  User‘s or bot’s last name
-  * @param username   User‘s or bot’s username
+  * @param id             Unique identifier for this user or bot
+  * @param first_name     User‘s or bot’s first name
+  * @param last_name      User‘s or bot’s last name
+  * @param username       User‘s or bot’s username
+  * @param language_code  IETF language tag of the user's language
   */
 case class User(id: Int,
                 first_name: String,
                 last_name: Option[String] = None,
-                username: Option[String] = None)
+                username: Option[String] = None,
+                language_code: Option[String] = None)

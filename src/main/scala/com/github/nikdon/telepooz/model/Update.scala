@@ -17,7 +17,7 @@
 package com.github.nikdon.telepooz.model
 
 import com.github.nikdon.telepooz.model.inline.{ChosenInlineQuery, InlineQuery}
-
+import com.github.nikdon.telepooz.model.payments.{PreCheckoutQuery, ShippingQuery}
 
 /**
   * This object represents an incoming update. Only one of the optional parameters can be present in any given update.
@@ -28,13 +28,23 @@ import com.github.nikdon.telepooz.model.inline.{ChosenInlineQuery, InlineQuery}
   *                             sequence, should they get out of order.
   * @param message              New incoming message of any kind — text, photo, sticker, etc.
   * @param edited_message       New version of a message that is known to the bot and was edited
+  * @param channel_post         New incoming channel post of any kind — text, photo, sticker, etc.
+  * @param edited_channel_post  New version of a channel post that is known to the bot and was edited
   * @param inline_query         New incoming inline query
   * @param chosen_inline_result The result of an inline query that was chosen by a user and sent to their chat partner
   * @param callback_query       New incoming callback query
+  * @param shipping_query       New incoming shipping query. Only for invoices with flexible price
+  * @param pre_checkout_query   New incoming pre-checkout query. Contains full information about checkout
   */
-case class Update(update_id: Long,
-                  message: Option[Message] = None,
-                  edited_message: Option[Message] = None,
-                  inline_query: Option[InlineQuery] = None,
-                  chosen_inline_result: Option[ChosenInlineQuery] = None,
-                  callback_query: Option[CallbackQuery] = None)
+case class Update(
+    update_id: Long,
+    message: Option[Message] = None,
+    edited_message: Option[Message] = None,
+    channel_post: Option[Message] = None,
+    edited_channel_post: Option[Message] = None,
+    inline_query: Option[InlineQuery] = None,
+    chosen_inline_result: Option[ChosenInlineQuery] = None,
+    callback_query: Option[CallbackQuery] = None,
+    shipping_query: Option[ShippingQuery] = None,
+    pre_checkout_query: Option[PreCheckoutQuery] = None
+)
