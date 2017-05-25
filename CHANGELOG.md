@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## [0.5.1] 2017-05-25
+
+- update akka to 2.5.2
+- refactor webhooks
+
 ## [0.5.0] 2017-05-23
 
 - 18th of May Telegram API changes
