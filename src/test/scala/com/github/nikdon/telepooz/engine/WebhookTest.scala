@@ -19,10 +19,10 @@ package com.github.nikdon.telepooz.engine
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.ContentTypes
 import akka.http.scaladsl.testkit.ScalatestRouteTest
-import akka.stream.scaladsl.{Sink, Source}
+import akka.stream.scaladsl.Sink
 import com.github.nikdon.telepooz.helpers.Arbitraries._
-import com.github.nikdon.telepooz.model.Update
 import com.github.nikdon.telepooz.json.CirceEncoders
+import com.github.nikdon.telepooz.model.Update
 import io.circe.syntax._
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalatest.concurrent.{ScalaFutures, ScaledTimeSpans}
@@ -43,20 +43,27 @@ class WebhookTest
   import encoders._
 
   val are = new MockApiRequestExecutor()
-  val whs = new Webhook("", "::0", 8080)(are, materializer).source
+  val whs = new Webhook("test", "https", "::0", 8080)(are, system, materializer).source
+
+  val http = Http()
+
+  val httpRequest =
+    Post("http://localhost:8080/test")
+      .withEntity(ContentTypes.`application/json`, arbitrary[Update].sample.get.asJson.noSpaces)
 
   behavior of "Webhooks"
 
   it should "handle incoming request with updates" in {
-    val httpRequest =
-      Post("http://0.0.0.0:8080/")
-        .withEntity(ContentTypes.`application/json`, arbitrary[Update].sample.get.asJson.noSpaces)
+    val res = whs.take(1).log("updates").runWith(Sink.seq)
+    http.singleRequest(httpRequest)
 
-    val t = whs.concat(Source.fromFuture(Http().singleRequest(httpRequest))).take(1).runWith(Sink.seq)
-
-    whenReady(t) { updates ⇒
+    whenReady(res) { updates ⇒
       updates.size shouldBe 1
       updates.foreach(u ⇒ u shouldBe an[Update])
     }
+  }
+
+  override protected def afterAll(): Unit = {
+    system.terminate()
   }
 }

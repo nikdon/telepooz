@@ -16,22 +16,27 @@
 
 package com.github.nikdon.telepooz.examples
 
-import com.github.nikdon.telepooz.engine.{
-  MockApiRequestExecutor,
-  Polling,
-  CommandBasedReactions,
-  Reactor,
-  Telepooz
-}
+import akka.stream.ActorMaterializer
+import com.github.nikdon.telepooz.engine._
 
-/** This bot queries messages via `MockApiRequestExecutor` and ignores them */
-object SelfBot extends Telepooz with App {
+object WebhookBot extends Telepooz with App {
 
-  implicit val are = new MockApiRequestExecutor(1000)
-  val poller       = new Polling
-  val reactor      = new Reactor {
+  implicit val asm = ActorMaterializer()
+  implicit val are = new MockApiRequestExecutor(1) {}
+  val poller       = new Webhook(endpoint = "test", interface = "127.0.0.1")
+  val reactor = new Reactor {
     val reactions = CommandBasedReactions()
+      .on("/start")(implicit message ⇒
+        args ⇒ {
+          println(s"You are started! $args")
+          reply("You are started!")
+      })
+      .on("/test")(implicit message ⇒
+        args ⇒ {
+          println(s"You are tested! $args")
+          reply("You are tested!")
+      })
   }
 
-  instance.run((are, poller, reactor))
+  webhook.run((poller, reactor))
 }
