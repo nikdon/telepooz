@@ -21,7 +21,7 @@ telepooz built for **scala-2.12**. To use it add following to build file:
 
 ```scala
 resolvers += "jitpack" at "https://jitpack.io"
-libraryDependencies += "com.github.nikdon" % "telepooz" % "0.5.0"
+libraryDependencies += "com.github.nikdon" % "telepooz" % "0.5.1"
 ```
 
 And configure telepooz via the `reference.conf` or `aplication.conf` or by, for ex., env variables:
@@ -90,6 +90,8 @@ Toplevel `Telepooz` trait provides a method `instance` that is a
 `ReaderT[Future, (ApiRequestExecutor, Polling, Reactor), Done]`. To start a bot provide a valid input 
 for `instance.run(...)` with all three components described above.
 
+### Polling
+
 ```scala
 /** Just an example of how the bot might look like */
 import com.github.nikdon.telepooz.engine._
@@ -105,6 +107,35 @@ object NaiveBot extends Telepooz with App {
   }
 
   instance.run((are, poller, reactor))
+}
+```
+
+### Webhook
+
+```scala
+import akka.stream.ActorMaterializer
+import com.github.nikdon.telepooz.engine._
+
+object WebhookBot extends Telepooz with App {
+
+  implicit val asm = ActorMaterializer()
+  implicit val are = new MockApiRequestExecutor(1) {}
+  val poller       = new Webhook(endpoint = "test", interface = "127.0.0.1")
+  val reactor = new Reactor {
+    val reactions = CommandBasedReactions()
+      .on("/start")(implicit message ⇒
+        args ⇒ {
+          println(s"You are started! $args")
+          reply("You are started!")
+      })
+      .on("/test")(implicit message ⇒
+        args ⇒ {
+          println(s"You are tested! $args")
+          reply("You are tested!")
+      })
+  }
+
+  webhook.run((poller, reactor))
 }
 ```
 

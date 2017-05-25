@@ -4,7 +4,7 @@ headerLicense := Some(HeaderLicense.ALv2("2016", "Nikolay Donets"))
 lazy val buildSettings = Seq(
   organization := "com.github.nikdon",
   name := "telepooz",
-  version := "0.4.2",
+  version := "0.5.1",
   scalaVersion := "2.12.2",
   licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
 )
@@ -17,7 +17,7 @@ lazy val compilerOptions = Seq(
   "-language:existentials",
   "-language:higherKinds",
   "-unchecked",
-//  "-Xfatal-warnings",
+  "-Xfatal-warnings",
   "-Yno-adapted-args",
   "-Ywarn-dead-code",
   "-Ywarn-numeric-widen",
@@ -40,7 +40,7 @@ lazy val baseSettings = Seq(
 
 buildSettings ++ baseSettings
 
-lazy val akkaVersion      = "2.5.1"
+lazy val akkaVersion      = "2.5.2"
 lazy val akkaHttpV        = "10.0.6"
 lazy val akkaHttpJsonV    = "1.16.1"
 lazy val catsV            = "0.9.0"
