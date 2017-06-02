@@ -33,9 +33,9 @@ class MockApiRequestExecutor(
 
   def r = Random
 
-  val fakeChat              = Chat(r.nextString(3), ChatType.Private)
+  val fakeChat              = Chat(r.nextLong(), ChatType.Private)
   val fakeFile              = File(r.nextString(5), None, None)
-  val fakeMessage           = Message(r.nextLong, new Date(r.nextLong), Chat(r.nextString(3), ChatType.Private))
+  val fakeMessage           = Message(r.nextLong, new Date(r.nextLong), Chat(r.nextLong(), ChatType.Private))
   val fakeUserProfilePhotos = UserProfilePhotos(r.nextInt, Vector.empty)
   val fakeUser              = User(r.nextInt, r.nextString(3))
 

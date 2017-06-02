@@ -82,7 +82,7 @@ class ExecutorSpec
       w <- methods.SendVoice("123", "voice")
       x <- methods.UnbanChatMember("123", 321)
       _ <- methods.DeleteMessage("123", 321)
-      b <- methods.SendMessage("123", a.result.fold("empty")(_.first_name))
+      b <- methods.SendMessage(123L, a.result.fold("empty")(_.first_name))
       _ <- methods.EditMessageReplyMarkup("123L", 333L, "bb")
       _ <- methods.EditMessageCaption("123L", 333L, "aa")
       _ <- methods.EditMessageText("123L", 333L, "cc", "TEST")

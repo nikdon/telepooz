@@ -138,7 +138,7 @@ class ReactorTest
       val reactions: CommandBasedReactions = CommandBasedReactions()
     }
 
-    implicit val m = Message(123L, java.util.Date.from(Instant.now), Chat("100500", ChatType.Channel))
+    implicit val m = Message(123L, java.util.Date.from(Instant.now), Chat(100500L, ChatType.Channel))
 
     val f = reactor.reply("test")
 

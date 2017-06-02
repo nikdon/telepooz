@@ -36,7 +36,7 @@ import com.github.nikdon.telepooz.model.{Message, ParseMode, ReplyMarkup, Respon
   *                                   from the user.
   */
 case class SendMessage(
-  chat_id: String,
+  chat_id: Long,
   text: String,
   parse_mode: Option[ParseMode] = None,
   disable_web_page_preview: Option[Boolean] = None,
