@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## [0.5.2] 2017-06-02
+
+- fix chat decoder
+
 ## [0.5.1] 2017-05-25
 
 - update akka to 2.5.2
