@@ -31,7 +31,7 @@ import com.github.nikdon.telepooz._
   * @param all_members_are_admins True if a group has ‘All Members Are Admins’ enabled.
   */
 case class Chat(
-  id: String,
+  id: Long,
   `type`: ChatType,
   title: Option[String] = None,
   username: Option[String] = None,
