@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## [0.5.4] 2017-06-13
+
+- fix errors
+
 ## [0.5.3] 2017-06-02
 
 - fix errors

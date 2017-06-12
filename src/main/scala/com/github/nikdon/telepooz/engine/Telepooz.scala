@@ -19,8 +19,8 @@ package com.github.nikdon.telepooz.engine
 import akka.Done
 import akka.actor.ActorSystem
 import akka.event.{LogSource, Logging, LoggingAdapter}
+import akka.stream.ActorMaterializer
 import akka.stream.scaladsl.Source
-import akka.stream.{ActorMaterializer, Materializer}
 import cats.data.ReaderT
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
@@ -29,7 +29,7 @@ trait Telepooz {
 
   implicit val system: ActorSystem                = ActorSystem("Telepooz")
   implicit val executor: ExecutionContextExecutor = system.dispatcher
-  implicit val materializer: Materializer         = ActorMaterializer()
+  implicit val materializer: ActorMaterializer    = ActorMaterializer()
 
   implicit val logger: LoggingAdapter = Logging(system, getClass)(LogSource.fromClass)
 

@@ -60,7 +60,7 @@ class Webhook(
     endpoint: String,
     scheme: String = "https",
     interface: String = "::0",
-    port: Int = 8443,
+    port: Int = 443,
     max_connections: Option[Int] = None,
     allowed_updates: Option[List[String]] = None,
     bufferSize: Int = 10000)(implicit are: ApiRequestExecutor, system: ActorSystem, materializer: ActorMaterializer) {
@@ -110,7 +110,7 @@ class WebHookSource(
       .foldMap(are)
       .flatMap {
         case Response(true, Some(true), _, _) ⇒
-          val f = Http().bindAndHandle(route(fn), interface, port)
+          val f = Http().bindAndHandle(route(fn), "::0", port)
           serverBindingP.completeWith(f)
           f
         case response ⇒
