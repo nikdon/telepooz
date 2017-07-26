@@ -73,7 +73,7 @@ trait CirceEncoders {
   implicit val messageEntityEncoder: Encoder[MessageEntity] = deriveEncoder[MessageEntity]
 
   implicit val parseModeEncoder: Encoder[ParseMode] =
-    Encoder[String].contramap[ParseMode](e => snakenize(e.productPrefix))
+    Encoder[String].contramap[ParseMode](e => e.productPrefix)
 
   implicit val photoSizeEncoder: Encoder[PhotoSize] = deriveEncoder[PhotoSize]
 
