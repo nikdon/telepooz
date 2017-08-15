@@ -10,6 +10,10 @@
 
 - fix errors
 
+## [0.5.6] 2017-08-15
+
+- add resuming supervision strategy for the polling
+
 ## [0.5.3] 2017-06-02
 
 - fix errors
