@@ -5,7 +5,7 @@ lazy val buildSettings = Seq(
   organization := "com.github.nikdon",
   name := "telepooz",
   version := "0.5.6",
-  scalaVersion := "2.12.2",
+  scalaVersion := "2.12.3",
   licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
 )
 
@@ -40,9 +40,9 @@ lazy val baseSettings = Seq(
 
 buildSettings ++ baseSettings
 
-lazy val akkaVersion      = "2.5.2"
-lazy val akkaHttpV        = "10.0.6"
-lazy val akkaHttpJsonV    = "1.16.1"
+lazy val akkaVersion      = "2.5.4"
+lazy val akkaHttpV        = "10.0.9"
+lazy val akkaHttpJsonV    = "1.17.0"
 lazy val catsV            = "0.9.0"
 lazy val circeVersion     = "0.8.0"
 lazy val shapelessVersion = "2.3.2"
