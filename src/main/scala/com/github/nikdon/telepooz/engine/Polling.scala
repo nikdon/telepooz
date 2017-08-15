@@ -65,11 +65,14 @@ class Polling(implicit apiRequestExecutor: ApiRequestExecutor, ec: ExecutionCont
 
     /** Execute a [[methods.GetUpdates]] via the provided api */
     val D: FlowShape[methods.GetUpdates, immutable.Seq[Update]] =
-      builder.add(Flow[methods.GetUpdates].mapAsync(parallelism) { gu: methods.GetUpdates ⇒
-        logger.debug(s"Executing a GetUpdates request: $gu")
-        val res = gu.foldMap(apiRequestExecutor).map(_.result.fold(Vector.empty[Update])(identity))
-        res
-      })
+      builder.add(
+        Flow[methods.GetUpdates]
+          .mapAsync(parallelism) { gu: methods.GetUpdates ⇒
+            logger.debug(s"Executing a GetUpdates request: $gu")
+            val res = gu.foldMap(apiRequestExecutor).map(_.result.fold(Vector.empty[Update])(identity))
+            res
+          }
+          .withAttributes(ActorAttributes.supervisionStrategy(Supervision.resumingDecider)))
 
     /** Merge two input streams of [[methods.GetUpdates]]. Created because of the initial producer [[A]] */
     val F: UniformFanInShape[methods.GetUpdates, methods.GetUpdates] = builder.add(Merge[methods.GetUpdates](2))
