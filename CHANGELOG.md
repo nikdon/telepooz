@@ -13,6 +13,7 @@
 ## [0.5.6] 2017-08-15
 
 - add resuming supervision strategy for the polling
+- update versions: scala, akka, akka-http, akka-http-json
 
 ## [0.5.3] 2017-06-02
 
