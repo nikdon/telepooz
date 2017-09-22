@@ -23,9 +23,9 @@ import akka.http.scaladsl.model.Uri
 import akka.stream._
 import cats.implicits._
 import cats.~>
+import com.github.nikdon.telepooz.json._
 import com.github.nikdon.telepooz.model._
 import com.github.nikdon.telepooz.model.methods._
-import com.github.nikdon.telepooz.json._
 import com.github.nikdon.telepooz.model.methods.payments.{AnswerPreCheckoutQuery, AnswerShippingQuery, SendInvoice}
 import com.typesafe.config.{Config, ConfigFactory}
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
@@ -66,7 +66,9 @@ abstract class ApiRequestExecutor(implicit system: ActorSystem,
     val body = RequestBuilding.Post(Uri(uri), content = data)
     for {
       response <- http.singleRequest(body)
-      decoded  <- unmarshaller(responseDecoder).apply(response.entity)
+      decoded <- unmarshaller(responseDecoder).apply(response.entity).recoverWith {
+        case err => response.entity.discardBytes().future().flatMap(_ => Future.failed(err))
+      }
     } yield decoded
   }
 
