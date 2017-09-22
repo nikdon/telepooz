@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- add discardBytes of an response entity in case of failure
+
 ## [0.5.6] 2017-08-15
 
 - add resuming supervision strategy for the polling
