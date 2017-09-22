@@ -46,6 +46,8 @@ trait CirceEncoders {
   implicit val chatTypeEncoder: Encoder[ChatType] =
     Encoder[String].contramap[ChatType](e => snakenize(e.productPrefix))
 
+  implicit val chatPhotoEncoder: Encoder[ChatPhoto] = deriveEncoder[ChatPhoto]
+
   implicit val chatEncoder: Encoder[Chat] = deriveEncoder[Chat]
 
   implicit val memberStatusEncoder: Encoder[MemberStatus] =

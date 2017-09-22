@@ -65,6 +65,7 @@ object Arbitraries {
   implicit val chatTypeArb: Arbitrary[ChatType] = Arbitrary(
     Gen.oneOf(ChatType.Group, ChatType.Channel, ChatType.Private, ChatType.SuperGroup)
   )
+  implicit val chatPhotoArb                   = Arbitrary(Gen.resultOf(ChatPhoto))
   implicit val chatArb: Arbitrary[Chat]       = Arbitrary(Gen.resultOf(Chat))
   implicit val venueArb: Arbitrary[Venue]     = Arbitrary(Gen.resultOf(Venue))
   implicit val contactAbr: Arbitrary[Contact] = Arbitrary(Gen.resultOf(Contact))
@@ -288,9 +289,10 @@ object Arbitraries {
   implicit val sendVoiceArb: Arbitrary[SendVoice]           = Arbitrary(Gen.resultOf(SendVoice.apply _))
 
   // Payments methods
-  implicit val answerPreCheckoutQueryArb: Arbitrary[AnswerPreCheckoutQuery] = Arbitrary(Gen.resultOf(AnswerPreCheckoutQuery))
+  implicit val answerPreCheckoutQueryArb: Arbitrary[AnswerPreCheckoutQuery] = Arbitrary(
+    Gen.resultOf(AnswerPreCheckoutQuery))
   implicit val answerShippingQueryArb: Arbitrary[AnswerShippingQuery] = Arbitrary(Gen.resultOf(AnswerShippingQuery))
-  implicit val sendInvoiceArb: Arbitrary[SendInvoice] = Arbitrary(Gen.resultOf(SendInvoice))
+  implicit val sendInvoiceArb: Arbitrary[SendInvoice]                 = Arbitrary(Gen.resultOf(SendInvoice))
 
   implicit val editMessageTextArb: Arbitrary[EditMessageText] = Arbitrary(Gen.resultOf(EditMessageText.apply _))
   implicit val editMessageCaptionArb: Arbitrary[EditMessageCaption] = Arbitrary(

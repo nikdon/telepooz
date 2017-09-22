@@ -34,8 +34,9 @@ trait CirceDecoders {
 
   implicit val audioDecoder: Decoder[Audio] = deriveDecoder[Audio]
 
-  implicit val chatTypeDecoder: Decoder[ChatType] = Decoder[String].map(a ⇒ ChatType.unsafe(pascalize(a)))
-  implicit val chatDecoder: Decoder[Chat]         = deriveDecoder[Chat]
+  implicit val chatTypeDecoder: Decoder[ChatType]   = Decoder[String].map(a ⇒ ChatType.unsafe(pascalize(a)))
+  implicit val chatPhotoDecoder: Decoder[ChatPhoto] = deriveDecoder[ChatPhoto]
+  implicit val chatDecoder: Decoder[Chat]           = deriveDecoder[Chat]
 
   implicit val contactDecoder: Decoder[Contact]                           = deriveDecoder[Contact]
   implicit val documentDecoder: Decoder[Document]                         = deriveDecoder[Document]
