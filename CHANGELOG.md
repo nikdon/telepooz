@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- update akka-http to 10.0.10
+- update akka-http-json to 1.18.0
+- update scalatest to 3.0.4
+- remove explicit akka and shapeless dependencies
+
 ## [0.5.6] 2017-08-15
 
 - add resuming supervision strategy for the polling

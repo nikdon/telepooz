@@ -40,21 +40,16 @@ lazy val baseSettings = Seq(
 
 buildSettings ++ baseSettings
 
-lazy val akkaVersion      = "2.5.4"
-lazy val akkaHttpV        = "10.0.9"
-lazy val akkaHttpJsonV    = "1.17.0"
+lazy val akkaHttpV        = "10.0.10"
+lazy val akkaHttpJsonV    = "1.18.0"
 lazy val catsV            = "0.9.0"
 lazy val circeVersion     = "0.8.0"
-lazy val shapelessVersion = "2.3.2"
 
-lazy val scalaTestV  = "3.0.3"
+lazy val scalaTestV  = "3.0.4"
 lazy val scalaCheckV = "1.13.5"
 
 libraryDependencies ++= Seq(
   "org.typelevel"     %% "cats"                 % catsV,
-  "com.typesafe.akka" %% "akka-actor"           % akkaVersion,
-  "com.typesafe.akka" %% "akka-stream"          % akkaVersion,
-  "com.typesafe.akka" %% "akka-testkit"         % akkaVersion,
   "com.typesafe.akka" %% "akka-http-core"       % akkaHttpV,
   "com.typesafe.akka" %% "akka-http"            % akkaHttpV,
   "com.typesafe.akka" %% "akka-http-testkit"    % akkaHttpV,
@@ -64,7 +59,6 @@ libraryDependencies ++= Seq(
   "io.circe"          %% "circe-parser"         % circeVersion,
   "io.circe"          %% "circe-testing"        % circeVersion,
   "de.heikoseeberger" %% "akka-http-circe"      % akkaHttpJsonV,
-  "com.chuusai"       %% "shapeless"            % shapelessVersion,
-  "org.scalatest"     %% "scalatest"            % scalaTestV % "test",
-  "org.scalacheck"    %% "scalacheck"           % scalaCheckV % "test"
+  "org.scalatest"     %% "scalatest"            % scalaTestV  % Test,
+  "org.scalacheck"    %% "scalacheck"           % scalaCheckV % Test
 )
